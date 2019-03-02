@@ -1,36 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
     <head>
         <meta charset="UTF-8">
         <title></title>
-    </head>
-
-    <body>
-        <canvas id="canvas" width="112" height="112"></canvas><br>
-        <button style="width:80px;background-color:yellow; " onclick='linecolor = "yellow ";'>YELLOW</button>
-        <button style="width:80px;background-color:red; " onclick='linecolor = "red ";'>RED</button>
-        <button style="width:80px;background-color:blue; " onclick='linecolor = "blue ";'>BLUE</button>
-        <button style="width:80px;background-color:green; " onclick='linecolor = "green ";'>GREEN</button>
-        <button style="width:80px;background-color:white; " onclick='linecolor = "white ";'>WHITE</button>
-        <button style="width:80px;background-color:black;color:white; " onclick='linecolor = "black ";'>BLACK</button>
-        <br>
-        <button style="width:80px;background-color:white; " onclick="linw=4;">4px</button>
-        <button style="width:80px;background-color:white; " onclick="linw=8;">8px</button>
-        <button style="width:80px;background-color:white; " onclick="linw=16;">16px</button>
-        <br>
-        <button id="but10 " style="width:80px;background-color:pink; " onclick="copyimage(); ">EXPORT</button>
-        <br>
-        <img src="" id="image_png" width="600" height="300">
-
+        <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+        <script src="js/jquery-1.7.2.min.js"></script>
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.9.24/paper-full.min.js"></script>
+        <script src="js/imageTools.js"></script>
         <script type="text/javascript">
-            var c = document.getElementById('canvas');
-            var ctx = c.getContext('2d');
-
-            //画一个黑色矩形
-            ctx.fillStyle = 'black';
-            ctx.fillRect(0, 0, 600, 300);
-
+            var ctx
             //按下标记
             var onoff = false;
             var oldx = -10;
@@ -42,22 +22,6 @@
             //设置线宽
             var linw = 4;
 
-            //添加鼠标移动事件
-            canvas.addEventListener('mousemove', draw, true);
-
-            //添加鼠标按下事件
-            canvas.addEventListener('mousedown', down, false);
-
-            //添加鼠标弹起事件
-            canvas.addEventListener('mouseup', up, false);
-
-            //鼠标按下获取坐标
-            function down(event) {
-                onoff = true;
-                oldx = event.pageX - 10;
-                oldy = event.pagey - 10;
-            }
-
             //鼠标弹起取消绘制
             function up() {
                 onoff = false;
@@ -65,7 +29,7 @@
 
             //获取鼠标坐标，并根据坐标绘制图像
             function draw(event) {
-                if(onoff == true) {
+                if(onoff === true) {
                     var newx = event.pageX - 10;
                     var newy = event.pageY - 10;
 
@@ -81,26 +45,71 @@
                     oldy = newy;
                 }
             }
+            
+            function clean() {
+                const c = document.getElementById('canvas');
+                ctx = c.getContext('2d');
+
+                //画一个黑色矩形
+                ctx.fillStyle = 'black';
+                ctx.fillRect(0, 0, 600, 300);
+            }
 
             //转canvas保存为base64 dataURL
             function copyimage(event) {
                 var img_png_src = canvas.toDataURL('image/png');
                 document.getElementById('image_png').src = img_png_src;
-            }           
+                $.post('http://127.0.0.1:5000/recognition',{"image":img_png_src},function (jsonStr) {
+                    $("#result").html(jsonStr);
+                    drawNerve(JSON.parse(jsonStr).data);
+                })
+            }
+
+                           //鼠标按下获取坐标
+            function down(event) {
+                onoff = true;
+                oldx = event.pageX - 10;
+                oldy = event.pageY - 10;
+            }
+
+            $(function () {
+                const c = document.getElementById('canvas');
+                ctx = c.getContext('2d');
+
+                //画一个黑色矩形
+                ctx.fillStyle = 'black';
+                ctx.fillRect(0, 0, 600, 300);
+
+                //添加鼠标移动事件
+                canvas.addEventListener('mousemove', draw, true);
+
+                //添加鼠标按下事件
+                canvas.addEventListener('mousedown', down, false);
+
+                //添加鼠标弹起事件
+                canvas.addEventListener('mouseup', up, false);
+            })
+
         </script>
+    </head>
+
+    <body>
+        <canvas id="canvas" width="112" height="112"></canvas>
+        <button id="btnExport" style="width:80px;background-color:pink; " onclick="copyimage(); ">导出</button>
+        <button id="btnClear" style="width:80px;background-color:yellow; " onclick="clean();">清除</button>
+        <br>
+
+        <img src="" id="image_png" width="224" height="224" style="display: none">
+        <canvas id="mainCanvas"></canvas>
+        <p>Result is</p><p id="result"></p>
+
+
+        <p>
+
+---------------------
+
+        </p>
     </body>
 
 </html>
---------------------- 
-作者：豆i浆 
-来源：CSDN 
-原文：https://blog.csdn.net/sinat_19327991/article/details/77050717 
-版权声明：本文为博主原创文章，转载请附上博文链接！
 
-
-如何保存为文件
-https://www.jianshu.com/p/df7461ff64b1
-
-
-上传到服务器（基于C#）
-https://blog.csdn.net/yunnying/article/details/44648413

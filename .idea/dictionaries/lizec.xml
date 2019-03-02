@@ -2,6 +2,7 @@
   <dictionary name="lizec">
     <words>
       <w>conv</w>
+      <w>mnist</w>
     </words>
   </dictionary>
 </component>
