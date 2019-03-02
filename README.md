@@ -7,6 +7,10 @@
 参考资料
 ----------
 
+### MNIST相关
+- [TensorFlow实践：CNN实现MNIST手写识别模型](https://www.cnblogs.com/willnote/p/6874699.html)
+- [训练Fashion MNIST](https://www.tensorflow.org/tutorials/keras/basic_classification)
+
 ### TensorFlow相关
 - [关于加载数据集的分析](https://www.jianshu.com/p/817ea446b9b9)
 - [关于梯度下降的一些分析](https://blog.csdn.net/xierhacker/article/details/53174558)
@@ -28,6 +32,9 @@ form    | 表单数据
 values  | args和form的数据
 json    | 解析后的JSON数据
 
+
+### Paper.js
+- [Paper.js Document](http://paperjs.org/reference/global/)
 
 ### curl 操作
 ```shell
