@@ -61,11 +61,13 @@
                 document.getElementById('image_png').src = img_png_src;
                 $.post('http://127.0.0.1:5000/recognition',{"image":img_png_src},function (jsonStr) {
                     $("#result").html(jsonStr);
-                    drawNerve(JSON.parse(jsonStr).data);
+                    rdata = JSON.parse(jsonStr);
+                    drawNerve(rdata.data);
+                    $("#numberResult").html(rdata.predict);
                 })
             }
 
-                           //鼠标按下获取坐标
+            //鼠标按下获取坐标
             function down(event) {
                 onoff = true;
                 oldx = event.pageX - 10;
@@ -97,6 +99,7 @@
         <canvas id="canvas" width="112" height="112"></canvas>
         <button id="btnExport" style="width:80px;background-color:pink; " onclick="copyimage(); ">导出</button>
         <button id="btnClear" style="width:80px;background-color:yellow; " onclick="clean();">清除</button>
+        <p>识别结果是</p><p id ="numberResult"></p>
         <br>
 
         <img src="" id="image_png" width="224" height="224" style="display: none">

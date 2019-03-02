@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request
 import json
-from cnn.recognition import predict
+from cnn.predict import Predict
 from image2List import toList, toString
 
 app = Flask(__name__)
+pred = Predict()
 
 
 @app.route('/')
@@ -21,9 +22,9 @@ def hello():
 def recognition():
     print(request.form)
     if 'image' in request.form:
-        array = toList(request.form['image']).tolist()
-        pred = predict(toList(request.form['image']))
-        result = {"predict": pred, "data": array}
+        array = toList(request.form['image']).reshape(784).tolist()
+        predResult = pred.predict(toList(request.form['image']), 'cnn/SavedData')
+        result = {"predict": predResult, "data": array}
         return json.dumps(result)
     return json.dumps({"predict": -1, "data": "None"})
 
