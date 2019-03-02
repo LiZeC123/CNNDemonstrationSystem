@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request
 import json
+
+from flask import Flask, render_template, request
+
 from cnn.predict import Predict
-from image2List import toList, toString
+from image2List import toList
 
 app = Flask(__name__)
 pred = Predict()

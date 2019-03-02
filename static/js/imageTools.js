@@ -9,8 +9,8 @@ function drawNerve(data) {
     const r = 7.5;
     const m = 9;
     const len = 28 * 2 * m + 1;
-    for(let x=r; x<len; x+=2*m){
-        for(let y=15; y<len; y+=2*m){
+    for (let x = m; x < len; x += 2 * m) {
+        for (let y = m; y < len; y += 2 * m) {
             c = Shape.Circle(y,x,r);
             c.strokeColor = 'white';
             // 值越大，透明度越低，颜色越白

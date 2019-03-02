@@ -11,6 +11,7 @@
 - [关于加载数据集的分析](https://www.jianshu.com/p/817ea446b9b9)
 - [关于梯度下降的一些分析](https://blog.csdn.net/xierhacker/article/details/53174558)
 - [关于正则化](https://blog.csdn.net/u012560212/article/details/73000740)
+- [保存和恢复模型](https://blog.csdn.net/huachao1001/article/details/78501928)
 
 ### Flask
 
@@ -29,28 +30,10 @@ json    | 解析后的JSON数据
 
 
 ### curl 操作
-
+```shell
 curl http://127.0.0.1:5000/hello -d 'name=baseimage&data=dsa4309jdsl'
+```
 
-
-
-
-
-
-
-
-
-
-
-作者：豆i浆 
-来源：CSDN 
-原文：https://blog.csdn.net/sinat_19327991/article/details/77050717 
-版权声明：本文为博主原创文章，转载请附上博文链接！
-
-
-如何保存为文件
-https://www.jianshu.com/p/df7461ff64b1
-
-
-上传到服务器（基于C#）
-https://blog.csdn.net/yunnying/article/details/44648413
+### 其他参考资料
+- [HTML5 -- canvas画板转为图片](https://blog.csdn.net/sinat_19327991/article/details/77050717 )
+- [HTML5 Canvas画图、保存图片、提交文件问题](https://www.jianshu.com/p/df7461ff64b1)
