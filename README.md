@@ -32,9 +32,16 @@ form    | 表单数据
 values  | args和form的数据
 json    | 解析后的JSON数据
 
+### HTML
+- [css绝对定位、相对定位和文档流的那些事](https://www.cnblogs.com/tim-li/archive/2012/07/09/2582618.html)
+- [js 点击某个区域跳转 即某个](https://blog.csdn.net/A9925/article/details/48154041)
 
 ### Paper.js
 - [Paper.js Document](http://paperjs.org/reference/global/)
+
+### JQuery
+- [JQuery动画](http://www.w3school.com.cn/jquery/jquery_animate.asp)
+
 
 ### curl 操作
 ```shell
