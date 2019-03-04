@@ -6,8 +6,8 @@ function drawNerve(data) {
 
     let c;
     let count = 0;
-    const r = 7.5;
-    const m = 9;
+    const r = 4.5;
+    const m = 6;
     const len = 28 * 2 * m + 1;
     for (let x = m; x < len; x += 2 * m) {
         for (let y = m; y < len; y += 2 * m) {
@@ -15,11 +15,9 @@ function drawNerve(data) {
             c.strokeColor = 'white';
             // 值越大，透明度越低，颜色越白
             c.fillColor = new Color(1,data[count]/256.0);
-            console.log(data[count]);
 
             count++;
         }
     }
-    console.log(count);
     paper.view.draw();
 }
