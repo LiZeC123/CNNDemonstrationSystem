@@ -83,6 +83,10 @@
 
             //添加鼠标弹起事件
             canvas.addEventListener('mouseup', up, false);
+
+            $("#btnMove").click(function () {
+                $("#mainCanvas").animate({left: '250px'});
+            })
         })
     </script>
 </head>
