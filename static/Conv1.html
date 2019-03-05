@@ -7,17 +7,19 @@
     <style type="text/css">
         #mainCanvas {
             width: 336px;
-            height: 336px;
+            height: 1344px;
 
             background-color: #535353;
             position: relative;
+            top: 0;
         }
 
         .line {
             position: relative;
-            width: 50px;
-            height: 336px;
+            width: 500px;
+            height: 1344px;
             background-color: #535353;
+            display: none;
         }
     </style>
     <script src="js/jquery-1.7.2.min.js"></script>
@@ -97,17 +99,8 @@
 
             //添加鼠标弹起事件
             canvas.addEventListener('mouseup', up, false);
-
-            $("#conv1Canvas").click(function () {
-                $("#line1").hide("slow");
-                $("#line2").hide("slow");
-                $("#line3").hide("slow");
-                $("#conv2Canvas").hide("slow", function () {
-                    $("#conv1Canvas").animate({left: '650px'}, function () {
-                        window.location.href = "/static/Conv1.html";
-                    });
-                });
-            });
+            $("html").scrollTop(500);
+            $("#line1").show(5000);
 
         })
     </script>
@@ -127,12 +120,13 @@
     <div id="numberResult"></div>
 </div>
 <br>
-
-<canvas id="mainCanvas"></canvas>
-<canvas id="line1" class="line"
-        onclick="location.href='/static/Canvas.html'"></canvas>
-<canvas id="conv1Canvas"
-        style="position: absolute; width: 336px; height: 600px; background-color: #66ccff;left: 1036px"></canvas>
+<div style="position: absolute;height: 1344px;">
+    <canvas id="mainCanvas"></canvas>
+    <canvas id="line1" class="line"
+            onclick="location.href='/static/Canvas.html'"></canvas>
+    <canvas id="conv1Canvas"
+            style="position: relative; width: 336px; height: 1008px; top:-168px;background-color: #66ccff"></canvas>
+</div>
 
 
 </body>
