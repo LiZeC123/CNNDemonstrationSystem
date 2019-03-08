@@ -51,11 +51,7 @@ def buildNetwork(x, y, keep_prob):
     h_vonv2 = tf.nn.relu(f_conv2 + b_conv2, 'h_vonv2')
     h_pool2 = max_pool_2x2(h_vonv2, 'h_pool2')  # 进行max-pooling
 
-    # 28*28的图片第一次卷积后还是28*28，第一次池化后变为14*14
-    # 第二次卷积后为14*14，第二次池化后变为7*7
-
     # 初始化第一个全连接层的权值
-    # 经过上面操作后得到64张7*7的平面，输出为1024个神经元
     W_fc1 = weight_variable([7 * 7 * 8, 84], 'W_fc1')
     b_fc1 = bias_variable([84], 'b_fc1')
     # 把池化层2的输出扁平化为1维
@@ -92,14 +88,13 @@ def train():
 
     batch_size = 100
     n_batch = mnist.train.num_examples // batch_size
-
+    n_test_batch = mnist.test.num_examples // batch_size
     x = tf.placeholder(tf.float32, [None, 784], name='x')  # 28*28
     y = tf.placeholder(tf.float32, [None, 10], name='y')
     keep_prob = tf.placeholder(tf.float32, name='keep_prob')
 
     train_step, prediction, accuracy = buildNetwork(x, y, keep_prob)
 
-    # TODO: 修改计算方法
     saver = tf.train.Saver()
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
@@ -112,14 +107,12 @@ def train():
                 print(f'batch {batch}, acc = {acc}')
         saver.save(sess, './SavedData/cnn_model')
 
+        print("===== Begin Test ====")
+        for batch in range(n_test_batch):
+            batch_test_xs, batch_test_ys = mnist.test.next_batch(batch_size)
+            acc = sess.run(accuracy, feed_dict={x: batch_test_xs, y: batch_test_ys, keep_prob: 1})
+            print(f'batch {batch},acc = {acc}')
+
 
 if __name__ == '__main__':
     train()
-
-# def lalal():
-#     # 下面的代码为修改后的结果
-#     acc = 0
-#     for batch in range(n_test_batch):
-#         batch_test_xs, batch_test_ys = mnist.test.next_batch(batch_size)
-#         acc += sess.run(accuracy, feed_dict={x: batch_test_xs, y: batch_test_ys, keep_prob: 1})
-#         print("Iter " + str(epoch) + ",Testing Accuracy " + str(acc / (batch + 1)))
