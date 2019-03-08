@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/paper-full.min.js"></script>
+    <script type="text/paperscript" src="js/imageLib.js" canvas="mainCanvas"></script>
+    <script type="text/paperscript" src="js/mouse-brush.js" canvas="canvas"></script>
+
+</head>
+<body>
+<canvas id="canvas" width="112" height="112"></canvas>
+<div style="position: absolute;top: 8px;left: 122px">
+    <button id="btnExport" style="width:80px;background-color:pink; " onclick="copyImage(); ">导出</button>
+    <br/>
+    <button id="btnClear" style="width:80px;background-color:yellow; " onclick="clean();">清除</button>
+    <br/>
+    <button id="btnMove" style="width: 80px;background-color: #66ccff;">移动</button>
+</div>
+<div style="position: absolute;top: 8px;left: 212px">
+    识别结果是
+    <div id="numberResult"></div>
+</div>
+<br>
+<canvas id="mainCanvas" resize="true"></canvas>
+</body>
+</html>

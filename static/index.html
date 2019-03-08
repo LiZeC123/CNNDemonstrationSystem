@@ -24,6 +24,7 @@
     <script src="js/jquery-1.7.2.min.js"></script>
     <script src="js/paper-full.min.js"></script>
     <script src="js/imageTools.js"></script>
+    <script src="js/imageLib.js" type="text/paperscript" canvas="mainCanvas"></script>
     <script type="text/javascript">
         let ctx;
         //按下标记
@@ -70,7 +71,9 @@
             //document.getElementById('image_png').src = img_png_src;
             $.post('http://127.0.0.1:5000/recognition', {"image": img_png_src}, function (jsonStr) {
                 const result = JSON.parse(jsonStr);
-                drawNerve(result.data);
+                //drawNerve(result.data);
+                let canvas = document.getElementById('mainCanvas');
+                drawMatrixNerve(canvas, 100, 0, 300, 300, 6, 4.5, result.data);
                 $("#numberResult").html(result.predict);
             })
         }

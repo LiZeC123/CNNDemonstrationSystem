@@ -1,3 +1,25 @@
+function drawMatrixNerve(element, top, left, width, height, margin, radius, data) {
+    'use strict';
+    paper.install(window);
+    paper.setup(element);
+
+    let c;
+    let count = 0;
+
+    const len = Math.sqrt(data.length);
+    for (let x = 0; x < len; x++) {
+        for (let y = 0; y < len; y++) {
+            c = Shape.Circle(left + 2 * y * margin + margin, top + 2 * x * margin + margin, radius);
+            c.strokeColor = 'white';
+            // 值越大，透明度越低，颜色越白
+            c.fillColor = new Color(1, data[count] / 256.0);
+
+            count++;
+        }
+    }
+    paper.view.draw();
+}
+
 function drawNerve(data) {
     'use strict';
     paper.install(window);
