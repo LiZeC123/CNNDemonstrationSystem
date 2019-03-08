@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset=UTF-8/>
+    <style type="text/css">
+        .describe {
+            display: none;
+            border: 1px solid black;
+            position: absolute;
+            background-color: #fd3;
+        }
+    </style>
+    <script type="text/javascript" src="/static/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var desc = $("#describe");
+            $("a").hover(function (e) {
+                var x = e.clientX, y = e.clientY;
+                desc.css(
+                    {
+                        "left": x + "px",
+                        "top": y + "px"
+                    }).text($(this).text()).fadeIn(30);
+            }, function () {
+                desc.hide();
+            });
+        })
+    </script>
+</head>
+<body>
+<div id="describe" class="describe"></div>
+<!--这里是需要出现的div框-->
+<li id="01"><a id="name">ssss</a></li>
+<!--各个超链接-->
+<li id="02"><a id="name">dsfdfsdf</a></li>
+<li id="03"><a id="name">aaaaaaaaaadfd</a></li>
+</body>
+</html>
