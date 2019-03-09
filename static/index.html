@@ -5,11 +5,17 @@
     <meta charset="UTF-8">
     <title></title>
     <style type="text/css">
+        .showCanvas {
+            height: 1344px;
+            background-color: #7c7c7c;
+            position: relative;
+        }
+
         #mainCanvas {
-            width: 336px;
+            width: 356px;
             height: 1344px;
 
-            background-color: #535353;
+            background-color: #7c7c7c;
             position: relative;
             top: 0;
         }
@@ -17,14 +23,16 @@
         .line {
             position: relative;
             width: 50px;
-            height: 1000px;
+            height: 1344px;
             background-color: #535353;
         }
     </style>
     <script src="js/jquery-1.7.2.min.js"></script>
     <script src="js/paper-full.min.js"></script>
-    <script src="js/imageTools.js"></script>
-    <script src="js/imageLib.js" type="text/paperscript" canvas="mainCanvas"></script>
+    <script src="js/dataTools.js"></script>
+    <script src="js/paper/mainMain.js" type="text/paperscript" canvas="mainCanvas"></script>
+    <script src="js/paper/mainConv1.js" type="text/paperscript" canvas="conv1Canvas"></script>
+    <script src="js/paper/mainConv2.js" type="text/paperscript" canvas="conv2Canvas"></script>
     <script type="text/javascript">
         let ctx;
         //按下标记
@@ -69,12 +77,24 @@
         function copyImage() {
             const img_png_src = canvas.toDataURL('image/png');
             //document.getElementById('image_png').src = img_png_src;
-            $.post('http://127.0.0.1:5000/recognition', {"image": img_png_src}, function (jsonStr) {
+            $.post('http://127.0.0.1:5000/upload', {"image": img_png_src}, function (jsonStr) {
                 const result = JSON.parse(jsonStr);
-                //drawNerve(result.data);
-                let canvas = document.getElementById('mainCanvas');
-                drawMatrixNerve(canvas, 100, 0, 300, 300, 6, 4.5, result.data);
-                $("#numberResult").html(result.predict);
+                console.log(result);
+
+                $.post('http://127.0.0.1:5000/inputImage', function (jsonStr) {
+                    window.inputImage = JSON.parse(jsonStr);
+                    window.mainMainUpdate();
+                });
+
+                $.post('http://127.0.0.1:5000/conv1', function (jsonStr) {
+                    window.conv1 = JSON.parse(jsonStr);
+                    window.mainConv1Update();
+                });
+
+                $.post('http://127.0.0.1:5000/conv2', function (jsonStr) {
+                    window.conv2 = JSON.parse(jsonStr);
+                    window.mainConv2Update();
+                });
             })
         }
 
@@ -134,14 +154,10 @@
 <canvas id="mainCanvas"></canvas>
 <canvas id="line1" class="line"
         onclick="location.href='/static/Canvas.html'"></canvas>
-<canvas id="conv1Canvas"
-        style="position: relative; width: 336px; height: 1008px; top:-168px;background-color: #66ccff"></canvas>
-<canvas id="line2" class="line"
-        onclick="location.href='/static/Conv1'"></canvas>
-<canvas id="conv2Canvas" style="position: relative; width: 336px; height: 1344px; background-color: #66ccff"
-        onclick="location.href='/static/Conv1'"></canvas>
-<canvas id="line3" class="line"
-        onclick="location.href='/static/Conv1'"></canvas>
+<canvas id="conv1Canvas" class="showCanvas" style="width: 300px;"></canvas>
+<canvas id="line2" class="line"></canvas>
+<canvas id="conv2Canvas" class="showCanvas" style="width: 300px;"></canvas>
+<canvas id="line3" class="line"></canvas>
 
 
 </body>

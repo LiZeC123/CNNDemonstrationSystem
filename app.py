@@ -3,11 +3,10 @@ import json
 from flask import Flask, render_template, request
 
 from cnn.calculator import Calculator
-from cnn.predict import Predict
 from image2List import toList
 
 app = Flask(__name__)
-pred = Predict()
+# pred = Predict()
 calculator = Calculator('cnn/SavedData')
 
 
@@ -22,15 +21,16 @@ def hello():
     return 'Hello'
 
 
-@app.route('/recognition', methods=['POST'])
-def recognition():
-    print(request.form)
-    if 'image' in request.form:
-        array = toList(request.form['image']).reshape(784).tolist()
-        predResult = pred.predict(toList(request.form['image']), 'cnn/SavedData')
-        result = {"predict": predResult, "data": array}
-        return json.dumps(result)
-    return json.dumps({"predict": -1, "data": "None"})
+#
+# @app.route('/recognition', methods=['POST'])
+# def recognition():
+#     print(request.form)
+#     if 'image' in request.form:
+#         array = toList(request.form['image']).reshape(784).tolist()
+#         predResult = pred.predict(toList(request.form['image']), 'cnn/SavedData')
+#         result = {"predict": predResult, "data": array}
+#         return json.dumps(result)
+#     return json.dumps({"predict": -1, "data": "None"})
 
 
 @app.route('/upload', methods=['POST'])
@@ -39,9 +39,19 @@ def uploadImage():
     return json.dumps({'status': 'OK'})
 
 
+@app.route('/inputImage', methods=['POST'])
+def getInputImage():
+    return json.dumps(calculator.calcInputImage())
+
+
 @app.route('/conv1', methods=['POST'])
 def getConv1():
     return json.dumps(calculator.calcConv1())
+
+
+@app.route('/conv2', methods=['POST'])
+def getConv2():
+    return json.dumps(calculator.calcConv2())
 
 
 if __name__ == '__main__':

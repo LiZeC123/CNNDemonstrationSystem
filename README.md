@@ -44,6 +44,7 @@ json    | 解析后的JSON数据
 
 ### Paper.js
 - [Paper.js Document](http://paperjs.org/reference/global/)
+- [Paperscope and paperjs](https://stackoverflow.com/questions/28035898/paperscope-and-paperjs)
 
 ### JQuery
 - [JQuery动画](http://www.w3school.com.cn/jquery/jquery_animate.asp)

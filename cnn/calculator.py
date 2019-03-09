@@ -1,3 +1,4 @@
+import numpy as np
 import tensorflow as tf
 
 
@@ -34,8 +35,10 @@ class Calculator:
         self.sess.close()
         self.cV1: ConvValueLayout = None
         self.cV2: ConvValueLayout = None
+        self.inputImage: np.ndarray = None
 
-    def setInputImage(self, inputImage):
+    def setInputImage(self, inputImage: np.ndarray):
+        self.inputImage = inputImage
         self.__calcAll(inputImage)
 
     def __calcAll(self, inputImage):
@@ -50,7 +53,10 @@ class Calculator:
             self.cV1 = ConvValueLayout(conv1, feed_dict, sess)
             self.cV2 = ConvValueLayout(conv2, feed_dict, sess)
 
-    def calcConv1(self):
+    def calcInputImage(self) -> dict:
+        return {'inputImage': self.inputImage.reshape(784).tolist()}
+
+    def calcConv1(self) -> dict:
         cv: ConvValueLayout = self.cV1
         result = {
             'W': [cv.W[:, :, 0, i].tolist() for i in range(len(cv.W[0][0][0]))],
@@ -61,16 +67,24 @@ class Calculator:
 
         return result
 
-    def calcConv2(self):
-        return self.cV2
+    def calcConv2(self) -> dict:
+        cv: ConvValueLayout = self.cV2
+        result = {
+            'W': [cv.W[:, :, 0, i].tolist() for i in range(len(cv.W[0][0][0]))],
+            'b': cv.b.tolist(),
+            'f': [cv.f[0, :, :, i].tolist() for i in range(len(cv.f[0][0][0]))],
+            'v': [cv.v[0, :, :, i].tolist() for i in range(len(cv.v[0][0][0]))],
+            'p': [cv.p[0, :, :, i].tolist() for i in range(len(cv.p[0][0][0]))]}
 
-    def calcFull(self):
+        return result
+
+    def calcFull(self) -> dict:
         pass
 
-    def calcResult(self):
+    def calcResult(self) -> dict:
         pass
 
-    def loadGraph(self, sess):
+    def loadGraph(self, sess) -> tf.Session.graph:
         saver = tf.train.import_meta_graph(self.path + '/cnn_model.meta')
         saver.restore(sess, tf.train.latest_checkpoint(self.path))
         graph = tf.get_default_graph()
