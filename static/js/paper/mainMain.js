@@ -1,7 +1,5 @@
 function drawMatrixNerve(point, margin, radius, data) {
-    console.log(data);
     var len = Math.sqrt(data.length);
-    console.log(len);
     var count = 0;
     for (var y = 0; y < len; y++) {
         for (var x = 0; x < len; x++) {

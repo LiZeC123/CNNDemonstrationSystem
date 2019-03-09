@@ -6,7 +6,7 @@ var path;
 function onMouseDown(event) {
     path = new Path();
     path.fillColor = {
-        hue: Math.random() * 360,
+        hue: 100,
         saturation: 1,
         brightness: 1
     };
@@ -20,7 +20,6 @@ function onMouseDrag(event) {
 
     // 通过此函数约束输入的变化,使线条变化更平滑
     step = restrain(step);
-    console.log(step);
 
     var top = event.middlePoint + step;
     var bottom = event.middlePoint - step;
@@ -46,5 +45,10 @@ function restrain(vec) {
         // y = 109e^(-x)+4
         return i * (109 * Math.exp(-vec.length) + 4);
     }
-
 }
+
+
+window.drawClean = function () {
+    paper.activate();
+    paper.project.clear();
+};
