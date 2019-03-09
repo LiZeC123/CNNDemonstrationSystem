@@ -37,6 +37,6 @@ window.mainConv2Update = function () {
     paper.project.clear();
     var data = window.conv2;
     for (var i = 0; i < data.v.length; i++) {
-        drawMatrixNerve({x: 10, y: 10 + i * 150}, 9, 6, data.p[i]);
+        drawMatrixNerve({x: 10, y: 21 + i * 168}, 9, 6, data.p[i]);
     }
 };

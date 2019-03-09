@@ -28,5 +28,5 @@ window.mainMainUpdate = function () {
     paper.activate();
     paper.project.clear();
     var data = window.inputImage;
-    drawMatrixNerve({x: 10, y: 10}, 6, 4.5, data.inputImage);
+    drawMatrixNerve({x: 10, y: 504}, 6, 4.5, data.inputImage);
 };

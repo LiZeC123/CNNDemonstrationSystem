@@ -25,7 +25,6 @@
     </style>
     <script src="js/jquery-1.7.2.min.js"></script>
     <script src="js/paper-full.min.js"></script>
-    <script src="js/imageTools.js"></script>
     <script type="text/javascript">
         let ctx;
         //按下标记
@@ -100,7 +99,6 @@
 
             //添加鼠标弹起事件
             canvas.addEventListener('mouseup', up, false);
-            $("html").scrollTop(500);
             $("#line1")
                 .show(2000)
                 .mousemove(function (e) {

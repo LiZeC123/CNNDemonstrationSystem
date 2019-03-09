@@ -24,7 +24,7 @@
             position: relative;
             width: 50px;
             height: 1344px;
-            background-color: #535353;
+            background-color: #7c7c7c;
         }
     </style>
     <script src="js/jquery-1.7.2.min.js"></script>
@@ -60,14 +60,17 @@
                 });
 
                 $.post("http://127.0.0.1:5000/fc1", function (jsonStr) {
-                    console.log(JSON.parse(jsonStr))
+                    window.fc1 = JSON.parse(jsonStr)
                 });
 
                 $.post("http://127.0.0.1:5000/fc2", function (jsonStr) {
-                    console.log(JSON.parse(jsonStr))
+                    window.fc2 = JSON.parse(jsonStr);
+                    console.log(window.fc2.f[0]);
+                    //console.log(JSON.parse(jsonStr))
                 });
 
                 $.post("http://127.0.0.1:5000/prediction", function (jsonStr) {
+                    window.prediction = JSON.parse(jsonStr);
                     var result = JSON.parse(jsonStr);
                     $("#numberResult").html(result.prediction[0])
                 });
@@ -76,7 +79,6 @@
 
         $(function () {
             $("#conv1Canvas").click(function () {
-                $("html").scrollTop(500);
                 $("#line1").hide("slow");
                 $("#line2").hide("slow");
                 $("#line3").hide("slow");
@@ -107,9 +109,9 @@
 <canvas id="mainCanvas"></canvas>
 <canvas id="line1" class="line"
         onclick="location.href='/static/Canvas.html'"></canvas>
-<canvas id="conv1Canvas" class="showCanvas" style="width: 300px;"></canvas>
+<canvas id="conv1Canvas" class="showCanvas" style="width: 272px;"></canvas>
 <canvas id="line2" class="line"></canvas>
-<canvas id="conv2Canvas" class="showCanvas" style="width: 300px;"></canvas>
+<canvas id="conv2Canvas" class="showCanvas" style="width: 146px;"></canvas>
 <canvas id="line3" class="line"></canvas>
 
 

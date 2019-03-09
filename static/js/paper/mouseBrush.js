@@ -5,11 +5,7 @@ var path;
 
 function onMouseDown(event) {
     path = new Path();
-    path.fillColor = {
-        hue: 100,
-        saturation: 1,
-        brightness: 1
-    };
+    path.fillColor = 'white';
 
     path.add(event.point);
 }
@@ -40,7 +36,7 @@ function restrain(vec) {
     var i = vec / vec.length;
 
     if (type === 0) {
-        return vec / -2 + i * 6;
+        return vec / -2 + i * 8;
     } else if (type === 1) {
         // y = 109e^(-x)+4
         return i * (109 * Math.exp(-vec.length) + 4);
