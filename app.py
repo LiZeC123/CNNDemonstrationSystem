@@ -54,5 +54,20 @@ def getConv2():
     return json.dumps(calculator.calcConv2())
 
 
+@app.route('/fc1', methods=['POST'])
+def getFc1():
+    return json.dumps(calculator.calcFullConnect1())
+
+
+@app.route('/fc2', methods=['POST'])
+def getFc2():
+    return json.dumps(calculator.calcFullConnect2())
+
+
+@app.route('/prediction', methods=['POST'])
+def getPrediction():
+    return json.dumps(calculator.calcResult())
+
+
 if __name__ == '__main__':
     app.run()

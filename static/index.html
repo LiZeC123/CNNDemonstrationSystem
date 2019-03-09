@@ -58,6 +58,19 @@
                     window.conv2 = JSON.parse(jsonStr);
                     window.mainConv2Update();
                 });
+
+                $.post("http://127.0.0.1:5000/fc1", function (jsonStr) {
+                    console.log(JSON.parse(jsonStr))
+                });
+
+                $.post("http://127.0.0.1:5000/fc2", function (jsonStr) {
+                    console.log(JSON.parse(jsonStr))
+                });
+
+                $.post("http://127.0.0.1:5000/prediction", function (jsonStr) {
+                    var result = JSON.parse(jsonStr);
+                    $("#numberResult").html(result.prediction[0])
+                });
             })
         }
 

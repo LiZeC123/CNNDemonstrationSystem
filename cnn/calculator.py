@@ -5,16 +5,11 @@ import tensorflow as tf
 class ConvLayout:
     def __init__(self, layoutIndex: int, graph: tf.Session.graph):
         i = layoutIndex
-        # 卷积权重
-        self.W_conv = graph.get_tensor_by_name(f'W_conv{i}:0')
-        # 偏置置
-        self.b_conv = graph.get_tensor_by_name(f'b_conv{i}:0')
-        # 卷积和偏置计算结果
-        self.f_conv = graph.get_tensor_by_name(f'f_conv{i}:0')
-        # 经过reLu函数后的结果
-        self.h_vonv = graph.get_tensor_by_name(f'h_vonv{i}:0')
-        # 池化后的结果
-        self.h_pool = graph.get_tensor_by_name(f'h_pool{i}:0')
+        self.W_conv = graph.get_tensor_by_name(f'W_conv{i}:0')  # 卷积权重
+        self.b_conv = graph.get_tensor_by_name(f'b_conv{i}:0')  # 偏置置
+        self.f_conv = graph.get_tensor_by_name(f'f_conv{i}:0')  # 卷积计算结果
+        self.h_vonv = graph.get_tensor_by_name(f'h_vonv{i}:0')  # 经过reLU函数后的结果
+        self.h_pool = graph.get_tensor_by_name(f'h_pool{i}:0')  # 池化后的结果
 
 
 class ConvValueLayout:
@@ -24,8 +19,17 @@ class ConvValueLayout:
 
 
 class FullLayout:
-    def __init__(self):
-        pass
+    def __init__(self, layoutIndex: int, graph: tf.Session.graph):
+        i = layoutIndex
+        self.W_fc = graph.get_tensor_by_name(f'W_fc{i}:0')  # 权重
+        self.b_fc = graph.get_tensor_by_name(f'b_fc{i}:0')  # 偏置
+        self.f_fc = graph.get_tensor_by_name(f'f_fc{i}:0')  # 计算结果
+        self.h_fc = graph.get_tensor_by_name(f'h_fc{i}:0')  # 经过reLU函数后的结果
+
+
+class FullValueLayout:
+    def __init__(self, fc: FullLayout, feed_dict: dict, sess: tf.Session):
+        self.W, self.b, self.f, self.h = sess.run([fc.W_fc, fc.b_fc, fc.f_fc, fc.h_fc], feed_dict=feed_dict)
 
 
 class Calculator:
@@ -33,9 +37,12 @@ class Calculator:
         self.sess = tf.Session()
         self.path = modelPath
         self.sess.close()
+        self.inputImage: np.ndarray = None
         self.cV1: ConvValueLayout = None
         self.cV2: ConvValueLayout = None
-        self.inputImage: np.ndarray = None
+        self.fV1: FullValueLayout = None
+        self.fV2: FullValueLayout = None
+        self.prediction: np.ndarray = None
 
     def setInputImage(self, inputImage: np.ndarray):
         self.inputImage = inputImage
@@ -48,10 +55,16 @@ class Calculator:
             y = graph.get_tensor_by_name("y:0")
             conv1 = ConvLayout(1, graph)
             conv2 = ConvLayout(2, graph)
+            fc1 = FullLayout(1, graph)
+            fc2 = FullLayout(2, graph)
+            prediction = graph.get_tensor_by_name('h_fc2:0')
             keep_prob = graph.get_tensor_by_name("keep_prob:0")
             feed_dict = {x: inputImage, y: [[0., 0., 1., 0., 0., 0., 0., 0., 0., 0.]], keep_prob: 1.0}
             self.cV1 = ConvValueLayout(conv1, feed_dict, sess)
             self.cV2 = ConvValueLayout(conv2, feed_dict, sess)
+            self.fV1 = FullValueLayout(fc1, feed_dict, sess)
+            self.fV2 = FullValueLayout(fc2, feed_dict, sess)
+            self.prediction = sess.run(tf.argmax(prediction, 1), feed_dict=feed_dict)
 
     def calcInputImage(self) -> dict:
         return {'inputImage': self.inputImage.reshape(784).tolist()}
@@ -78,11 +91,28 @@ class Calculator:
 
         return result
 
-    def calcFull(self) -> dict:
-        pass
+    def calcFullConnect1(self) -> dict:
+        fv: FullValueLayout = self.fV1
+        result = {
+            'W': fv.W.tolist(),
+            'b': fv.b.tolist(),
+            'f': fv.f.tolist(),
+            'h': fv.h.tolist(),
+        }
+        return result
+
+    def calcFullConnect2(self) -> dict:
+        fv: FullValueLayout = self.fV2
+        result = {
+            'W': fv.W.tolist(),
+            'b': fv.b.tolist(),
+            'f': fv.f.tolist(),
+            'h': fv.h.tolist(),
+        }
+        return result
 
     def calcResult(self) -> dict:
-        pass
+        return {'prediction': self.prediction.tolist()}
 
     def loadGraph(self, sess) -> tf.Session.graph:
         saver = tf.train.import_meta_graph(self.path + '/cnn_model.meta')
