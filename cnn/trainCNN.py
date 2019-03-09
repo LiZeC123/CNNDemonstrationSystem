@@ -51,14 +51,14 @@ def buildNetwork(x, y, keep_prob):
     h_vonv2 = tf.nn.relu(f_conv2 + b_conv2, 'h_vonv2')
     h_pool2 = max_pool_2x2(h_vonv2, 'h_pool2')  # 进行max-pooling
 
+    # 把池化层2的输出扁平化为1维
+    h_pool2_flat = tf.reshape(h_pool2, [-1, 7 * 7 * 8], name='h_pool2_flat')
+
     # 初始化第一个全连接层的权值
     W_fc1 = weight_variable([7 * 7 * 8, 84], 'W_fc1')
     b_fc1 = bias_variable([84], 'b_fc1')
-    # 把池化层2的输出扁平化为1维
-    h_pool2_flat = tf.reshape(h_pool2, [-1, 7 * 7 * 8], name='h_pool2_flat')
-    # 求第一个全连接层的输出
-    f_fc1 = tf.matmul(h_pool2_flat, W_fc1, name='f_fc1')
-    h_fc1 = tf.nn.relu(f_fc1 + b_fc1, name='h_fc1')
+    f_fc1 = tf.add(tf.matmul(h_pool2_flat, W_fc1), b_fc1, name='f_fc1')
+    h_fc1 = tf.nn.relu(f_fc1, name='h_fc1')
 
     # keep_prob用来表示神经元的输出概率
     h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob, name='h_fc1_drop')
@@ -66,10 +66,11 @@ def buildNetwork(x, y, keep_prob):
     # 初始化第二个全连接层
     W_fc2 = weight_variable([84, 10], 'W_fc2')
     b_fc2 = bias_variable([10], 'b_fc2')
-    f_fc2 = tf.matmul(h_fc1_drop, W_fc2, name='f_fc2')
-    # 计算输出
+    f_fc2 = tf.add(tf.matmul(h_fc1_drop, W_fc2), b_fc2, name='f_fc2')
+    h_fc2 = tf.nn.softmax(f_fc2, name='h_fc2')
 
-    prediction = tf.nn.softmax(f_fc2 + b_fc2, name='prediction')
+    # 计算输出
+    prediction = h_fc2
     # softmax和交叉熵一起使用
     loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=prediction), name='loss')
     train_step = tf.train.GradientDescentOptimizer(0.2).minimize(loss, name='train_step')
