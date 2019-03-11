@@ -52,4 +52,4 @@ window.drawMatrixNerve2 = function (point, margin, radius, data) {
     border.add(new Point(point.x + len * margin * 2, point.y + len * margin * 2));
     border.add(new Point(point.x + len * margin * 2, point.y));
     border.closed = true;
-}
+};

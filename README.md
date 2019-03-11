@@ -20,6 +20,9 @@
 
 ### Flask
 
+- [Flask第五篇——设置debug模式](https://www.cnblogs.com/captainmeng/p/8508106.html)
+- [flask创建的项目用外网访问？](https://segmentfault.com/q/1010000007309151?_ea=1303968)
+- [pycharm 运行 flask项目,指定访问ip与端口的坑](https://blog.csdn.net/LJXZDN/article/details/82429303)
 #### Request 对象
 
 通过Request的以下成员变量获得请求参数

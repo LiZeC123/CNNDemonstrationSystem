@@ -38,46 +38,41 @@
     <script src="js/paper/mainConv1.js" type="text/paperscript" canvas="conv1Canvas"></script>
     <script src="js/paper/mainConv2.js" type="text/paperscript" canvas="conv2Canvas"></script>
     <script type="text/javascript">
-        //转canvas保存为base64 dataURL
+        function postDataAndDraw(img_png_src) {
+            dataTool.upload({"image": img_png_src}, function (status) {
+                console.log(status);
+                dataTool.getInputImage(function (data) {
+                    window.inputImage = data;
+                    window.mainMainUpdate();
+                });
+                dataTool.getConv1(function (data) {
+                    window.conv1 = data;
+                    window.mainConv1Update();
+                });
+                dataTool.getConv2(function (data) {
+                    window.conv2 = data;
+                    window.mainConv2Update();
+                });
+                dataTool.getFc1(function (data) {
+                    window.fc1 = data;
+                });
+                dataTool.getFc2(function (data) {
+                    window.fc2 = data;
+                    console.log(window.fc2.f[0]);
+                });
+                dataTool.getPrediction(function (data) {
+                    window.prediction = data.prediction;
+                    $("#numberResult").html(data.prediction[0])
+                })
+            });
+        }
+
+        //canvas内容转化为base64格式的dataURL
         function copyImage() {
             const canvas = document.getElementById('drawCanvas');
             const img_png_src = canvas.toDataURL('image/png');
             //document.getElementById('image_png').src = img_png_src;
-            $.post('http://127.0.0.1:5000/upload', {"image": img_png_src}, function (jsonStr) {
-                const result = JSON.parse(jsonStr);
-                console.log(result);
-
-                $.post('http://127.0.0.1:5000/inputImage', function (jsonStr) {
-                    window.inputImage = JSON.parse(jsonStr);
-                    window.mainMainUpdate();
-                });
-
-                $.post('http://127.0.0.1:5000/conv1', function (jsonStr) {
-                    window.conv1 = JSON.parse(jsonStr);
-                    window.mainConv1Update();
-                });
-
-                $.post('http://127.0.0.1:5000/conv2', function (jsonStr) {
-                    window.conv2 = JSON.parse(jsonStr);
-                    window.mainConv2Update();
-                });
-
-                $.post("http://127.0.0.1:5000/fc1", function (jsonStr) {
-                    window.fc1 = JSON.parse(jsonStr)
-                });
-
-                $.post("http://127.0.0.1:5000/fc2", function (jsonStr) {
-                    window.fc2 = JSON.parse(jsonStr);
-                    console.log(window.fc2.f[0]);
-                    //console.log(JSON.parse(jsonStr))
-                });
-
-                $.post("http://127.0.0.1:5000/prediction", function (jsonStr) {
-                    window.prediction = JSON.parse(jsonStr);
-                    var result = JSON.parse(jsonStr);
-                    $("#numberResult").html(result.prediction[0])
-                });
-            })
+            postDataAndDraw(img_png_src);
         }
 
         $(function () {
