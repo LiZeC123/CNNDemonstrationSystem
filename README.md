@@ -37,10 +37,9 @@ json    | 解析后的JSON数据
 - [css绝对定位、相对定位和文档流的那些事](https://www.cnblogs.com/tim-li/archive/2012/07/09/2582618.html)
 - [js 点击某个区域跳转 即某个](https://blog.csdn.net/A9925/article/details/48154041)
 - [JS跨页面调用变量的方法](https://blog.csdn.net/zaynahly/article/details/75434874)
-- [jquery 获取鼠标和元素的坐标点](https://www.cnblogs.com/taleche/p/6065545.html)
 - [HTML页悬浮div的两种方式](https://blog.csdn.net/u012698249/article/details/78031155)
 - [HTML 鼠标放上显示悬浮窗口](https://blog.csdn.net/revitalizing/article/details/72455937?utm_source=blogxgwz7)
-
+- [去除inline-block元素间间距的N种方法](https://www.zhangxinxu.com/wordpress/2012/04/inline-block-space-remove-%E5%8E%BB%E9%99%A4%E9%97%B4%E8%B7%9D/)
 
 ### Paper.js
 - [Paper.js Document](http://paperjs.org/reference/global/)
@@ -48,6 +47,7 @@ json    | 解析后的JSON数据
 
 ### JQuery
 - [JQuery动画](http://www.w3school.com.cn/jquery/jquery_animate.asp)
+- [jquery 获取鼠标和元素的坐标点](https://www.cnblogs.com/taleche/p/6065545.html)
 
 
 ### curl 操作
