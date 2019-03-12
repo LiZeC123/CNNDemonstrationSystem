@@ -1,5 +1,5 @@
 var config = {
-    baseURL: 'http://127.0.0.1:5000',
+    baseURL: 'http://192.168.1.100:5000',
 };
 
 var dataTool = {};
