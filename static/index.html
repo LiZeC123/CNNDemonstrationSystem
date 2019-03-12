@@ -37,6 +37,7 @@
     <script src="js/paper/mainMain.js" type="text/paperscript" canvas="mainCanvas"></script>
     <script src="js/paper/mainConv1.js" type="text/paperscript" canvas="conv1Canvas"></script>
     <script src="js/paper/mainConv2.js" type="text/paperscript" canvas="conv2Canvas"></script>
+    <script src="js/paper/mainFc.js" type="text/paperscript" canvas="fullCanvas"></script>
     <script type="text/javascript">
         function postDataAndDraw(img_png_src) {
             dataTool.upload({"image": img_png_src}, function (status) {
@@ -55,11 +56,13 @@
                 });
                 dataTool.getFc1(function (data) {
                     window.fc1 = data;
+                    dataTool.getFc2(function (data) {
+                        window.fc2 = data;
+                        console.log(window.fc2.h[0]);
+                        window.mainFcUpdate();
+                    });
                 });
-                dataTool.getFc2(function (data) {
-                    window.fc2 = data;
-                    console.log(window.fc2.f[0]);
-                });
+
                 dataTool.getPrediction(function (data) {
                     window.prediction = data.prediction;
                     $("#numberResult").html(data.prediction[0])
@@ -84,7 +87,7 @@
                     window.location.href = "/static/Conv1.html";
                 });
             });
-
+            
             $("body").mousemove(function (e) {
                 // 获得针对浏览器窗口的坐标
                 const xx = e.originalEvent.x || e.originalEvent.layerX || 0;
@@ -110,7 +113,7 @@
 
 <body>
 <canvas id="detailCanvas"
-        style="position: fixed;top: 8px;left: 300px;width: 600px;height: 112px;background-color: #66ccff;z-index: 999"></canvas>
+        style="position: fixed;top: 8px;left: 300px;width: 600px;height: 112px;background-color: #66ccff;z-index: 999;display: none;"></canvas>
 
 <div id="inputDiv" style="width: 1340px;">
     <canvas id="drawCanvas" width="112" height="112" style="background-color: #7c7c7c"></canvas>
