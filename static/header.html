@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<!-- 所有页面的公用头部，实现手写数字的输入和显示功能 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<canvas id="drawCanvas" width="112" height="112" style="background-color: #7c7c7c"></canvas>
+<div style="position: absolute;top: 8px;left: 122px">
+    <button id="btnExport" style="width:80px;background-color:pink; " onclick="copyImage(); ">导出</button>
+    <br/>
+    <button id="btnClear" style="width:80px;background-color:yellow; " onclick="drawClean();">清除</button>
+    <div style="top: 8px;left: 212px;">
+        识别结果是
+        <div id="numberResult"></div>
+    </div>
+</div>
+</body>
+</html>

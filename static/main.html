@@ -3,32 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <title></title>
-    <style type="text/css">
-        .showCanvas {
-            height: 1344px;
-            background-color: #7c7c7c;
-            position: relative;
-            margin-left: -5px;
-        }
-
-        #mainCanvas {
-            width: 356px;
-            height: 1344px;
-
-            background-color: #7c7c7c;
-            position: relative;
-            top: 0;
-        }
-
-        .line {
-            position: relative;
-            width: 50px;
-            height: 1344px;
-            background-color: #7c7c7c;
-            margin-left: -5px;
-        }
-    </style>
+    <title>卷积神经网络演示系统</title>
+    <link rel="stylesheet" href="css/main.css" type="text/css"/>
     <script src="js/jquery-1.7.2.min.js"></script>
     <script src="js/paper-full.min.js"></script>
     <script src="js/dataTools.js"></script>
@@ -84,10 +60,10 @@
                 $("#line2").hide("slow");
                 $("#line3").hide("slow");
                 $("#conv2Canvas").hide("slow", function () {
-                    window.location.href = "/static/Conv1.html";
+                    window.location.href = "conv1.html";
                 });
             });
-            
+
             $("body").mousemove(function (e) {
                 // 获得针对浏览器窗口的坐标
                 const xx = e.originalEvent.x || e.originalEvent.layerX || 0;
@@ -107,26 +83,16 @@
                     detail.hide();
                 }
             });
+
+            $("#headDiv").load("/static/header.html");
         });
     </script>
 </head>
 
 <body>
-<canvas id="detailCanvas"
-        style="position: fixed;top: 8px;left: 300px;width: 600px;height: 112px;background-color: #66ccff;z-index: 999;display: none;"></canvas>
 
-<div id="inputDiv" style="width: 1340px;">
-    <canvas id="drawCanvas" width="112" height="112" style="background-color: #7c7c7c"></canvas>
-    <div style="position: absolute;top: 8px;left: 122px">
-        <button id="btnExport" style="width:80px;background-color:pink; " onclick="copyImage(); ">导出</button>
-        <br/>
-        <button id="btnClear" style="width:80px;background-color:yellow; " onclick="drawClean();">清除</button>
-        <div style="top: 8px;left: 212px;">
-            识别结果是
-            <div id="numberResult"></div>
-        </div>
-    </div>
-</div>
+<canvas id="detailCanvas"></canvas>
+<div id="headDiv"></div>
 
 <div id="mainDiv" style="width: 1340px;overflow-x: scroll;z-index: 0;position: relative">
     <canvas id="mainCanvas"></canvas>

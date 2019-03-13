@@ -1,0 +1,39 @@
+.showCanvas {
+    height: 1344px;
+    background-color: #7c7c7c;
+    position: relative;
+    margin-left: -5px;
+}
+
+.line {
+    position: relative;
+    width: 50px;
+    height: 1344px;
+    background-color: #7c7c7c;
+    margin-left: -5px;
+}
+
+#mainCanvas {
+    width: 356px;
+    height: 1344px;
+
+    background-color: #7c7c7c;
+    position: relative;
+    top: 0;
+}
+
+#detailCanvas {
+    position: fixed;
+    top: 8px;
+    left: 300px;
+    width: 600px;
+    height: 112px;
+    background-color: #66ccff;
+    z-index: 999;
+    display: none;
+}
+
+#headDiv {
+    width: 1340px;
+    height: 122px;
+}

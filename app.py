@@ -69,5 +69,18 @@ def getPrediction():
     return json.dumps(calculator.calcResult())
 
 
+@app.route('/getAll', methods=['POST'])
+def getAll():
+    data = {
+        'conv1': calculator.calcConv1(),
+        'conv2': calculator.calcConv2(),
+        'fc1': calculator.calcFullConnect1(),
+        'fc2': calculator.calcFullConnect2()
+    }
+    data.update(calculator.calcInputImage())
+    data.update(calculator.calcResult())
+    return json.dumps(data)
+
+
 if __name__ == '__main__':
     app.run()
