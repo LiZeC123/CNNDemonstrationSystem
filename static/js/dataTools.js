@@ -2,9 +2,23 @@ const config = {
     baseURL: 'http://192.168.1.100:5000',
 };
 
-var dataTool = {};
+const dataTool = {};
+dataTool.serverOnline = function () {
+    // 向服务器发送请求，如果服务器再指定的时间内答复
+    // 则说明当前网络可用（基于本地服务器）
+    let result = false;
+    $.ajax({
+        url: config.baseURL + "/online",
+        timeout: 100,
+        type: "get",
+        async: false,
+        success: () => result = true,
+    });
+    return result;
+};
+
 dataTool.inOnline = function () {
-    return true;
+    return navigator.onLine || dataTool.serverOnline();
 };
 
 dataTool.saveData = function (jsonStr) {

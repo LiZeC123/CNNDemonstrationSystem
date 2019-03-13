@@ -21,6 +21,11 @@ def hello():
     return 'Hello'
 
 
+@app.route('/online', methods=['GET'])
+def isOnline():
+    return "Hello From Server"
+
+
 #
 # @app.route('/recognition', methods=['POST'])
 # def recognition():
