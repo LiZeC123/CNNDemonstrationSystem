@@ -13,6 +13,13 @@
     margin-left: -5px;
 }
 
+.mainDiv {
+    width: 1340px;
+    overflow-x: scroll;
+    z-index: 0;
+    position: relative;
+}
+
 #mainCanvas {
     width: 356px;
     height: 1344px;

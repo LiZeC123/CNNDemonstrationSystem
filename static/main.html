@@ -15,6 +15,7 @@
     <script src="js/paper/mainFc.js" type="text/paperscript" canvas="fullCanvas"></script>
     <script type="text/javascript">
         $(function () {
+            $("#headDiv").load("/static/header.html");
             $("#conv1Canvas").click(function () {
                 $("#line1").hide("slow");
                 $("#line2").hide("slow");
@@ -44,8 +45,6 @@
                     detail.hide();
                 }
             });
-
-            $("#headDiv").load("/static/header.html");
         });
     </script>
 </head>
@@ -55,7 +54,7 @@
 <canvas id="detailCanvas"></canvas>
 <div id="headDiv"></div>
 
-<div id="mainDiv" style="width: 1340px;overflow-x: scroll;z-index: 0;position: relative">
+<div class="mainDiv">
     <canvas id="mainCanvas"></canvas>
     <canvas id="line1" class="line"></canvas>
     <canvas id="conv1Canvas" class="showCanvas" style="width: 272px;"></canvas>
