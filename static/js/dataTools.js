@@ -11,6 +11,12 @@ dataTool.autoGetData = function (URL, data, callBack) {
     if (dataTool.inOnline()) {
         $.post(URL, data, function (jsonStr) {
             const result = JSON.parse(jsonStr);
+            window.inputImage = result.inputImage;
+            window.conv1 = result.conv1;
+            window.conv2 = result.conv2;
+            window.fc1 = result.fc1;
+            window.fc2 = result.fc2;
+            window.prediction = result.prediction;
             callBack(result);
         });
     } else {
@@ -18,9 +24,15 @@ dataTool.autoGetData = function (URL, data, callBack) {
     }
 };
 
+// dataTool.upload = function (data, callBack) {
+//     dataTool.autoGetData(config.baseURL + "/upload", data, callBack);
+// };
+
+
 dataTool.upload = function (data, callBack) {
     dataTool.autoGetData(config.baseURL + "/upload", data, callBack);
 };
+
 
 dataTool.getInputImage = function (callBack) {
     dataTool.autoGetData(config.baseURL + "/inputImage", {}, callBack);

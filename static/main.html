@@ -8,57 +8,18 @@
     <script src="js/jquery-1.7.2.min.js"></script>
     <script src="js/paper-full.min.js"></script>
     <script src="js/dataTools.js"></script>
-    <script src="js/paper/commonTools.js" type="text/paperscript" canvas="drawCanvas"></script>
-    <script src="js/paper/mouseBrush.js" type="text/paperscript" canvas="drawCanvas"></script>
+
     <script src="js/paper/mainMain.js" type="text/paperscript" canvas="mainCanvas"></script>
     <script src="js/paper/mainConv1.js" type="text/paperscript" canvas="conv1Canvas"></script>
     <script src="js/paper/mainConv2.js" type="text/paperscript" canvas="conv2Canvas"></script>
     <script src="js/paper/mainFc.js" type="text/paperscript" canvas="fullCanvas"></script>
     <script type="text/javascript">
-        function postDataAndDraw(img_png_src) {
-            dataTool.upload({"image": img_png_src}, function (status) {
-                console.log(status);
-                dataTool.getInputImage(function (data) {
-                    window.inputImage = data;
-                    window.mainMainUpdate();
-                });
-                dataTool.getConv1(function (data) {
-                    window.conv1 = data;
-                    window.mainConv1Update();
-                });
-                dataTool.getConv2(function (data) {
-                    window.conv2 = data;
-                    window.mainConv2Update();
-                });
-                dataTool.getFc1(function (data) {
-                    window.fc1 = data;
-                    dataTool.getFc2(function (data) {
-                        window.fc2 = data;
-                        console.log(window.fc2.h[0]);
-                        window.mainFcUpdate();
-                    });
-                });
-
-                dataTool.getPrediction(function (data) {
-                    window.prediction = data.prediction;
-                    $("#numberResult").html(data.prediction[0])
-                })
-            });
-        }
-
-        //canvas内容转化为base64格式的dataURL
-        function copyImage() {
-            const canvas = document.getElementById('drawCanvas');
-            const img_png_src = canvas.toDataURL('image/png');
-            //document.getElementById('image_png').src = img_png_src;
-            postDataAndDraw(img_png_src);
-        }
-
         $(function () {
             $("#conv1Canvas").click(function () {
                 $("#line1").hide("slow");
                 $("#line2").hide("slow");
                 $("#line3").hide("slow");
+                $("#fullCanvas").hide("slow");
                 $("#conv2Canvas").hide("slow", function () {
                     window.location.href = "conv1.html";
                 });

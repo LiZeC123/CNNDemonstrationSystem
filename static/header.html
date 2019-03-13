@@ -4,11 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/paper-full.min.js"></script>
+    <script src="js/dataTools.js"></script>
+    <script src="js/headButton.js"></script>
+    <script src="js/paper/commonTools.js" type="text/paperscript" canvas="drawCanvas"></script>
+    <script src="js/paper/mouseBrush.js" type="text/paperscript" canvas="drawCanvas"></script>
 </head>
 <body>
 <canvas id="drawCanvas" width="112" height="112" style="background-color: #7c7c7c"></canvas>
 <div style="position: absolute;top: 8px;left: 122px">
-    <button id="btnExport" style="width:80px;background-color:pink; " onclick="copyImage(); ">导出</button>
+    <button id="btnExport" style="width:80px;background-color:pink; " onclick="drawExport(window.location.href); ">导出
+    </button>
     <br/>
     <button id="btnClear" style="width:80px;background-color:yellow; " onclick="drawClean();">清除</button>
     <div style="top: 8px;left: 212px;">

@@ -36,7 +36,16 @@ def hello():
 @app.route('/upload', methods=['POST'])
 def uploadImage():
     calculator.setInputImage(toList(request.form['image']))
-    return json.dumps({'status': 'OK'})
+    data = {
+        'conv1': calculator.calcConv1(),
+        'conv2': calculator.calcConv2(),
+        'fc1': calculator.calcFullConnect1(),
+        'fc2': calculator.calcFullConnect2()
+    }
+    data.update(calculator.calcInputImage())
+    data.update(calculator.calcResult())
+    return json.dumps(data)
+    # return json.dumps({'status': 'OK'})
 
 
 @app.route('/inputImage', methods=['POST'])

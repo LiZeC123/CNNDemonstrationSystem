@@ -44,7 +44,7 @@ json    | 解析后的JSON数据
 - [HTML页悬浮div的两种方式](https://blog.csdn.net/u012698249/article/details/78031155)
 - [HTML 鼠标放上显示悬浮窗口](https://blog.csdn.net/revitalizing/article/details/72455937?utm_source=blogxgwz7)
 - [去除inline-block元素间间距的N种方法](https://www.zhangxinxu.com/wordpress/2012/04/inline-block-space-remove-%E5%8E%BB%E9%99%A4%E9%97%B4%E8%B7%9D/)
-
+- [html中引入调用另一个公用html模板文件的方法](https://www.w3h5.com/post/53.html)
 ### Paper.js
 - [Paper.js Document](http://paperjs.org/reference/global/)
 - [Paperscope and paperjs](https://stackoverflow.com/questions/28035898/paperscope-and-paperjs)

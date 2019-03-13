@@ -43,8 +43,9 @@ function restrain(vec) {
     }
 }
 
-
-window.drawClean = function () {
+// 用于清除当前画布的内容
+// 暴露到全局，以供其他函数调用
+window.mouthBrushClean = function () {
     paper.activate();
     paper.project.clear();
 };
