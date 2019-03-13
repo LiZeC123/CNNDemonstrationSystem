@@ -1,4 +1,4 @@
-var config = {
+const config = {
     baseURL: 'http://192.168.1.100:5000',
 };
 
@@ -7,10 +7,16 @@ dataTool.inOnline = function () {
     return true;
 };
 
+dataTool.saveData = function (jsonStr) {
+    sessionStorage.setItem("inputData", jsonStr);
+};
+
 dataTool.autoGetData = function (URL, data, callBack) {
     if (dataTool.inOnline()) {
         $.post(URL, data, function (jsonStr) {
+            dataTool.saveData(jsonStr);
             const result = JSON.parse(jsonStr);
+            //window.inputData = result;
             window.inputImage = result.inputImage;
             window.conv1 = result.conv1;
             window.conv2 = result.conv2;
@@ -24,15 +30,25 @@ dataTool.autoGetData = function (URL, data, callBack) {
     }
 };
 
-// dataTool.upload = function (data, callBack) {
-//     dataTool.autoGetData(config.baseURL + "/upload", data, callBack);
-// };
-
-
 dataTool.upload = function (data, callBack) {
     dataTool.autoGetData(config.baseURL + "/upload", data, callBack);
 };
 
+dataTool.reloadData = function () {
+    const jsonStr = sessionStorage.getItem("inputData");
+    if (jsonStr != null) {
+        const result = JSON.parse(jsonStr);
+        window.inputImage = result.inputImage;
+        window.conv1 = result.conv1;
+        window.conv2 = result.conv2;
+        window.fc1 = result.fc1;
+        window.fc2 = result.fc2;
+        window.prediction = result.prediction;
+        return true;
+    } else {
+        return false;
+    }
+};
 
 dataTool.getInputImage = function (callBack) {
     dataTool.autoGetData(config.baseURL + "/inputImage", {}, callBack);

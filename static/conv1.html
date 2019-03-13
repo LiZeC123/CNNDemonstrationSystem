@@ -8,111 +8,46 @@
     <script src="js/jquery-1.7.2.min.js"></script>
     <script src="js/paper-full.min.js"></script>
     <script src="js/dataTools.js"></script>
+
+    <script src="js/paper/mainMain.js" type="text/paperscript" canvas="mainCanvas"></script>
+    <script src="js/paper/mainConv1.js" type="text/paperscript" canvas="poolCanvas"></script>
     <script type="text/javascript">
-        let ctx;
-        //按下标记
-        let onOff = false;
-        let oldX = -10;
-        let oldY = -10;
-
-        //鼠标弹起取消绘制
-        function up() {
-            onOff = false;
-        }
-
-        //获取鼠标坐标，并根据坐标绘制图像
-        function draw(event) {
-            if (onOff === true) {
-                const newX = event.pageX - 10;
-                const newY = event.pageY - 10;
-
-                ctx.beginPath();
-                ctx.moveTo(oldX, oldY);
-                ctx.lineTo(newX, newY);
-                ctx.strokeStyle = 'white';
-                ctx.lineWidth = 4;
-                ctx.lineCap = 'round';
-                ctx.stroke();
-
-                oldX = newX;
-                oldY = newY;
-            }
-        }
-
-        function clean() {
-            const c = document.getElementById('canvas');
-            ctx = c.getContext('2d');
-
-            //画一个黑色矩形
-            ctx.fillStyle = 'black';
-            ctx.fillRect(0, 0, 600, 300);
-        }
-
-        //转canvas保存为base64 dataURL
-        function copyImage() {
-            const img_png_src = canvas.toDataURL('image/png');
-            //document.getElementById('image_png').src = img_png_src;
-            $.post('http://127.0.0.1:5000/recognition', {"image": img_png_src}, function (jsonStr) {
-                const result = JSON.parse(jsonStr);
-                drawNerve(result.data);
-                $("#numberResult").html(result.predict);
-            })
-        }
-
-        //鼠标按下获取坐标
-        function down(event) {
-            onOff = true;
-            oldX = event.pageX - 10;
-            oldY = event.pageY - 10;
-        }
-
         $(function () {
-            const c = document.getElementById('canvas');
-            ctx = c.getContext('2d');
+            $("#headDiv").load("/static/header.html");
+            if (dataTool.reloadData()) {
+                let count = 0;
+                const poll = function () {
+                    count++;
+                    if (undefined === window.mainMainUpdate) {
+                        if (count < 20)
+                            setTimeout(poll, 100);
+                    } else {
+                        window.mainMainUpdate();
+                        window.mainConv1Update();
+                    }
 
-            //画一个黑色矩形
-            ctx.fillStyle = 'black';
-            ctx.fillRect(0, 0, 600, 300);
-
-            //添加鼠标移动事件
-            canvas.addEventListener('mousemove', draw, true);
-
-            //添加鼠标按下事件
-            canvas.addEventListener('mousedown', down, false);
-
-            //添加鼠标弹起事件
-            canvas.addEventListener('mouseup', up, false);
-            $("#line1")
-                .show(2000)
-                .mousemove(function (e) {
-                    const positionX = e.pageX - $(this).offset().left; //获取当前鼠标相对img的X坐标
-                    const positionY = e.pageY - $(this).offset().top; //获取当前鼠标相对img的Y坐标
-                    console.log(positionX + '   ' + positionY);
-                });
-        })
+                };
+                poll();
+            } else {
+                console.log("数据读取失败");
+            }
+        });
     </script>
 </head>
 
 <body>
-<canvas id="canvas" width="112" height="112"></canvas>
-<div style="position: absolute;top: 8px;left: 122px">
-    <button id="btnExport" style="width:80px;background-color:pink; " onclick="copyImage(); ">导出</button>
-    <br/>
-    <button id="btnClear" style="width:80px;background-color:yellow; " onclick="clean();">清除</button>
-    <br/>
-    <button id="btnMove" style="width: 80px;background-color: #66ccff;">移动</button>
-</div>
-<div style="position: absolute;top: 8px;left: 212px">
-    识别结果是
-    <div id="numberResult"></div>
-</div>
-<br>
-<div style="position: absolute;height: 1344px;">
+<canvas id="detailCanvas"></canvas>
+<div id="headDiv"></div>
+
+
+<div class="mainDiv">
     <canvas id="mainCanvas"></canvas>
-    <canvas id="line1" class="line"
-            onclick="location.href='/static/Canvas.html'"></canvas>
-    <canvas id="conv1Canvas"
-            style="position: relative; width: 336px; height: 1008px; top:-168px;background-color: #66ccff"></canvas>
+    <canvas id="line1" class="line"></canvas>
+    <canvas id="convCanvas" class="showCanvas" style="width: 272px;"></canvas>
+    <canvas id="line2" class="line"></canvas>
+    <canvas id="convCanvas" class="showCanvas" style="width: 272px;"></canvas>
+    <canvas id="line3" class="line"></canvas>
+    <canvas id="poolCanvas" class="showCanvas" style="width: 272px;"></canvas>
 </div>
 
 <div id="describe" class="describe"></div>
