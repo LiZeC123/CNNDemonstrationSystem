@@ -55,7 +55,7 @@ json    | 解析后的JSON数据
 - [JQuery动画](http://www.w3school.com.cn/jquery/jquery_animate.asp)
 - [jquery 获取鼠标和元素的坐标点](https://www.cnblogs.com/taleche/p/6065545.html)
 - [jQuery动态设置样式（style、css）](https://blog.csdn.net/xiaoyuncc/article/details/70854925)
-
+- [jQuery 异步和同步请求](https://www.cnblogs.com/wtcl/p/8138061.html)
 ### curl 操作
 ```shell
 curl http://127.0.0.1:5000/hello -d 'name=baseimage&data=dsa4309jdsl'

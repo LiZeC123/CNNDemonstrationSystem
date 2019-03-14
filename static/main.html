@@ -9,21 +9,43 @@
     <script src="js/paper-full.min.js"></script>
     <script src="js/dataTools.js"></script>
 
+    <script src="js/headButton.js"></script>
+    <script src="js/paper/commonTools.js" type="text/paperscript" canvas="drawCanvas"></script>
+    <script src="js/paper/mouseBrush.js" type="text/paperscript" canvas="drawCanvas"></script>
+
     <script src="js/paper/mainMain.js" type="text/paperscript" canvas="mainCanvas"></script>
-    <script src="js/paper/mainConv1.js" type="text/paperscript" canvas="conv1Canvas"></script>
-    <script src="js/paper/mainConv2.js" type="text/paperscript" canvas="conv2Canvas"></script>
+
+    <script src="js/paper/conv1Conv.js" type="text/paperscript" canvas="conv1Canvas"></script>
+    <script src="js/paper/conv1ReLU.js" type="text/paperscript" canvas="reLU1Canvas"></script>
+    <script src="js/paper/conv1Pool.js" type="text/paperscript" canvas="pool1Canvas"></script>
+
+    <script src="js/paper/conv2Conv.js" type="text/paperscript" canvas="conv2Canvas"></script>
+    <script src="js/paper/conv2ReLU.js" type="text/paperscript" canvas="reLU2Canvas"></script>
+    <script src="js/paper/conv2Pool.js" type="text/paperscript" canvas="pool2Canvas"></script>
+
     <script src="js/paper/mainFc.js" type="text/paperscript" canvas="fullCanvas"></script>
+
     <script type="text/javascript">
+        var shrink = true;
         $(function () {
-            $("#headDiv").load("/static/header.html");
-            $("#conv1Canvas").click(function () {
-                $("#line1").hide("slow");
-                $("#line2").hide("slow");
-                $("#line3").hide("slow");
-                $("#fullCanvas").hide("slow");
-                $("#conv2Canvas").hide("slow", function () {
-                    window.location.href = "conv1.html";
-                });
+            $("#pool1Canvas").click(function () {
+                if (shrink) {
+                    $("#conv1Canvas").hide("slow");
+                    $("#reLU1Canvas").hide("slow");
+                    $("#conv2Canvas").hide();
+                    $("#reLU2Canvas").hide();
+                    $("#pool2Canvas").show();
+                    $("#fullCanvas").show();
+                } else {
+                    $("#fullCanvas").hide();
+                    $("#pool2Canvas").hide("slow", function () {
+                        $("#conv1Canvas").show("slow");
+                        $("#reLU1Canvas").show("slow");
+                    });
+                }
+                shrink = !shrink;
+
+
             });
 
             $("body").mousemove(function (e) {
@@ -50,17 +72,27 @@
 </head>
 
 <body>
-
 <canvas id="detailCanvas"></canvas>
-<div id="headDiv"></div>
+<canvas id="drawCanvas" width="112" height="112" style="background-color: #7c7c7c"></canvas>
+<div id="headDiv" style="position: absolute;top: 8px;left: 122px">
+    <button id="btnExport" style="width:80px;background-color:pink; " onclick="drawExport(window.location.href); ">导出
+    </button>
+    <br/>
+    <button id="btnClear" style="width:80px;background-color:yellow; " onclick="drawClean();">清除</button>
+    <div style="top: 8px;left: 212px;">
+        识别结果是
+        <div id="numberResult"></div>
+    </div>
+</div>
 
 <div class="mainDiv">
     <canvas id="mainCanvas"></canvas>
-    <canvas id="line1" class="line"></canvas>
-    <canvas id="conv1Canvas" class="showCanvas" style="width: 272px;"></canvas>
-    <canvas id="line2" class="line"></canvas>
-    <canvas id="conv2Canvas" class="showCanvas" style="width: 146px;"></canvas>
-    <canvas id="line3" class="line"></canvas>
+    <canvas id="conv1Canvas" class="showCanvas" style="width: 356px;"></canvas>
+    <canvas id="reLU1Canvas" class="showCanvas" style="width: 356px;"></canvas>
+    <canvas id="pool1Canvas" class="showCanvas" style="width: 272px;"></canvas>
+    <canvas id="conv2Canvas" class="showCanvas" style="width: 272px;"></canvas>
+    <canvas id="reLU2Canvas" class="showCanvas" style="width: 272px;"></canvas>
+    <canvas id="pool2Canvas" class="showCanvas" style="width: 146px;"></canvas>
     <canvas id="fullCanvas" class="showCanvas" style="width: 416px;"></canvas>
 </div>
 

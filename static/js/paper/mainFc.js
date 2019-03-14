@@ -91,5 +91,5 @@ function drawFullConnectNerve(pointIn, pointMid, pointOut) {
 window.mainFcUpdate = function () {
     paper.activate();
     paper.project.clear();
-    drawFullConnectNerve(new Point(30, 22), new Point(200, 122), new Point(370, 222));
+    drawFullConnectNerve(new Point(30, 47), new Point(200, 147), new Point(370, 247));
 };

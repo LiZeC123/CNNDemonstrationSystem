@@ -1,20 +1,13 @@
 .showCanvas {
-    height: 1344px;
+    height: 1394px;
     background-color: #7c7c7c;
     position: relative;
-    margin-left: -5px;
-}
-
-.line {
-    position: relative;
-    width: 50px;
-    height: 1344px;
-    background-color: #7c7c7c;
     margin-left: -5px;
 }
 
 .mainDiv {
-    width: 1340px;
+    /*width: 1340px;*/
+    width: 3000px;
     overflow-x: scroll;
     z-index: 0;
     position: relative;
@@ -22,7 +15,7 @@
 
 #mainCanvas {
     width: 356px;
-    height: 1344px;
+    height: 1394px;
 
     background-color: #7c7c7c;
     position: relative;

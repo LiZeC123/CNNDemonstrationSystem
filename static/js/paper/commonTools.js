@@ -14,7 +14,7 @@ window.drawMatrixNerve = function (point, margin, radius, data) {
                 // c.strokeColor = new Color(1, data[y][x] / 256.0);
                 c.fillColor = new Color(1, data[y][x] / 256.0);
             } else {
-                console.log(data[y][x]);
+                //console.log(data[y][x]);
                 c.strokeColor = 'black';
                 c.fillColor = new Color(1, -data[y][x] / 256.0);
             }

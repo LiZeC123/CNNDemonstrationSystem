@@ -10,8 +10,12 @@ function drawExport(URL) {
         const name = URL.split('/').pop();
         if (name === 'main.html') {
             window.mainMainUpdate();
-            window.mainConv1Update();
-            window.mainConv2Update();
+            window.conv1ConvUpdate();
+            window.conv1ReLUUpdate();
+            window.conv1PoolUpdate();
+            window.conv2ConvUpdate();
+            window.conv2ReLUUpdate();
+            window.conv2PoolUpdate();
             window.mainFcUpdate();
         }
 
