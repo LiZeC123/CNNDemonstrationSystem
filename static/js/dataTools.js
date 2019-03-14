@@ -28,7 +28,7 @@ dataTool.saveData = function (jsonStr) {
 dataTool.autoGetData = function (URL, data, callBack) {
     if (dataTool.inOnline()) {
         $.post(URL, data, function (jsonStr) {
-            dataTool.saveData(jsonStr);
+            //dataTool.saveData(jsonStr);
             const result = JSON.parse(jsonStr);
             //window.inputData = result;
             window.inputImage = result.inputImage;
