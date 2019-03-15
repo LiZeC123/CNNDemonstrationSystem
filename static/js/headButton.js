@@ -22,3 +22,12 @@ function drawExport(URL) {
         $("#numberResult").html(window.prediction[0])
     })
 }
+
+function drawNew() {
+    $.post(config.baseURL + "/getMnistImage", function (jsonStr) {
+        var data = JSON.parse(jsonStr);
+        window.inputImage = data.image;
+        window.mainMainUpdate();
+        $("#numberResult").html(data.label + "(MNIST)")
+    })
+}
