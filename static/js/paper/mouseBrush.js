@@ -1,5 +1,5 @@
 tool.minDistance = 4;
-tool.maxDistance = 8;
+tool.maxDistance = 6;
 
 var path;
 
@@ -36,7 +36,9 @@ function restrain(vec) {
     var i = vec / vec.length;
 
     if (type === 0) {
-        return vec / -2 + i * 8;
+        // sys = [Eq(4*a+b,6),Eq(6*a+b,3)]
+        // nonlinsolve(sys,[a,b])
+        return vec * (-1) + i * 10;
     } else if (type === 1) {
         // y = 109e^(-x)+4
         return i * (109 * Math.exp(-vec.length) + 4);
