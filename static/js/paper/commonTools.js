@@ -36,10 +36,10 @@ window.drawMatrixNerve = function (point, margin, radius, data) {
                 // 绝对值越大，透明度越低
                 if (data[y][x] >= 0) {
                     c.strokeColor = 'white';
-                    c.fillColor = new Color(1, data[y][x] / 256.0);
+                    c.fillColor = new Color(1, data[y][x] / scan);
                 } else {
                     c.strokeColor = 'black';
-                    c.fillColor = new Color(0, -data[y][x] / 256.0);
+                    c.fillColor = new Color(0, -data[y][x] / scan);
                 }
             }
         }
@@ -56,6 +56,16 @@ window.drawMatrixNerve = function (point, margin, radius, data) {
 };
 
 window.drawMatrixNerve2 = function (point, margin, radius, data) {
+    var min = data[0], max = data[0], scan;
+    data.forEach(function (ele) {
+        if (ele < min) {
+            min = ele;
+        } else if (ele > max) {
+            max = ele;
+        }
+    });
+    scan = max - min;
+
     var len = Math.sqrt(data.length);
     var count = 0;
     for (var y = 0; y < len; y++) {
@@ -63,7 +73,7 @@ window.drawMatrixNerve2 = function (point, margin, radius, data) {
             var c = Shape.Circle(point.x + 2 * x * margin + margin, point.y + 2 * y * margin + margin, radius);
             c.strokeColor = 'white';
             // 值越大，透明度越低，颜色越白
-            c.fillColor = new Color(1, data[count] / 256.0);
+            c.fillColor = new Color(1, data[count] / scan);
             count++;
         }
     }
