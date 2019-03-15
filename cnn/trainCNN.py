@@ -99,13 +99,13 @@ def train():
     saver = tf.train.Saver()
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
-        times = 20
+        times = 60
         for batch in range(n_batch * times):
             batch_xs, batch_ys = mnist.train.next_batch(batch_size)
             sess.run(train_step, feed_dict={x: batch_xs, y: batch_ys, keep_prob: 0.7})
             if batch % 100 == 0:
                 acc = sess.run(accuracy, feed_dict={x: batch_xs, y: batch_ys, keep_prob: 0.7})
-                print(f'batch {batch}, acc = {acc}')
+                print(f'batch {batch}({batch / batch * times}%), acc = {acc}')
         saver.save(sess, './SavedData/cnn_model')
 
         print("===== Begin Test ====")
