@@ -40,15 +40,15 @@ def buildNetwork(x, y, keep_prob):
     # 把x_image和权值向量进行卷积，再加上偏置值，然后应用与relu激活函数
     W_conv1 = weight_variable([5, 5, 1, 4], 'W_conv1')
     b_conv1 = bias_variable([4], 'b_conv1')
-    f_conv1 = conv2d(x_image, W_conv1, 'f_conv1')
-    h_vonv1 = tf.nn.relu(f_conv1 + b_conv1, name='h_vonv1')
+    f_conv1 = tf.add(conv2d(x_image, W_conv1, name='c_conv1'), b_conv1, name='f_conv1')
+    h_vonv1 = tf.nn.relu(f_conv1, name='h_vonv1')
     h_pool1 = max_pool_2x2(h_vonv1, 'h_pool1')
 
     # 初始化第二个卷积层的权值和偏置
     W_conv2 = weight_variable([5, 5, 4, 8], 'W_conv2')
     b_conv2 = bias_variable([8], 'b_conv2')
-    f_conv2 = conv2d(h_pool1, W_conv2, 'f_conv2')
-    h_vonv2 = tf.nn.relu(f_conv2 + b_conv2, 'h_vonv2')
+    f_conv2 = tf.add(conv2d(h_pool1, W_conv2, name='c_conv2'), b_conv2, name='f_conv2')
+    h_vonv2 = tf.nn.relu(f_conv2, 'h_vonv2')
     h_pool2 = max_pool_2x2(h_vonv2, 'h_pool2')  # 进行max-pooling
 
     # 把池化层2的输出扁平化为1维
