@@ -99,20 +99,24 @@ def train():
     saver = tf.train.Saver()
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
-        times = 60
-        for batch in range(n_batch * times):
+        times = 20
+        for batch in range(1, n_batch * times + 1):
             batch_xs, batch_ys = mnist.train.next_batch(batch_size)
             sess.run(train_step, feed_dict={x: batch_xs, y: batch_ys, keep_prob: 0.7})
             if batch % 100 == 0:
                 acc = sess.run(accuracy, feed_dict={x: batch_xs, y: batch_ys, keep_prob: 0.7})
-                print(f'batch {batch}({batch / batch * times}%), acc = {acc}')
+                print(f'batch: {batch:6}, (Total progress: {batch / (n_batch * times) * 100:.2f}%), '
+                      f'Current correct rate: {acc:.2f}')
         saver.save(sess, './SavedData/cnn_model')
 
         print("===== Begin Test ====")
-        for batch in range(n_test_batch):
+        acc_sum = 0
+        for batch in range(1, n_test_batch + 1):
             batch_test_xs, batch_test_ys = mnist.test.next_batch(batch_size)
             acc = sess.run(accuracy, feed_dict={x: batch_test_xs, y: batch_test_ys, keep_prob: 1})
-            print(f'batch {batch},acc = {acc}')
+            print(f'batch: {batch:6}, Current correct rate: {acc:.2f}')
+            acc_sum = acc_sum + acc
+        print(f"Average correct rate: {acc_sum / n_test_batch:.4f}")
 
 
 if __name__ == '__main__':
