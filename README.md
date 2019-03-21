@@ -17,7 +17,8 @@
 - [关于梯度下降的一些分析](https://blog.csdn.net/xierhacker/article/details/53174558)
 - [关于正则化](https://blog.csdn.net/u012560212/article/details/73000740)
 - [保存和恢复模型](https://blog.csdn.net/huachao1001/article/details/78501928)
-
+- [tensorflow中 tf.reduce_mean函数](https://blog.csdn.net/dcrmg/article/details/79797826)
+- [tensorflow--tf.one_hot()函数示例](https://blog.csdn.net/wenqiwenqi123/article/details/78055740)
 ### Flask
 
 - [Flask第五篇——设置debug模式](https://www.cnblogs.com/captainmeng/p/8508106.html)
@@ -64,3 +65,8 @@ curl http://127.0.0.1:5000/hello -d 'name=baseimage&data=dsa4309jdsl'
 ### 其他参考资料
 - [HTML5 -- canvas画板转为图片](https://blog.csdn.net/sinat_19327991/article/details/77050717 )
 - [HTML5 Canvas画图、保存图片、提交文件问题](https://www.jianshu.com/p/df7461ff64b1)
+
+
+### 
+- [softmax函数详解](https://www.cnblogs.com/alexanderkun/p/8098781.html)
+- [一文搞懂交叉熵在机器学习中的使用，透彻理解交叉熵背后的直觉](https://blog.csdn.net/tsyccnh/article/details/79163834 )
