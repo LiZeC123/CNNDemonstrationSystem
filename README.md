@@ -19,6 +19,8 @@
 - [保存和恢复模型](https://blog.csdn.net/huachao1001/article/details/78501928)
 - [tensorflow中 tf.reduce_mean函数](https://blog.csdn.net/dcrmg/article/details/79797826)
 - [tensorflow--tf.one_hot()函数示例](https://blog.csdn.net/wenqiwenqi123/article/details/78055740)
+- [TensorFlow tf.data 导入数据（tf.data官方教程）](https://blog.csdn.net/u014061630/article/details/80728694)
+
 ### Flask
 
 - [Flask第五篇——设置debug模式](https://www.cnblogs.com/captainmeng/p/8508106.html)
@@ -57,16 +59,11 @@ json    | 解析后的JSON数据
 - [jquery 获取鼠标和元素的坐标点](https://www.cnblogs.com/taleche/p/6065545.html)
 - [jQuery动态设置样式（style、css）](https://blog.csdn.net/xiaoyuncc/article/details/70854925)
 - [jQuery 异步和同步请求](https://www.cnblogs.com/wtcl/p/8138061.html)
-### curl 操作
-```shell
-curl http://127.0.0.1:5000/hello -d 'name=baseimage&data=dsa4309jdsl'
-```
 
 ### 其他参考资料
 - [HTML5 -- canvas画板转为图片](https://blog.csdn.net/sinat_19327991/article/details/77050717 )
 - [HTML5 Canvas画图、保存图片、提交文件问题](https://www.jianshu.com/p/df7461ff64b1)
 
-
-### 
+### 机器学习理论 
 - [softmax函数详解](https://www.cnblogs.com/alexanderkun/p/8098781.html)
 - [一文搞懂交叉熵在机器学习中的使用，透彻理解交叉熵背后的直觉](https://blog.csdn.net/tsyccnh/article/details/79163834 )
