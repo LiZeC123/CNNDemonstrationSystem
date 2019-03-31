@@ -16,6 +16,15 @@ class ConvValueLayout:
         self.W, self.b, self.f, self.v, self.p = sess.run(
             [conv.W_conv, conv.b_conv, conv.f_conv, conv.h_vonv, conv.h_pool], feed_dict=feed_dict)
 
+    def toDict(self):
+        return {
+            'W': [self.W[:, :, 0, i].tolist() for i in range(len(self.W[0][0][0]))],
+            'b': self.b.tolist(),
+            'f': [self.f[0, :, :, i].tolist() for i in range(len(self.f[0][0][0]))],
+            'v': [self.v[0, :, :, i].tolist() for i in range(len(self.v[0][0][0]))],
+            'p': [self.p[0, :, :, i].tolist() for i in range(len(self.p[0][0][0]))]
+        }
+
 
 class FullLayout:
     def __init__(self, layoutIndex: int, graph: tf.Session.graph):
@@ -29,3 +38,11 @@ class FullLayout:
 class FullValueLayout:
     def __init__(self, fc: FullLayout, feed_dict: dict, sess: tf.Session):
         self.W, self.b, self.f, self.h = sess.run([fc.W_fc, fc.b_fc, fc.f_fc, fc.h_fc], feed_dict=feed_dict)
+
+    def toDict(self):
+        return {
+            'W': self.W.tolist(),
+            'b': self.b.tolist(),
+            'f': self.f.tolist(),
+            'h': self.h.tolist(),
+        }

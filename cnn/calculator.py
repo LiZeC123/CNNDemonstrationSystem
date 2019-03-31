@@ -44,46 +44,16 @@ class Calculator:
         return {'inputImage': self.inputImage.reshape(784).tolist()}
 
     def calcConv1(self) -> dict:
-        cv: ConvValueLayout = self.cV1
-        result = {
-            'W': [cv.W[:, :, 0, i].tolist() for i in range(len(cv.W[0][0][0]))],
-            'b': cv.b.tolist(),
-            'f': [cv.f[0, :, :, i].tolist() for i in range(len(cv.f[0][0][0]))],
-            'v': [cv.v[0, :, :, i].tolist() for i in range(len(cv.v[0][0][0]))],
-            'p': [cv.p[0, :, :, i].tolist() for i in range(len(cv.p[0][0][0]))]}
-
-        return result
+        return self.cV1.toDict()
 
     def calcConv2(self) -> dict:
-        cv: ConvValueLayout = self.cV2
-        result = {
-            'W': [cv.W[:, :, 0, i].tolist() for i in range(len(cv.W[0][0][0]))],
-            'b': cv.b.tolist(),
-            'f': [cv.f[0, :, :, i].tolist() for i in range(len(cv.f[0][0][0]))],
-            'v': [cv.v[0, :, :, i].tolist() for i in range(len(cv.v[0][0][0]))],
-            'p': [cv.p[0, :, :, i].tolist() for i in range(len(cv.p[0][0][0]))]}
-
-        return result
+        return self.cV2.toDict()
 
     def calcFullConnect1(self) -> dict:
-        fv: FullValueLayout = self.fV1
-        result = {
-            'W': fv.W.tolist(),
-            'b': fv.b.tolist(),
-            'f': fv.f.tolist(),
-            'h': fv.h.tolist(),
-        }
-        return result
+        return self.fV1.toDict()
 
     def calcFullConnect2(self) -> dict:
-        fv: FullValueLayout = self.fV2
-        result = {
-            'W': fv.W.tolist(),
-            'b': fv.b.tolist(),
-            'f': fv.f.tolist(),
-            'h': fv.h.tolist(),
-        }
-        return result
+        return self.fV2.toDict()
 
     def calcResult(self) -> dict:
         return {'prediction': self.prediction.tolist()}
