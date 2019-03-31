@@ -1,3 +1,4 @@
+import numpy as np
 import tensorflow as tf
 
 
@@ -91,3 +92,9 @@ def loadGraph(sess, path) -> tf.Session.graph:
     saver.restore(sess, tf.train.latest_checkpoint(path))
     graph = tf.get_default_graph()
     return graph
+
+
+def oneHot(number: int):
+    """对给定的数字执行one-hot操作"""
+    data = np.array([number])
+    return (np.arange(10) == data[:, None]).astype(np.integer)
