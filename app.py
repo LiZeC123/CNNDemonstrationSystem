@@ -36,39 +36,15 @@ def uploadImage():
     # return json.dumps({'status': 'OK'})
 
 
-@app.route('/inputImage', methods=['POST'])
-def getInputImage():
-    return json.dumps(calculator.calcInputImage())
-
-
-@app.route('/conv1', methods=['POST'])
-def getConv1():
-    return json.dumps(calculator.calcConv1())
-
-
-@app.route('/conv2', methods=['POST'])
-def getConv2():
-    return json.dumps(calculator.calcConv2())
-
-
-@app.route('/fc1', methods=['POST'])
-def getFc1():
-    return json.dumps(calculator.calcFullConnect1())
-
-
-@app.route('/fc2', methods=['POST'])
-def getFc2():
-    return json.dumps(calculator.calcFullConnect2())
-
-
-@app.route('/prediction', methods=['POST'])
-def getPrediction():
-    return json.dumps(calculator.calcResult())
-
-
+# 获得MNIST的图片
 @app.route('/getMnistImage', methods=['POST'])
 def getImage():
     return json.dumps(mnistHelper.getImage())
+
+
+@app.route('/uploadTrainImage', methods=['POST'])
+def uploadTrainImage():
+    pass
 
 
 if __name__ == '__main__':

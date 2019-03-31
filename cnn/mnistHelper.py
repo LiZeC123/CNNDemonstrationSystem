@@ -1,6 +1,6 @@
 import random
 
-from cnn import input_data
+from tensorflow.examples.tutorials.mnist import input_data
 
 
 class MnistHelper:
