@@ -83,3 +83,11 @@ def buildNetwork(x, y, keep_prob):
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
     return train_step, prediction, accuracy
+
+
+def loadGraph(sess, path) -> tf.Session.graph:
+    """从指定的位置加载以及保存的图"""
+    saver = tf.train.import_meta_graph(path + '/cnn_model.meta')
+    saver.restore(sess, tf.train.latest_checkpoint(path))
+    graph = tf.get_default_graph()
+    return graph

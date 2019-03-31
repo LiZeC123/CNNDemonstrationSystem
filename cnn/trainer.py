@@ -5,7 +5,7 @@ from cnn.common import loadGraph
 from cnn.model import ConvLayout, ConvValueLayout, FullLayout, FullValueLayout
 
 
-class Calculator:
+class StepTrainer:
     # noinspection PyTypeChecker
     def __init__(self, modelPath):
         self.sess = tf.Session()
@@ -20,9 +20,9 @@ class Calculator:
 
     def setInputImage(self, inputImage: np.ndarray):
         self.inputImage = inputImage
-        self.__calcAll(inputImage)
+        self.__trainStep(inputImage)
 
-    def __calcAll(self, inputImage):
+    def __trainStep(self, inputImage):
         with tf.Session() as sess:
             graph = loadGraph(sess, self.path)
             x = graph.get_tensor_by_name("x:0")
@@ -42,48 +42,3 @@ class Calculator:
 
     def calcInputImage(self) -> dict:
         return {'inputImage': self.inputImage.reshape(784).tolist()}
-
-    def calcConv1(self) -> dict:
-        cv: ConvValueLayout = self.cV1
-        result = {
-            'W': [cv.W[:, :, 0, i].tolist() for i in range(len(cv.W[0][0][0]))],
-            'b': cv.b.tolist(),
-            'f': [cv.f[0, :, :, i].tolist() for i in range(len(cv.f[0][0][0]))],
-            'v': [cv.v[0, :, :, i].tolist() for i in range(len(cv.v[0][0][0]))],
-            'p': [cv.p[0, :, :, i].tolist() for i in range(len(cv.p[0][0][0]))]}
-
-        return result
-
-    def calcConv2(self) -> dict:
-        cv: ConvValueLayout = self.cV2
-        result = {
-            'W': [cv.W[:, :, 0, i].tolist() for i in range(len(cv.W[0][0][0]))],
-            'b': cv.b.tolist(),
-            'f': [cv.f[0, :, :, i].tolist() for i in range(len(cv.f[0][0][0]))],
-            'v': [cv.v[0, :, :, i].tolist() for i in range(len(cv.v[0][0][0]))],
-            'p': [cv.p[0, :, :, i].tolist() for i in range(len(cv.p[0][0][0]))]}
-
-        return result
-
-    def calcFullConnect1(self) -> dict:
-        fv: FullValueLayout = self.fV1
-        result = {
-            'W': fv.W.tolist(),
-            'b': fv.b.tolist(),
-            'f': fv.f.tolist(),
-            'h': fv.h.tolist(),
-        }
-        return result
-
-    def calcFullConnect2(self) -> dict:
-        fv: FullValueLayout = self.fV2
-        result = {
-            'W': fv.W.tolist(),
-            'b': fv.b.tolist(),
-            'f': fv.f.tolist(),
-            'h': fv.h.tolist(),
-        }
-        return result
-
-    def calcResult(self) -> dict:
-        return {'prediction': self.prediction.tolist()}
