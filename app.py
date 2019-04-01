@@ -4,10 +4,12 @@ from flask import Flask, render_template, request
 
 from cnn.calculator import Calculator
 from cnn.mnistHelper import MnistHelper
+from cnn.trainer import StepTrainer
 from image2List import toList
 
 app = Flask(__name__)
 calculator = Calculator('cnn/SavedData')
+stepTrainer = StepTrainer('cnn/SemiData')
 mnistHelper = MnistHelper()
 
 
@@ -42,9 +44,17 @@ def getImage():
     return json.dumps(mnistHelper.getImage())
 
 
-@app.route('/uploadTrainImage', methods=['POST'])
+@app.route('/uploadTrain', methods=['POST'])
 def uploadTrainImage():
-    pass
+    stepTrainer.setInputImage(toList(request.form['image']), int(request.form['number']))
+    data = {
+        "first": stepTrainer.first,
+        "gradient": stepTrainer.gradient,
+        "second": stepTrainer.second,
+    }
+    data.update(stepTrainer.calcInputImage())
+    # print(data["gradient"])
+    return json.dumps(data)
 
 
 if __name__ == '__main__':

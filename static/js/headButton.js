@@ -23,6 +23,21 @@ function drawExport(URL) {
     })
 }
 
+
+function trainExport() {
+    const canvas = document.getElementById('drawCanvas');
+    const img_png_src = canvas.toDataURL('image/png');
+    //TODO: 使用真实获得的数字
+    let data = {
+        "image": img_png_src,
+        "number": 0
+    };
+
+    dataTool.trainUpload(data, function () {
+        // TODO: 调用绘图函数
+    })
+}
+
 function drawNew() {
     $.post(config.baseURL + "/getMnistImage", function (jsonStr) {
         var data = JSON.parse(jsonStr);
@@ -31,3 +46,4 @@ function drawNew() {
         $("#numberResult").html(data.label + "(MNIST)")
     })
 }
+
