@@ -3,7 +3,7 @@ import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 
 from cnn.common import loadGraph, oneHot
-from cnn.model import ConvLayout, ConvValueLayout, FullLayout, FullValueLayout
+from cnn.model import ConvLayout, ConvValueLayout, FullLayout, FullValueLayout, GradientList
 
 
 class StepTrainer:
@@ -21,10 +21,16 @@ class StepTrainer:
     def setInputImage(self, inputImage: np.ndarray, realNumber: int):
         self.inputImage = inputImage
         self.__trainOneStep(inputImage, realNumber)
+        # self.__checkCalculate()
+
+    def trainByDataSet(self):
+        with tf.Session() as sess:
+            graph = loadGraph(sess, self.path)
+            StepTrainer.__dataSetGradientDescent(sess, graph)
+            self.__saveModel(sess)
 
     def __trainOneStep(self, inputImage: np.ndarray, realNumber: int):
         """执行一次计算，反向传播，再次计算的完整训练过程"""
-        # TODO：优化函数过程，尽量去除冗余的代码计算
         print(f"realNumber={realNumber}")
         with tf.Session() as sess:
             graph = loadGraph(sess, self.path)
@@ -32,23 +38,12 @@ class StepTrainer:
             y = graph.get_tensor_by_name("y:0")
             keep_prob = graph.get_tensor_by_name("keep_prob:0")
 
-            # num = 100
-            # xs = np.zeros((num, 784))
-            # ys = np.zeros((num, 10))
-            # for i in range(num):
-            #     xs[i] = np.array(inputImage / 255)
-            #     ys[i] = oneHot(realNumber)
-            # feed_dict = {x: xs, y: ys, keep_prob: 1.0}
-
             feed_dict = {x: inputImage / 255, y: oneHot(realNumber), keep_prob: 1.0}
-
             self.first = StepTrainer.__calcValue(sess, graph, feed_dict)
-
             self.gradient = StepTrainer.__gradientDescent(sess, graph, feed_dict)
-
             self.second = StepTrainer.__calcValue(sess, graph, feed_dict)
-            saver = tf.train.Saver()
-            saver.save(sess, self.path + "/cnn_model")
+
+            # self.__saveModel(sess)
 
     @staticmethod
     def __calcValue(sess: tf.Session, graph: tf.Session.graph, feed_dict: dict):
@@ -70,31 +65,19 @@ class StepTrainer:
     @staticmethod
     def __gradientDescent(sess: tf.Session, graph: tf.Session.graph, feed_dict: dict):
         """根据预测结果计算梯度，并执行一次梯度下降优化"""
-
-        for k, v in feed_dict.items():
-            print(f"k={k},v={v}")
-
         loss = graph.get_tensor_by_name("loss:0")
         gradient = tf.train.GradientDescentOptimizer(0.2).compute_gradients(loss)
-        train_step = graph.get_operation_by_name("train_step")
+        # train_step = graph.get_operation_by_name("train_step")
+        train_step = tf.train.GradientDescentOptimizer(0.2).apply_gradients(gradient)
 
         # 计算梯度
-        lossV = sess.run(loss, feed_dict)
-        print(f"loss Value = {lossV}")
-        glist = sess.run(gradient, feed_dict)
+        gList = sess.run(gradient, feed_dict)
+        gDict = GradientList(gList).toDict()
+
         # 执行梯度下降
         sess.run(train_step, feed_dict)
 
-        # 输出的梯度是一个列表，其中每个元素是（gradient, variable）的格式
-        # 因此提取gradient即可
-        print(glist[0][0])
-        result = []
-        for g in glist:
-            # print(g[0])
-            # print("-----------------")
-            result.append(g[0].tolist())
-
-        return result
+        return gDict
 
     @staticmethod
     def __dataSetGradientDescent(sess: tf.Session, graph: tf.Session.graph):
@@ -112,12 +95,25 @@ class StepTrainer:
 
         sess.run(train_step, feed_dict)
 
-    def __saveModel(self):
+    def __saveModel(self, sess: tf.Session):
         """保存训练之后的模型"""
-        pass
+        saver = tf.train.Saver()
+        saver.save(sess, self.path + "/cnn_model")
 
     def calcInputImage(self) -> dict:
         return {'inputImage': self.inputImage.reshape(784).tolist()}
+
+    def __checkCalculate(self):
+        """检查梯度下降计算和执行结果"""
+        arr1 = np.array(self.first["conv1"]["W"][0])
+        arr2 = np.array(self.second["conv1"]["W"][0])
+        arr = arr1 - arr2
+        g = np.array(self.gradient["conv1"]["W"][0])
+        print(arr)
+        print("----")
+        print(g)
+        print("----")
+        print(arr / g)  # 如果比值等于学习率，则计算正确
 
 
 if __name__ == '__main__':
