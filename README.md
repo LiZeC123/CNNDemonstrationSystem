@@ -20,9 +20,11 @@
 - [tensorflow中 tf.reduce_mean函数](https://blog.csdn.net/dcrmg/article/details/79797826)
 - [tensorflow--tf.one_hot()函数示例](https://blog.csdn.net/wenqiwenqi123/article/details/78055740)
 - [TensorFlow tf.data 导入数据（tf.data官方教程）](https://blog.csdn.net/u014061630/article/details/80728694)
+- [tensorflow checkpoint文件的版本](https://blog.csdn.net/u014061630/article/details/80698843)
+- [Tensorflow: 从checkpoint文件中读取tensor（checkpoint.ckpt)](https://blog.csdn.net/wuguangbin1230/article/details/79101174)
+- [tensorflow中读取模型中保存的值, tf.train.NewCheckpointReader](https://blog.csdn.net/qq_39124762/article/details/82951818)
 
 ### Flask
-
 - [Flask第五篇——设置debug模式](https://www.cnblogs.com/captainmeng/p/8508106.html)
 - [flask创建的项目用外网访问？](https://segmentfault.com/q/1010000007309151?_ea=1303968)
 - [pycharm 运行 flask项目,指定访问ip与端口的坑](https://blog.csdn.net/LJXZDN/article/details/82429303)
