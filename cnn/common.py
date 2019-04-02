@@ -4,14 +4,14 @@ import tensorflow as tf
 
 def weight_variable(shape, name):
     """创建一个给定大小的，随机初始化的tensor（用于卷积核的权值）"""
-    initial = tf.truncated_normal(shape, stddev=0.1, name=name)
-    return tf.Variable(initial)
+    initial = tf.truncated_normal(shape, stddev=0.1)
+    return tf.Variable(initial, name=name)
 
 
 def bias_variable(shape, name):
     """创建一个给定大小的，固定值的tensor（用于初始偏置值）"""
-    initial = tf.constant(0.1, shape=shape, name=name)
-    return tf.Variable(initial)
+    initial = tf.constant(0.1, shape=shape)
+    return tf.Variable(initial, name=name)
 
 
 def conv2d(x, W, name):
