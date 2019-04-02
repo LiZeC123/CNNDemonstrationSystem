@@ -46,3 +46,44 @@ class FullValueLayout:
             'f': self.f.tolist(),
             'h': self.h.tolist(),
         }
+
+
+class ConvGradientValueLayout:
+    def __init__(self, W, b):
+        self.W = W
+        self.b = b
+
+    def toDict(self):
+        return {
+            "W": [self.W[:, :, 0, i].tolist() for i in range(len(self.W[0][0][0]))],
+            "b": self.b.tolist()
+        }
+
+
+class FullGradientValueLayout:
+    def __init__(self, W, b):
+        self.W = W
+        self.b = b
+
+    def toDict(self):
+        return {
+            "W": self.W.tolist(),
+            "b": self.b.tolist()
+        }
+
+
+class GradientList:
+    def __init__(self, gradient):
+        # 梯度是一个列表，其中每个元素是（gradient, variable）的格式
+        self.conv1 = ConvGradientValueLayout(gradient[0][0], gradient[1][0])
+        self.conv2 = ConvGradientValueLayout(gradient[2][0], gradient[3][0])
+        self.fc1 = FullGradientValueLayout(gradient[4][0], gradient[5][0])
+        self.fc2 = FullGradientValueLayout(gradient[6][0], gradient[7][0])
+
+    def toDict(self):
+        return {
+            "conv1": self.conv1.toDict(),
+            "conv2": self.conv2.toDict(),
+            "fc1": self.fc1.toDict(),
+            "fc2": self.fc2.toDict()
+        }
