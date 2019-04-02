@@ -8,9 +8,9 @@ from cnn.model import ConvLayout, ConvValueLayout, FullLayout, FullValueLayout
 class Calculator:
     # noinspection PyTypeChecker
     def __init__(self, modelPath):
-        self.sess = tf.Session()
+        # self.sess = tf.Session()
         self.path = modelPath
-        self.sess.close()
+        # self.sess.close()
         self.inputImage: np.ndarray = None
         self.cV1: ConvValueLayout = None
         self.cV2: ConvValueLayout = None
