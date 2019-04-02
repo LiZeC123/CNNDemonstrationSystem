@@ -47,7 +47,7 @@ window.drawMatrixNerve = function (point, margin, radius, data) {
 
     var border = new Path();
     border.strokeColor = 'white';
-    border.strokeWidth = 5;
+    border.strokeWidth = 4;
     border.add(point);
     border.add(new Point(point.x, point.y + height * margin * 2));
     border.add(new Point(point.x + width * margin * 2, point.y + height * margin * 2));

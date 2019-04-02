@@ -1,5 +1,5 @@
 .showCanvas {
-    height: 1394px;
+    height: 1600px;
     background-color: #7c7c7c;
     position: relative;
     margin-left: -5px;
@@ -15,7 +15,7 @@
 
 #mainCanvas {
     width: 356px;
-    height: 1394px;
+    height: 1600px;
 
     background-color: #7c7c7c;
     position: relative;
