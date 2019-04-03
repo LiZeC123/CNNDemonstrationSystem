@@ -69,8 +69,8 @@ function drawFullConnectNerve(pointIn, pointMid, pointOut) {
     var half1 = 6; //每一层一半的节点数量
     var half2 = 5;
     var fp = flatConv(window.conv2.p);
-    drawOmissibleNerve(pointIn, half1, radius, margin, 0, 40, fp);
-    drawOmissibleNerve(pointMid, half2, radius, margin, 0, 79, window.fc1.h[0]);
+    drawOmissibleNerve(pointIn, half1, radius, margin, 0, fp.length - half1, fp);
+    drawOmissibleNerve(pointMid, half2, radius, margin, 0, window.fc1.h[0].length - half2, window.fc1.h[0]);
     drawLinearNerve(pointOut, 10, radius, margin, 0, window.fc2.h[0]);
     var point11 = new Point(pointIn.x + radius, pointIn.y);
     var point21 = new Point(pointMid.x - radius, pointMid.y);
