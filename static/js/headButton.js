@@ -33,9 +33,28 @@ function trainExport() {
         "number": 0
     };
 
-    dataTool.trainUpload(data, function () {
-        // TODO: 调用绘图函数
+    dataTool.trainUpload(data, function (trainData) {
+        // TODO: 调用绘图函数 / 添加锁定逻辑，保证先获得数据
+        console.log(trainData);
+        window.trainData = trainData;
+        window.conv1WbUpdate(trainData.first.conv1, "data");
+        window.conv2WbUpdate(trainData.first.conv2, "data");
+
     })
+}
+
+var trainFlag = false;
+
+function trainGradient() {
+    trainFlag = !trainFlag;
+    if (trainFlag) {
+        window.conv1WbUpdate(trainData.gradient.conv1, "gradient");
+        window.conv2WbUpdate(trainData.gradient.conv2, "gradient");
+    } else {
+        window.conv1WbUpdate(trainData.first.conv1, "data");
+        window.conv2WbUpdate(trainData.first.conv2, "data");
+    }
+
 }
 
 function drawNew() {

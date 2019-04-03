@@ -15,6 +15,11 @@
 
     <script src="js/paper/mainMain.js" type="text/paperscript" canvas="mainCanvas"></script>
 
+    <script src="js/paper/conv1Wb.js" type="text/paperscript" canvas="Wb1Canvas"></script>
+    <script src="js/paper/conv2Wb.js" type="text/paperscript" canvas="Wb2Canvas"></script>
+
+
+    <!--
     <script src="js/paper/conv1Conv.js" type="text/paperscript" canvas="conv1Canvas"></script>
     <script src="js/paper/conv1ReLU.js" type="text/paperscript" canvas="reLU1Canvas"></script>
     <script src="js/paper/conv1Pool.js" type="text/paperscript" canvas="pool1Canvas"></script>
@@ -22,52 +27,11 @@
     <script src="js/paper/conv2Conv.js" type="text/paperscript" canvas="conv2Canvas"></script>
     <script src="js/paper/conv2ReLU.js" type="text/paperscript" canvas="reLU2Canvas"></script>
     <script src="js/paper/conv2Pool.js" type="text/paperscript" canvas="pool2Canvas"></script>
-
+    -->
     <script src="js/paper/mainFc.js" type="text/paperscript" canvas="fullCanvas"></script>
 
     <script type="text/javascript">
-        var shrink = true;
-        $(function () {
-            $("#pool1Canvas").click(function () {
-                if (shrink) {
-                    $("#conv1Canvas").hide("slow");
-                    $("#reLU1Canvas").hide("slow");
-                    $("#conv2Canvas").hide();
-                    $("#reLU2Canvas").hide();
-                    $("#pool2Canvas").show();
-                    $("#fullCanvas").show();
-                } else {
-                    $("#fullCanvas").hide();
-                    $("#pool2Canvas").hide("slow", function () {
-                        $("#conv1Canvas").show("slow");
-                        $("#reLU1Canvas").show("slow");
-                    });
-                }
-                shrink = !shrink;
-
-
-            });
-
-            $("body").mousemove(function (e) {
-                // 获得针对浏览器窗口的坐标
-                const xx = e.originalEvent.x || e.originalEvent.layerX || 0;
-                const yy = e.originalEvent.y || e.originalEvent.layerY || 0;
-                const detail = $("#detailCanvas");
-                //console.log(xx + '   ' + yy);
-
-                // 获得相对页面的坐标
-                if (e.pageY > 150) {
-                    detail.show();
-                    if (xx < 620) {
-                        detail.css({"left": xx + 20, "top": yy - 140});
-                    } else {
-                        detail.css({"left": xx - 600 - 20, "top": yy - 140});
-                    }
-                } else {
-                    detail.hide();
-                }
-            });
-        });
+        //TODO: 添加动画和详细页面的鼠标跟随代码
     </script>
 </head>
 
@@ -80,7 +44,7 @@
     <br/>
     <button id="btnClear" style="width:80px;background-color:yellow; " onclick="drawClean();">清除</button>
     <br/>
-    <button id="btnNew" style="width:80px;background-color:blue;" onclick="drawNew();">切换</button>
+    <button id="btnNew" style="width:80px;background-color:blue;" onclick="trainGradient();">切换</button>
     <div style="top: 8px;left: 212px;">
         识别结果是
         <div id="numberResult"></div>
@@ -89,13 +53,18 @@
 
 <div class="mainDiv">
     <canvas id="mainCanvas"></canvas>
+    <canvas id="Wb1Canvas" class="gradientCanvas" style="width: 356px"></canvas>
+    <canvas id="Wb2Canvas" class="gradientCanvas" style="width: 356px"></canvas>
+    <!-- 全连接层直接复用 -->
+    <canvas id="fullCanvas" class="showCanvas" style="width: 416px;"></canvas>
+    <!--
     <canvas id="conv1Canvas" class="showCanvas" style="width: 356px;"></canvas>
     <canvas id="reLU1Canvas" class="showCanvas" style="width: 356px;"></canvas>
     <canvas id="pool1Canvas" class="showCanvas" style="width: 272px;"></canvas>
     <canvas id="conv2Canvas" class="showCanvas" style="width: 272px;"></canvas>
     <canvas id="reLU2Canvas" class="showCanvas" style="width: 272px;"></canvas>
     <canvas id="pool2Canvas" class="showCanvas" style="width: 146px;"></canvas>
-    <canvas id="fullCanvas" class="showCanvas" style="width: 416px;"></canvas>
+    -->
 </div>
 
 </body>

@@ -5,6 +5,13 @@
     margin-left: -5px;
 }
 
+.gradientCanvas {
+    height: 1600px;
+    background-color: #7c7c7c;
+    position: relative;
+    margin-left: -5px;
+}
+
 .mainDiv {
     /*width: 1340px;*/
     width: 3000px;

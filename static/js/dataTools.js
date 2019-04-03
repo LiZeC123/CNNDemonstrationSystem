@@ -49,15 +49,6 @@ dataTool.autoGetTrainData = function (URL, data, callBack) {
         $.post(URL, data, function (jsonStr) {
             //dataTool.saveData(jsonStr);
             const result = JSON.parse(jsonStr);
-            console.log(result);
-            console.log(result.first.prediction);
-            // //window.inputData = result;
-            // window.inputImage = result.inputImage;
-            // window.conv1 = result.conv1;
-            // window.conv2 = result.conv2;
-            // window.fc1 = result.fc1;
-            // window.fc2 = result.fc2;
-            // window.prediction = result.prediction;
             callBack(result);
         });
     } else {

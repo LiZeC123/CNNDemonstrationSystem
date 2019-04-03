@@ -15,8 +15,24 @@ function matrixBorder(matrix) {
     return [min, max];
 }
 
+function getColorByType(colorType, sign, alpha) {
+    alpha = (alpha === undefined ? 1 : alpha);
+    if (colorType === "data") {
+        if (sign > 0) {
+            return new Color(1, 1, 1, alpha);
+        } else {
+            return new Color(0, 0, 0, alpha);
+        }
+    } else if (colorType === "gradient") {
+        if (sign > 0) {
+            return new Color(1, 0, 0, alpha);
+        } else {
+            return new Color(0, 1, 0.2, alpha);
+        }
+    }
+}
 
-window.drawMatrixNerve = function (point, margin, radius, data) {
+function baseDrawMatrixNerve(point, margin, radius, data, colorType) {
     var b = matrixBorder(data);
     var min = b[0];
     var max = b[1];
@@ -28,18 +44,18 @@ window.drawMatrixNerve = function (point, margin, radius, data) {
         for (var y = 0; y < height; y++) {
             var c = Shape.Circle(point.x + 2 * x * margin + margin, point.y + 2 * y * margin + margin, radius);
             if (min >= 0) {
-                // 只有正数的场景，全部使用白色，值越大，透明度越低，颜色越白
-                c.strokeColor = 'white';
-                c.fillColor = new Color(1, data[y][x] / scan);
+                // 只有正数的场景，使用一种颜色，值越大，透明度越低
+                c.strokeColor = getColorByType(colorType, +1);
+                c.fillColor = getColorByType(colorType, +1, data[y][x] / scan);
             } else {
-                // 正负数同时存在的场景，分别使用黑白两种颜色
+                // 正负数同时存在的场景，分别使用两种颜色
                 // 绝对值越大，透明度越低
                 if (data[y][x] >= 0) {
-                    c.strokeColor = 'white';
-                    c.fillColor = new Color(1, data[y][x] / scan);
+                    c.strokeColor = getColorByType(colorType, +1);
+                    c.fillColor = getColorByType(colorType, +1, data[y][x] / scan);
                 } else {
-                    c.strokeColor = 'black';
-                    c.fillColor = new Color(0, -data[y][x] / scan);
+                    c.strokeColor = getColorByType(colorType, -1);
+                    c.fillColor = getColorByType(colorType, -1, -data[y][x] / scan);
                 }
             }
         }
@@ -53,6 +69,14 @@ window.drawMatrixNerve = function (point, margin, radius, data) {
     border.add(new Point(point.x + width * margin * 2, point.y + height * margin * 2));
     border.add(new Point(point.x + width * margin * 2, point.y));
     border.closed = true;
+}
+
+window.drawMatrixNerve = function (point, margin, radius, data) {
+    baseDrawMatrixNerve(point, margin, radius, data, "data");
+};
+
+window.drawGradientMatrixNerve = function (point, margin, radius, data) {
+    baseDrawMatrixNerve(point, margin, radius, data, "gradient");
 };
 
 window.drawMatrixNerve2 = function (point, margin, radius, data) {
