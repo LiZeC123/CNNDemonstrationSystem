@@ -1,6 +1,7 @@
 import base64
 import io
 import json
+
 import numpy as np
 from PIL import Image
 
@@ -11,7 +12,7 @@ def toList(base64_image: str) -> np.ndarray:
     i = Image.open(byte_stream)
     i_grey = i.convert('L').resize((28, 28), Image.ANTIALIAS)
     array = np.array(i_grey).reshape(1, 784)
-    return array
+    return array / 255
 
 
 def toString(base64_image: str) -> str:

@@ -38,7 +38,7 @@ class StepTrainer:
             y = graph.get_tensor_by_name("y:0")
             keep_prob = graph.get_tensor_by_name("keep_prob:0")
 
-            feed_dict = {x: inputImage / 255, y: oneHot(realNumber), keep_prob: 1.0}
+            feed_dict = {x: inputImage, y: oneHot(realNumber), keep_prob: 1.0}
             self.first = StepTrainer.__calcValue(sess, graph, feed_dict)
             self.gradient = StepTrainer.__gradientDescent(sess, graph, feed_dict)
             self.second = StepTrainer.__calcValue(sess, graph, feed_dict)

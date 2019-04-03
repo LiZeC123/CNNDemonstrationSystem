@@ -33,7 +33,7 @@ class Calculator:
             fc2 = FullLayout(2, graph)
             prediction = graph.get_tensor_by_name('h_fc2:0')
             keep_prob = graph.get_tensor_by_name("keep_prob:0")
-            feed_dict = {x: inputImage / 255, y: [[0., 0., 1., 0., 0., 0., 0., 0., 0., 0.]], keep_prob: 1.0}
+            feed_dict = {x: inputImage, y: [[0., 0., 1., 0., 0., 0., 0., 0., 0., 0.]], keep_prob: 1.0}
             self.cV1 = ConvValueLayout(conv1, feed_dict, sess)
             self.cV2 = ConvValueLayout(conv2, feed_dict, sess)
             self.fV1 = FullValueLayout(fc1, feed_dict, sess)

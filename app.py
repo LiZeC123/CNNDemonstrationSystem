@@ -5,7 +5,7 @@ from flask import Flask, render_template, request
 from cnn.calculator import Calculator
 from cnn.mnistHelper import MnistHelper
 from cnn.trainer import StepTrainer
-from image2List import toList
+from util.image2List import toList
 
 app = Flask(__name__)
 calculator = Calculator('cnn/SavedData')
