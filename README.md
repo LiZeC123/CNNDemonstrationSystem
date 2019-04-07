@@ -51,7 +51,9 @@ json    | 解析后的JSON数据
 - [去除inline-block元素间间距的N种方法](https://www.zhangxinxu.com/wordpress/2012/04/inline-block-space-remove-%E5%8E%BB%E9%99%A4%E9%97%B4%E8%B7%9D/)
 - [html中引入调用另一个公用html模板文件的方法](https://www.w3h5.com/post/53.html)
 - [javascript判断机器是否联网的2种方法](https://www.jb51.net/article/40449.htm)
-
+- [JS数据格式化保留两位小数的多种实现方法总结](https://balzac.iteye.com/blog/1450143)
+- [HTML <select> 标签](http://www.w3school.com.cn/tags/tag_select.asp)
+- [如何用jQuery获得select的值](https://www.cnblogs.com/eager/p/7133270.html)
 ### Paper.js
 - [Paper.js Document](http://paperjs.org/reference/global/)
 - [Paperscope and paperjs](https://stackoverflow.com/questions/28035898/paperscope-and-paperjs)
