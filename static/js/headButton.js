@@ -27,10 +27,9 @@ function drawExport(URL) {
 function trainExport() {
     const canvas = document.getElementById('drawCanvas');
     const img_png_src = canvas.toDataURL('image/png');
-    //TODO: 使用真实获得的数字
     let data = {
         "image": img_png_src,
-        "number": 0
+        "number": $("#selectNumber").val()
     };
 
     dataTool.trainUpload(data, function (trainData) {
@@ -39,20 +38,22 @@ function trainExport() {
         window.trainData = trainData;
         window.conv1WbUpdate(trainData.first.conv1, "data");
         window.conv2WbUpdate(trainData.first.conv2, "data");
-
+        window.mainFcUpdate(trainData, "data");
     })
 }
 
-var trainFlag = false;
+let trainFlag = false;
 
 function trainGradient() {
     trainFlag = !trainFlag;
     if (trainFlag) {
         window.conv1WbUpdate(trainData.gradient.conv1, "gradient");
         window.conv2WbUpdate(trainData.gradient.conv2, "gradient");
+        window.mainFcUpdate(trainData, "gradient");
     } else {
         window.conv1WbUpdate(trainData.first.conv1, "data");
         window.conv2WbUpdate(trainData.first.conv2, "data");
+        window.mainFcUpdate(trainData, "data");
     }
 
 }
