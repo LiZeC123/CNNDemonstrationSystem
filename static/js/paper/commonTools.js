@@ -25,9 +25,9 @@ function getColorByType(colorType, sign, alpha) {
         }
     } else if (colorType === "gradient") {
         if (sign > 0) {
-            return new Color(1, 0, 0, alpha);
-        } else {
             return new Color(0, 1, 0.2, alpha);
+        } else {
+            return new Color(1, 0, 0, alpha);
         }
     }
 }
@@ -36,27 +36,19 @@ function baseDrawMatrixNerve(point, margin, radius, data, colorType) {
     var b = matrixBorder(data);
     var min = b[0];
     var max = b[1];
-    var scan = max - min;
 
     var width = data[0].length;
     var height = data.length;
     for (var x = 0; x < width; x++) {
         for (var y = 0; y < height; y++) {
             var c = Shape.Circle(point.x + 2 * x * margin + margin, point.y + 2 * y * margin + margin, radius);
-            if (min >= 0) {
-                // 只有正数的场景，使用一种颜色，值越大，透明度越低
+            //由于正负数分开进行归一化，因此ReLU函数前后的正数神经元看起来亮度不变，更能反映ReLU函数的特点
+            if (data[y][x] >= 0) {
                 c.strokeColor = getColorByType(colorType, +1);
-                c.fillColor = getColorByType(colorType, +1, data[y][x] / scan);
+                c.fillColor = getColorByType(colorType, +1, data[y][x] / max);
             } else {
-                // 正负数同时存在的场景，分别使用两种颜色
-                // 绝对值越大，透明度越低
-                if (data[y][x] >= 0) {
-                    c.strokeColor = getColorByType(colorType, +1);
-                    c.fillColor = getColorByType(colorType, +1, data[y][x] / scan);
-                } else {
-                    c.strokeColor = getColorByType(colorType, -1);
-                    c.fillColor = getColorByType(colorType, -1, -data[y][x] / scan);
-                }
+                c.strokeColor = getColorByType(colorType, -1);
+                c.fillColor = getColorByType(colorType, -1, data[y][x] / min);
             }
         }
     }
