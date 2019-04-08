@@ -63,6 +63,7 @@ json    | 解析后的JSON数据
 - [jquery 获取鼠标和元素的坐标点](https://www.cnblogs.com/taleche/p/6065545.html)
 - [jQuery动态设置样式（style、css）](https://blog.csdn.net/xiaoyuncc/article/details/70854925)
 - [jQuery 异步和同步请求](https://www.cnblogs.com/wtcl/p/8138061.html)
+- [jQuery监听键盘事件及相关操作使用教程](https://www.cnblogs.com/xiangsj/p/5996454.html)
 
 ### 其他参考资料
 - [HTML5 -- canvas画板转为图片](https://blog.csdn.net/sinat_19327991/article/details/77050717 )

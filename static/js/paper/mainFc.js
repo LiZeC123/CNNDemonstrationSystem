@@ -1,6 +1,19 @@
 var radius = 20;  //全连接层神经元半径
 var margin = 100; //全连接层神经元间距
+var num1 = 12, num2 = 10;
 
+var begIdx1 = 0, begIdx2 = 0;
+window.mainFcChange = function (delta, layout) {
+    if (layout === 1) {
+        if ((begIdx1 + delta >= 0) && (begIdx1 + num1 + delta <= 392)) {
+            begIdx1 += delta;
+        }
+    } else if (layout === 2) {
+        if ((begIdx2 + delta >= 0) && (begIdx2 + num2 + delta <= 84)) {
+            begIdx2 += delta;
+        }
+    }
+};
 
 window.mainFcUpdate = function (trainData, type) {
     paper.activate();
@@ -21,17 +34,14 @@ window.mainFcUpdate = function (trainData, type) {
 
 function drawFullConnectGradientNerve(location, trainData) {
     var flatP = flatArray(trainData.first.conv2.p);
-    //var len1 = flatP.length;
-    //var len2 = fcData.fc1.b.length;
 
-    drawNerve(location.pointIn, 0, 12, flatP);
-    drawNerve2(location.pointMid, 0, 10,
+    drawNerve(location.pointIn, begIdx1, num1, flatP);
+    drawNerve2(location.pointMid, begIdx2, num2,
         {"type": "gradient", "v": trainData.first.fc1.h[0], "b": trainData.gradient.fc1.b});
     drawNerve2(location.pointOut, 0, 10,
         {"type": "gradient", "v": trainData.first.fc2.h[0], "b": trainData.gradient.fc2.b});
 
-    var begIdx1 = 0, begIdx2 = 0, begIdx3 = 0;
-    var num1 = 12, num2 = 10, num3 = 10;
+
     drawConnectLine({"begPnt": location.pointIn, "begIdx": begIdx1, "num": num1},
         {"begPnt": location.pointMid, "begIdx": begIdx2, "num": num2},
         {
@@ -42,7 +52,7 @@ function drawFullConnectGradientNerve(location, trainData) {
     );
 
     drawConnectLine({"begPnt": location.pointMid, "begIdx": begIdx2, "num": num2},
-        {"begPnt": location.pointOut, "begIdx": begIdx3, "num": num3},
+        {"begPnt": location.pointOut, "begIdx": 0, "num": 10},
         {
             "type": "gradient", "W": trainData.gradient.fc2.W,
             "Wmin": min(flatArray(trainData.gradient.fc2.W)),
@@ -53,14 +63,11 @@ function drawFullConnectGradientNerve(location, trainData) {
 
 function drawFullConnectNerve(location, trainData) {
     var flatP = flatArray(trainData.first.conv2.p);
-    // var len1 = flatP.length;
-    // var len2 = fcData.fc1.h[0].length;
-    var begIdx1 = 0, begIdx2 = 0, begIdx3 = 0;
-    var num1 = 12, num2 = 10, num3 = 10;
+
     drawNerve(location.pointIn, begIdx1, num1, flatP);
     drawNerve2(location.pointMid, begIdx2, num2,
         {"type": "data", "v": trainData.first.fc1.h[0], "b": trainData.first.fc1.b});
-    drawNerve2(location.pointOut, begIdx3, num3,
+    drawNerve2(location.pointOut, 0, 10,
         {"type": "data", "v": trainData.first.fc2.h[0], "b": trainData.first.fc2.b});
 
     drawConnectLine({"begPnt": location.pointIn, "begIdx": begIdx1, "num": num1},
@@ -73,7 +80,7 @@ function drawFullConnectNerve(location, trainData) {
     );
 
     drawConnectLine({"begPnt": location.pointMid, "begIdx": begIdx2, "num": num2},
-        {"begPnt": location.pointOut, "begIdx": begIdx3, "num": num3},
+        {"begPnt": location.pointOut, "begIdx": 0, "num": 10},
         {
             "type": "data", "W": trainData.first.fc2.W,
             "Wmin": min(flatArray(trainData.first.fc2.W)),

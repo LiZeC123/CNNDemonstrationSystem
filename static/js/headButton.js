@@ -17,7 +17,7 @@ function drawExport(URL) {
             window.conv2ReLUUpdate();
             window.conv2PoolUpdate();
             // 调整结构，使其兼容训练过程的数据格式
-            window.mainFcUpdate({"first": data});
+            window.mainFcUpdate({"first": data}, "data");
         }
 
         $("#numberResult").html(window.prediction[0])
@@ -67,3 +67,23 @@ function drawNew() {
     })
 }
 
+$(document).keydown(function (event) {
+    if (trainData !== undefined) {
+        if (event.key === 'a') {
+            window.mainFcChange(1, 1);
+        } else if (event.key === 's') {
+            window.mainFcChange(1, 2);
+        } else if (event.key === 'q') {
+            window.mainFcChange(-1, 1);
+        } else if (event.key === 'w') {
+            window.mainFcChange(-1, 2);
+        }
+
+        if (trainFlag) {
+            window.mainFcUpdate(trainData, "gradient");
+        } else {
+            window.mainFcUpdate(trainData, "data");
+        }
+    }
+
+});
