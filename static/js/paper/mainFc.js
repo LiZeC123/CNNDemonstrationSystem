@@ -1,6 +1,6 @@
 var radius = 20;  //全连接层神经元半径
 var margin = 100; //全连接层神经元间距
-var num1 = 12, num2 = 10;
+var num1 = 14, num2 = 12;
 
 var begIdx1 = 0, begIdx2 = 0;
 window.mainFcChange = function (delta, layout) {
