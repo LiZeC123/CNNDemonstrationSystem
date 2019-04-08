@@ -6,7 +6,7 @@ function drawExport(URL) {
     //将canvas内容转化为base64格式的dataURL
     const canvas = document.getElementById('drawCanvas');
     const img_png_src = canvas.toDataURL('image/png');
-    dataTool.upload({"image": img_png_src}, function () {
+    dataTool.upload({"image": img_png_src}, function (data) {
         const name = URL.split('/').pop();
         if (name === 'main.html') {
             window.mainMainUpdate();
@@ -16,7 +16,8 @@ function drawExport(URL) {
             window.conv2ConvUpdate();
             window.conv2ReLUUpdate();
             window.conv2PoolUpdate();
-            window.mainFcUpdate();
+            // 调整结构，使其兼容训练过程的数据格式
+            window.mainFcUpdate({"first": data});
         }
 
         $("#numberResult").html(window.prediction[0])
@@ -33,7 +34,6 @@ function trainExport() {
     };
 
     dataTool.trainUpload(data, function (trainData) {
-        // TODO: 调用绘图函数 / 添加锁定逻辑，保证先获得数据
         console.log(trainData);
         window.trainData = trainData;
         window.conv1WbUpdate(trainData.first.conv1, "data");
