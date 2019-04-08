@@ -1,10 +1,14 @@
+// const config = {
+//     baseURL: 'http://192.168.1.100:5000',
+// };
+// 根据需要来切换URL，否则无法在本地运行
 const config = {
-    baseURL: 'http://192.168.1.100:5000',
+    baseURL: 'http://localhost:5000',
 };
 
 const dataTool = {};
 dataTool.serverOnline = function () {
-    // 向服务器发送请求，如果服务器再指定的时间内答复
+    // 向服务器发送请求，如果服务器在指定的时间内答复
     // 则说明当前网络可用（基于本地服务器）
     let result = false;
     $.ajax({
