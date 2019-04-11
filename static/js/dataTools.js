@@ -1,10 +1,22 @@
-// const config = {
-//     baseURL: 'http://192.168.1.100:5000',
-// };
-// 根据需要来切换URL，否则无法在本地运行
-const config = {
+const serverType = "localServer";
+// 使用远程服务器时使用的配置
+const remoteServerConfig = {
+    baseURL: '<请替换为相应的服务器域名或IP地址>',
+};
+// 使用本地服务器时使用的配置
+const localServerConfig = {
     baseURL: 'http://localhost:5000',
 };
+// 使用纯本地静态文件时使用的配置
+const localStaticConfig = {};
+let config = {};
+if (serverType === "remoteServer") {
+    config = remoteServerConfig;
+} else if (serverType === "localServer") {
+    config = localServerConfig;
+} else if (serverType === "localStatic") {
+    config = localStaticConfig;
+}
 
 const dataTool = {};
 dataTool.serverOnline = function () {
