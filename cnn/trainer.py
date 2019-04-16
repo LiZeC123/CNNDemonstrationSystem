@@ -4,6 +4,7 @@ from tensorflow.examples.tutorials.mnist import input_data
 
 from cnn.common import loadGraph, oneHot
 from cnn.model import ConvLayout, ConvValueLayout, FullLayout, FullValueLayout, GradientList
+from util.jsonWriter import JsonWriter
 
 
 class StepTrainer:
@@ -39,14 +40,12 @@ class StepTrainer:
             keep_prob = graph.get_tensor_by_name("keep_prob:0")
 
             feed_dict = {x: inputImage, y: oneHot(realNumber), keep_prob: 1.0}
-            self.first = StepTrainer.__calcValue(sess, graph, feed_dict)
-            self.gradient = StepTrainer.__gradientDescent(sess, graph, feed_dict)
-            self.second = StepTrainer.__calcValue(sess, graph, feed_dict)
-
-            # self.__saveModel(sess)
+            self.first = StepTrainer.calcValue(sess, graph, feed_dict)
+            self.gradient = StepTrainer.gradientDescent(sess, graph, feed_dict)
+            self.second = StepTrainer.calcValue(sess, graph, feed_dict)
 
     @staticmethod
-    def __calcValue(sess: tf.Session, graph: tf.Session.graph, feed_dict: dict):
+    def calcValue(sess: tf.Session, graph: tf.Session.graph, feed_dict: dict):
         """预测图片的数值"""
         conv1 = ConvLayout(1, graph)
         conv2 = ConvLayout(2, graph)
@@ -63,7 +62,14 @@ class StepTrainer:
         }
 
     @staticmethod
-    def __gradientDescent(sess: tf.Session, graph: tf.Session.graph, feed_dict: dict):
+    def calcGradient(sess: tf.Session, graph: tf.Session.graph, feed_dict: dict):
+        loss = graph.get_tensor_by_name("loss:0")
+        gradient = tf.train.GradientDescentOptimizer(0.2).compute_gradients(loss)
+        gList = sess.run(gradient, feed_dict)
+        return GradientList(gList).toDict()
+
+    @staticmethod
+    def gradientDescent(sess: tf.Session, graph: tf.Session.graph, feed_dict: dict):
         """根据预测结果计算梯度，并执行一次梯度下降优化"""
         loss = graph.get_tensor_by_name("loss:0")
         gradient = tf.train.GradientDescentOptimizer(0.2).compute_gradients(loss)
@@ -114,6 +120,50 @@ class StepTrainer:
         print(g)
         print("----")
         print(arr / g)  # 如果比值等于学习率，则计算正确
+
+
+def cast(value: dict) -> dict:
+    del value["conv1"]["f"]
+    del value["conv1"]["p"]
+    del value["conv1"]["v"]
+    del value["conv2"]["f"]
+    # del value["conv2"]["p"]
+    del value["conv2"]["v"]
+    del value["fc1"]["f"]
+    # del value["fc1"]["h"]
+    del value["fc2"]["f"]
+    # del value["fc2"]["h"]
+    return value
+
+
+class TrainDateGen:
+    def __init__(self, modelPath, jsonPath):
+        self.modelPath = modelPath
+        self.jsonPath = jsonPath
+
+    def genTrainData(self):
+        mnist = input_data.read_data_sets('cnn/MNIST_data', one_hot=True)
+        writer = JsonWriter(self.jsonPath)
+
+        with tf.Session() as sess:
+            graph = loadGraph(sess, self.modelPath)
+            x = graph.get_tensor_by_name("x:0")
+            y = graph.get_tensor_by_name("y:0")
+            keep_prob = graph.get_tensor_by_name("keep_prob:0")
+
+            for n in range(10):
+                # 先执行计算操作，获得参数信息
+                batch_xs, batch_ys = mnist.train.next_batch(1)
+                feed_dict = {x: batch_xs, y: batch_ys, keep_prob: 1.0}
+                value = StepTrainer.calcValue(sess, graph, feed_dict)
+                writer.write(cast(value))
+                # 再执行训练操作
+                batch_xs, batch_ys = mnist.train.next_batch(100)
+                feed_dict = {x: batch_xs, y: batch_ys, keep_prob: 1.0}
+                value = StepTrainer.gradientDescent(sess, graph, feed_dict)
+                writer.write(value)
+
+        writer.close()
 
 
 if __name__ == '__main__':
