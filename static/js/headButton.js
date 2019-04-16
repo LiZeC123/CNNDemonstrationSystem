@@ -87,3 +87,33 @@ $(document).keydown(function (event) {
     }
 
 });
+
+
+function drawBegin() {
+    dataTool.trainData({}, function (result) {
+        window.trainData = {};
+        console.log(result);
+        trainFlag = true;
+        let dataIdx = 0;
+        // 第一项是数据，第二项是梯度
+        setInterval(function () {
+            if (dataIdx % 2 === 0) {
+                console.log("Draw Data,dataIdx=", dataIdx);
+                console.log(result[dataIdx]);
+                trainData.first = result[dataIdx];
+                window.conv1WbUpdate(trainData.first.conv1, "data");
+                window.conv2WbUpdate(trainData.first.conv2, "data");
+                window.mainFcUpdate(trainData, "data");
+            } else {
+                console.log("Draw Gradient,dataIdx=", dataIdx);
+                console.log(result[dataIdx]);
+                trainData.gradient = result[dataIdx];
+                window.conv1WbUpdate(trainData.gradient.conv1, "gradient");
+                window.conv2WbUpdate(trainData.gradient.conv2, "gradient");
+                window.mainFcUpdate(trainData, "gradient");
+            }
+            // 越界保护的逻辑
+            dataIdx++;
+        }, 1000);
+    })
+}

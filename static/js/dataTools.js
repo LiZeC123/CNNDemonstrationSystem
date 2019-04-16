@@ -80,6 +80,15 @@ dataTool.trainUpload = function (data, callBack) {
     dataTool.autoGetTrainData(config.baseURL + "/uploadTrain", data, callBack);
 };
 
+dataTool.trainData = function (data, callBack) {
+    const URL = config.baseURL + "/static/local/train.json";
+    $.get(URL, data, function (result) {
+        //console.log(jsonStr);
+        //const result = JSON.parse(jsonStr);
+        callBack(result);
+    });
+};
+
 dataTool.reloadData = function () {
     const jsonStr = sessionStorage.getItem("inputData");
     if (jsonStr != null) {
