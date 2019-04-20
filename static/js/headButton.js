@@ -97,23 +97,27 @@ function drawBegin() {
         let dataIdx = 0;
         // 第一项是数据，第二项是梯度
         setInterval(function () {
+            // 越界保护的逻辑
+            if (dataIdx >= result.length) {
+                return;
+            }
+
             if (dataIdx % 2 === 0) {
-                console.log("Draw Data,dataIdx=", dataIdx);
-                console.log(result[dataIdx]);
+                //console.log("Draw Data,dataIdx=", dataIdx);
+                //console.log(result[dataIdx].conv1.W[0][0][0]);
                 trainData.first = result[dataIdx];
                 window.conv1WbUpdate(trainData.first.conv1, "data");
                 window.conv2WbUpdate(trainData.first.conv2, "data");
                 window.mainFcUpdate(trainData, "data");
             } else {
-                console.log("Draw Gradient,dataIdx=", dataIdx);
-                console.log(result[dataIdx]);
+                //console.log("Draw Gradient,dataIdx=", dataIdx);
+                //console.log(result[dataIdx]);
                 trainData.gradient = result[dataIdx];
                 window.conv1WbUpdate(trainData.gradient.conv1, "gradient");
                 window.conv2WbUpdate(trainData.gradient.conv2, "gradient");
                 window.mainFcUpdate(trainData, "gradient");
             }
-            // 越界保护的逻辑
             dataIdx++;
-        }, 1000);
+        }, 200);
     })
 }
