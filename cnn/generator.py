@@ -44,6 +44,7 @@ if __name__ == '__main__':
         train()
     elif op == 'Semi':
         # 创建一个显欠拟合的网络，用于进一步的训练
-        train('./SemiData/cnn_model', 1)
+        # 训练次数为0，则直接跳过训练过程，只用初始值
+        train('./SemiData/cnn_model', 0)
     else:
         print("Op is not a correct option")
