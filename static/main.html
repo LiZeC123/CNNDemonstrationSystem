@@ -38,18 +38,45 @@
                     $("#reLU1Canvas").hide("slow");
                     $("#conv2Canvas").hide();
                     $("#reLU2Canvas").hide();
+                    $("#mainCanvas").show();
                     $("#pool2Canvas").show();
                     $("#fullCanvas").show();
                 } else {
                     $("#fullCanvas").hide();
                     $("#pool2Canvas").hide("slow", function () {
+                        $("#mainCanvas").show();
                         $("#conv1Canvas").show("slow");
                         $("#reLU1Canvas").show("slow");
                     });
                 }
                 shrink = !shrink;
-
-
+            });
+            $("#pool2Canvas").click(function () {
+                if (shrink) {
+                    $("#conv2Canvas").hide("slow");
+                    $("#reLU2Canvas").hide("slow", function () {
+                        $("#mainCanvas").show("slow");
+                        $("#pool1Canvas").show("slow");
+                        $("#fullCanvas").show("slow");
+                    });
+                } else {
+                    $("#fullCanvas").hide();
+                    $("#mainCanvas").hide("slow", function () {
+                        $("#conv2Canvas").show("slow");
+                        $("#reLU2Canvas").show("slow");
+                    });
+                }
+                shrink = !shrink;
+            });
+            $("#fullCanvas").click(function () {
+                if (shrink) {
+                    $("#mainCanvas").show("slow");
+                    $("#pool1Canvas").show("slow");
+                } else {
+                    $("#mainCanvas").hide("slow");
+                    $("#pool1Canvas").hide("slow");
+                }
+                shrink = !shrink;
             });
             /*
             $("body").mousemove(function (e) {
@@ -74,7 +101,7 @@
              */
 
             $("#btnOpen").click(function () {
-                window.dialog = $.ligerDialog.open({ target: $("#mainHeadDiv"),width:244});
+                window.dialog = $.ligerDialog.open({target: $("#mainHeadDiv"), width: 249, title: "请输入手写数字"});
             });
         });
     </script>
@@ -103,11 +130,11 @@
 
 <div id="mainHeadDiv" style="display: none">
     <canvas id="drawCanvas" width="224" height="224" style="background-color: #7c7c7c;"></canvas>
-    <br />
-    <button id="btnExport" style="width:80px;background-color:pink;"
+    <br/>
+    <button id="btnExport" style="width:110px;background-color:pink;"
             onclick="drawExport(window.location.href); ">导出
     </button>
-    <button id="btnClear" style="width:80px;background-color:yellow; " onclick="drawClean();">清除</button>
+    <button id="btnClear" style="width:110px;background-color:yellow; " onclick="drawClean();">清除</button>
     <button id="btnNew" style="width:80px;background-color:blue;" onclick="drawNew();">切换</button>
 </div>
 
