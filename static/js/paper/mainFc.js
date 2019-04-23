@@ -19,9 +19,9 @@ window.mainFcUpdate = function (trainData, type) {
     paper.activate();
     paper.project.clear();
     var location = {
-        "pointIn": new Point(30, 47),
-        "pointMid": new Point(200, 147),
-        "pointOut": new Point(370, 247)
+        "pointIn": new Point(37, 47),
+        "pointMid": new Point(277, 147),
+        "pointOut": new Point(517, 247)
     };
 
 
@@ -59,6 +59,8 @@ function drawFullConnectGradientNerve(location, trainData) {
             "Wmax": max(flatArray(trainData.gradient.fc2.W))
         }
     );
+
+    drawNumberLabel(location.pointOut);
 }
 
 function drawFullConnectNerve(location, trainData) {
@@ -87,6 +89,8 @@ function drawFullConnectNerve(location, trainData) {
             "Wmax": max(flatArray(trainData.first.fc2.W))
         }
     );
+
+    drawNumberLabel(location.pointOut);
 }
 
 // data -> {type,W,Wmin,Wmax}
@@ -139,6 +143,17 @@ function drawNerve2(begPnt, begIdx, num, drawData) {
         var text = new PointText(getTextPoint(begPnt.x, begPnt.y + i * margin, v));
         text.content = v.toFixed(2)
     }
+}
+
+function drawNumberLabel(begPnt) {
+    for(var i=0;i<10;i++){
+        var text = new PointText(new Point(begPnt.x+40,begPnt.y + i * margin+8));
+        text.content = i;
+        text.fontSize = 20;
+        text.strokeColor = 'white';
+        text.fillColor = 'white';
+    }
+
 }
 
 function getColorByType(type, value, Vmax, Vmin) {
