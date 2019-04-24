@@ -103,3 +103,13 @@ window.drawMatrixNerve2 = function (point, margin, radius, data) {
     border.add(new Point(point.x + len * margin * 2, point.y));
     border.closed = true;
 };
+
+window.drawTitle = function (content,point) {
+    if(point === undefined){
+        point = new Point(5,20);
+    }
+    var text = new PointText(point);
+    text.content = content;
+    text.fontSize = 20;
+    text.fillColor = 'white';
+};
