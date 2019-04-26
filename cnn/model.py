@@ -17,13 +17,25 @@ class ConvValueLayout:
             [conv.W_conv, conv.b_conv, conv.f_conv, conv.h_vonv, conv.h_pool], feed_dict=feed_dict)
 
     def toDict(self):
-        return {
-            'W': [self.W[:, :, 0, i].tolist() for i in range(len(self.W[0][0][0]))],
-            'b': self.b.tolist(),
-            'f': [self.f[0, :, :, i].tolist() for i in range(len(self.f[0][0][0]))],
-            'v': [self.v[0, :, :, i].tolist() for i in range(len(self.v[0][0][0]))],
-            'p': [self.p[0, :, :, i].tolist() for i in range(len(self.p[0][0][0]))]
-        }
+        if self.W.shape[2] == 1:
+            return {
+                'W': [self.W[:, :, 0, i].tolist() for i in range(len(self.W[0][0][0]))],
+                'b': self.b.tolist(),
+                'f': [self.f[0, :, :, i].tolist() for i in range(len(self.f[0][0][0]))],
+                'v': [self.v[0, :, :, i].tolist() for i in range(len(self.v[0][0][0]))],
+                'p': [self.p[0, :, :, i].tolist() for i in range(len(self.p[0][0][0]))]
+            }
+        else:
+            W = []
+            for m in range(self.W.shape[2]):
+                W.append([self.W[:, :, 0, i].tolist() for i in range(len(self.W[0][0][0]))])
+            return {
+                'W': W,
+                'b': self.b.tolist(),
+                'f': [self.f[0, :, :, i].tolist() for i in range(len(self.f[0][0][0]))],
+                'v': [self.v[0, :, :, i].tolist() for i in range(len(self.v[0][0][0]))],
+                'p': [self.p[0, :, :, i].tolist() for i in range(len(self.p[0][0][0]))]
+            }
 
 
 class FullLayout:
@@ -54,10 +66,19 @@ class ConvGradientValueLayout:
         self.b = b
 
     def toDict(self):
-        return {
-            "W": [self.W[:, :, 0, i].tolist() for i in range(len(self.W[0][0][0]))],
-            "b": self.b.tolist()
-        }
+        if self.W.shape[2] == 1:
+            return {
+                "W": [self.W[:, :, 0, i].tolist() for i in range(len(self.W[0][0][0]))],
+                "b": self.b.tolist()
+            }
+        else:
+            W = []
+            for m in range(self.W.shape[2]):
+                W.append([self.W[:, :, 0, i].tolist() for i in range(len(self.W[0][0][0]))])
+            return {
+                "W": W,
+                "b": self.b.tolist()
+            }
 
 
 class FullGradientValueLayout:
