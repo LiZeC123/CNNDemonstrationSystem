@@ -27,8 +27,8 @@ class ConvValueLayout:
             }
         else:
             W = []
-            for m in range(self.W.shape[2]):
-                W.append([self.W[:, :, 0, i].tolist() for i in range(len(self.W[0][0][0]))])
+            for m in range(self.W.shape[3]):
+                W.append([self.W[:, :, i, m].tolist() for i in range(self.W.shape[2])])
             return {
                 'W': W,
                 'b': self.b.tolist(),
@@ -73,8 +73,8 @@ class ConvGradientValueLayout:
             }
         else:
             W = []
-            for m in range(self.W.shape[2]):
-                W.append([self.W[:, :, 0, i].tolist() for i in range(len(self.W[0][0][0]))])
+            for m in range(self.W.shape[3]):
+                W.append([self.W[:, :, i, m].tolist() for i in range(self.W.shape[2])])
             return {
                 "W": W,
                 "b": self.b.tolist()
