@@ -23,6 +23,7 @@
     <script src="js/paper/conv1ReLU.js" type="text/paperscript" canvas="reLU1Canvas"></script>
     <script src="js/paper/conv1Pool.js" type="text/paperscript" canvas="pool1Canvas"></script>
 
+    <script src="js/paper/mainConv2Wb.js" type="text/paperscript" canvas="conv2WbCanvas"></script>
     <script src="js/paper/conv2Conv.js" type="text/paperscript" canvas="conv2Canvas"></script>
     <script src="js/paper/conv2ReLU.js" type="text/paperscript" canvas="reLU2Canvas"></script>
     <script src="js/paper/conv2Pool.js" type="text/paperscript" canvas="pool2Canvas"></script>
@@ -36,6 +37,7 @@
                 if (shrink) {
                     $("#conv1Canvas").hide("slow");
                     $("#reLU1Canvas").hide("slow");
+                    $("#conv2WbCanvas").hide();
                     $("#conv2Canvas").hide();
                     $("#reLU2Canvas").hide();
                     $("#mainCanvas").show();
@@ -53,6 +55,7 @@
             });
             $("#pool2Canvas").click(function () {
                 if (shrink) {
+                    $("#conv2WbCanvas").hide("slow");
                     $("#conv2Canvas").hide("slow");
                     $("#reLU2Canvas").hide("slow", function () {
                         $("#mainCanvas").show("slow");
@@ -62,6 +65,7 @@
                 } else {
                     $("#fullCanvas").hide();
                     $("#mainCanvas").hide("slow", function () {
+                        $("#conv2WbCanvas").show("slow");
                         $("#conv2Canvas").show("slow");
                         $("#reLU2Canvas").show("slow");
                     });
@@ -78,6 +82,21 @@
                 }
                 shrink = !shrink;
             });
+
+            /*
+            $("#fullCanvas").mousemove(function (e) {
+                var positionX = e.pageX - $(this).offset().left; //获取当前鼠标相对img的X坐标
+                var positionY = e.pageY - $(this).offset().top; //获取当前鼠标相对img的Y坐标
+                console.log(positionX + '   ' + positionY);
+            });
+
+            $("#reLU2Canvas").mousemove(function (e) {
+                var positionX = e.pageX - $(this).offset().left; //获取当前鼠标相对img的X坐标
+                var positionY = e.pageY - $(this).offset().top; //获取当前鼠标相对img的Y坐标
+                console.log(positionX + '   ' + positionY);
+            });
+            */
+
             /*
             $("body").mousemove(function (e) {
                 // 获得针对浏览器窗口的坐标
@@ -109,19 +128,23 @@
 
 <body>
 <canvas id="detailCanvas"></canvas>
-<div style="top: 8px;left: 212px;">
+<span style="display: inline-block;font-size: 20px;color: black;padding-top: 6px">卷积神经网络演示系统</span>
+
+<button id="btnOpen" style="width:80px;height: 26px;background-color:pink;">Open</button>
+
+<div>
     识别结果是
     <div id="numberResult"></div>
 </div>
-<button id="btnOpen" style="width:80px;background-color:pink;">Open</button>
 
 <div class="mainDiv">
     <canvas id="mainCanvas"></canvas>
     <canvas id="conv1Canvas" class="showCanvas" style="width: 356px;"></canvas>
     <canvas id="reLU1Canvas" class="showCanvas" style="width: 356px;"></canvas>
     <canvas id="pool1Canvas" class="showCanvas" style="width: 282px;"></canvas>
-    <canvas id="conv2Canvas" class="showCanvas" style="width: 465px;"></canvas>
-    <canvas id="reLU2Canvas" class="showCanvas" style="width: 465px;"></canvas>
+    <canvas id="conv2WbCanvas" class="showCanvas" style="width: 210px"></canvas>
+    <canvas id="conv2Canvas" class="showCanvas" style="width: 360px;"></canvas>
+    <canvas id="reLU2Canvas" class="showCanvas" style="width: 360px;"></canvas>
     <canvas id="pool2Canvas" class="showCanvas" style="width: 146px;"></canvas>
     <canvas id="fullCanvas" class="showCanvas" style="width: 575px;"></canvas>
 </div>

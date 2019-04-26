@@ -14,11 +14,13 @@ function drawExport(URL) {
             window.conv1ConvUpdate();
             window.conv1ReLUUpdate();
             window.conv1PoolUpdate();
+            window.mainConv2WbUpdate(data.conv2, 0);
             window.conv2ConvUpdate();
             window.conv2ReLUUpdate();
             window.conv2PoolUpdate();
             // 调整结构，使其兼容训练过程的数据格式
             window.mainFcUpdate({"first": data}, "data");
+            console.log(data);
         }
 
         $("#numberResult").html(window.prediction[0])
