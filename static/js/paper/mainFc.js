@@ -19,18 +19,50 @@ window.mainFcUpdate = function (trainData, type) {
     paper.activate();
     paper.project.clear();
     var location = {
-        "pointIn": new Point(37, 47),
-        "pointMid": new Point(277, 147),
-        "pointOut": new Point(517, 247)
+        "pointIn": new Point(37, 150),
+        "pointMid": new Point(277, 250),
+        "pointOut": new Point(517, 350)
     };
 
-
+    drawTitle("全连接层", new Point(100, 30));
+    drawArrow(location);
     if (type === "gradient") {
         drawFullConnectGradientNerve(location, trainData)
     } else {
         drawFullConnectNerve(location, trainData);
     }
 };
+
+function drawArrow(location) {
+    drawUpArrow(new Point(location.pointIn.x, location.pointIn.y - 80));
+    drawUpArrow(new Point(location.pointMid.x, location.pointIn.y - 80));
+    drawDownArrow(new Point(location.pointIn.x, location.pointIn.y + 1380));
+    drawDownArrow(new Point(location.pointMid.x, location.pointIn.y + 1380));
+}
+
+function drawUpArrow(point) {
+    var A = new Point(point.x - 10, point.y + 10);
+    var B = new Point(point.x + 10, point.y + 10);
+    var C = new Point(point.x, point.y - 20);
+    var pathUp = new Path();
+    pathUp.strokeColor = 'white';
+    pathUp.strokeWidth = 5;
+    pathUp.add(A);
+    pathUp.add(C);
+    pathUp.add(B);
+}
+
+function drawDownArrow(point) {
+    var A = new Point(point.x - 10, point.y - 10);
+    var B = new Point(point.x + 10, point.y - 10);
+    var C = new Point(point.x, point.y + 20);
+    var pathUp = new Path();
+    pathUp.strokeColor = 'white';
+    pathUp.strokeWidth = 5;
+    pathUp.add(A);
+    pathUp.add(C);
+    pathUp.add(B);
+}
 
 function drawFullConnectGradientNerve(location, trainData) {
     var flatP = flatArray(trainData.first.conv2.p);
@@ -146,11 +178,10 @@ function drawNerve2(begPnt, begIdx, num, drawData) {
 }
 
 function drawNumberLabel(begPnt) {
-    for(var i=0;i<10;i++){
-        var text = new PointText(new Point(begPnt.x+40,begPnt.y + i * margin+8));
+    for (var i = 0; i < 10; i++) {
+        var text = new PointText(new Point(begPnt.x + 40, begPnt.y + i * margin + 8));
         text.content = i;
         text.fontSize = 20;
-        text.strokeColor = 'white';
         text.fillColor = 'white';
     }
 
