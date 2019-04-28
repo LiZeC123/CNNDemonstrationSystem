@@ -1,22 +1,48 @@
+function drawText(point, content) {
+    var text = new PointText(point);
+    text.content = content;
+    //text.fontFamily = "SimSun";
+    text.fontSize = 20;
+    text.fillColor = 'white';
+
+}
+
+function drawLine(begin, end) {
+    var line = new Path();
+    line.strokeColor = 'white';
+    line.strokeWidth = 2;
+
+    line.add(begin);
+    line.add(end);
+}
+
 /**
- *
- * @param layoutName
- * @param value
+ * 根据给定的参数绘制详细界面
+ * @param layoutName 当前所在的层次名称
+ * @param value 当前神经元的取值
+ * @param more 更多其他参数组成的字典
  */
-window.drawDetail = function (layoutName, value) {
+window.drawDetail = function (layoutName, value, more) {
     paper.activate();
     paper.project.clear();
 
-    var layout = new PointText(new Point(5, 20));
-    layout.content = "当前位置:" + layoutName;
-    //layout.fontFamily = "SimSun";
-    layout.fontSize = 20;
-    layout.fillColor = 'white';
+    drawText(new Point(5, 20), "当前位置:" + layoutName);
+    drawText(new Point(5, 50), "当前神经元取值:" + value.toFixed(2));
 
-    var v = new PointText(new Point(5, 50));
-    v.content = "当前神经元取值:" + value.toFixed(2);
-    // v.fontFamily = "SimSun";
-    v.fontSize = 20;
-    v.fillColor = 'white';
+    if (more !== undefined) {
+        drawLine(new Point(0, 60), new Point(300, 60));
+        if (more.name === "conv1Weight") {
+            drawText(new Point(5, 80), more.weightTitle);
+            // 图像部分向右偏移半个边框宽度的距离，从而与文字对齐
+            drawMatrixNerve(new Point(7, 100), 9, 6, more.getWeight(more.pos));
+
+            drawLine(new Point(150, 60), new Point(150, 200));
+
+            drawText(new Point(155, 80), more.inputTitle);
+            drawMatrixNerve(new Point(157, 100), 9, 6, more.getInputData(more.pos));
+
+        }
+    }
+
 
 };

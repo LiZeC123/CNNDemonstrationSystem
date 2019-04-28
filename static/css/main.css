@@ -33,11 +33,10 @@
     position: fixed;
     top: 8px;
     left: 300px;
-    width: 600px;
-    height: 112px;
-    background-color: #66ccff;
+    width: 300px;
+    height: 200px;
+    background-color: #7c7c7c;
     z-index: 999;
-    /*display: none;*/
 }
 
 #headDiv {

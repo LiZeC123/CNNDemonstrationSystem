@@ -21,5 +21,33 @@ obj.mousemove(genMouseMove(obj, conv1ConvToIdx,
     },
     function (pos) {
         return window.calcData.conv1.f[pos.feature][pos.row][pos.col];
+    },
+    {
+        "name": "conv1Weight",
+        "weightTitle": "当前卷积核",
+        "getWeight": function (pos) {
+            return window.calcData.conv1.W[pos.feature];
+        },
+        "inputTitle": "输入数据",
+        "getInputData": function (pos) {
+            var leftTop = {
+                "row": pos.row - 2,
+                "col": pos.col - 2
+            };
+            var result = [];
+            for (var row = leftTop.row; row < leftTop.row + 5; row++) {
+                var oneRow = [];
+                for (var col = leftTop.col; col < leftTop.col + 5; col++) {
+                    if (row < 0 || col < 0 || row >= 28 || col >= 28) {
+                        // 超过范围的部分使用0填充
+                        oneRow.push(0);
+                    } else {
+                        oneRow.push(window.calcData.inputImage[row * 28 + col])
+                    }
+                }
+                result.push(oneRow);
+            }
+            return result;
+        }
     })
 );

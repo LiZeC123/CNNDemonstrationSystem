@@ -149,9 +149,10 @@ window.genConvert = function (point, num, eleNum, interval, margin) {
  * @param funConv 将坐标转化为元素索引的函数
  * @param funGetName 根据索引值获得名称的函数
  * @param funGetValue 根据索引值获得神经元值的函数
+ * @param more 更多其他参数组成的字典
  * @returns {Function} 返回鼠标的监听函数
  */
-window.genMouseMove = function (eleThis, funConv, funGetName, funGetValue) {
+window.genMouseMove = function (eleThis, funConv, funGetName, funGetValue, more) {
     return function (e) {
         ////相对浏览器窗口的坐标
         var xx = e.originalEvent.x || e.originalEvent.layerX || 0;
@@ -165,16 +166,21 @@ window.genMouseMove = function (eleThis, funConv, funGetName, funGetValue) {
         console.log(xx, yy);
         if (pos !== undefined) {
             detail.show();
-            if (xx < 710 && yy < 200) {
+            if (xx < 710 && yy < 240) {
                 detail.css({"left": xx + 20, "top": yy + 20});
-            } else if (xx < 710 && yy >= 200) {
-                detail.css({"left": xx + 20, "top": yy - 140});
-            } else if (xx >= 710 && yy < 200) {
-                detail.css({"left": xx - 600 - 20, "top": yy + 20});
+            } else if (xx < 710 && yy >= 240) {
+                detail.css({"left": xx + 20, "top": yy - 200 - 20});
+            } else if (xx >= 710 && yy < 240) {
+                detail.css({"left": xx - 300 - 20, "top": yy + 20});
             } else {
-                detail.css({"left": xx - 600 - 20, "top": yy - 140});
+                detail.css({"left": xx - 300 - 20, "top": yy - 200 - 20});
             }
-            drawDetail(funGetName(pos), funGetValue(pos));
+
+            if (more !== undefined) {
+                // 如果更多参数不为空，则将pos加入到其中,以便于内部的模块调用其他函数
+                more.pos = pos;
+            }
+            drawDetail(funGetName(pos), funGetValue(pos), more);
         } else {
             detail.hide();
         }
