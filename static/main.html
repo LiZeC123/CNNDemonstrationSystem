@@ -18,6 +18,7 @@
     <script src="js/paper/mouseBrush.js" type="text/paperscript" canvas="drawCanvas"></script>
 
     <script src="js/paper/mainMain.js" type="text/paperscript" canvas="mainCanvas"></script>
+    <script src="js/paper/detailCanvas.js" type="text/paperscript" canvas="detailCanvas"></script>
 
     <script src="js/paper/conv1Conv.js" type="text/paperscript" canvas="conv1Canvas"></script>
     <script src="js/paper/conv1ReLU.js" type="text/paperscript" canvas="reLU1Canvas"></script>
@@ -81,6 +82,26 @@
                     $("#pool1Canvas").hide("slow");
                 }
                 shrink = !shrink;
+            });
+
+            $("#mainCanvas").mousemove(function (e) {
+                const xx = e.originalEvent.x || e.originalEvent.layerX || 0;
+                const yy = e.originalEvent.y || e.originalEvent.layerY || 0;
+                const positionX = e.pageX - $(this).offset().left; //获取当前鼠标相对img的X坐标
+                const positionY = e.pageY - $(this).offset().top; //获取当前鼠标相对img的Y坐标
+                const detail = $("#detailCanvas");
+                const pos = mainMainToIdx(positionX, positionY);
+                if (pos.row >= 0 && pos.col >= 0 && pos.row < 28 && pos.col < 28) {
+                    detail.show();
+                    detail.css({"left": xx + 20, "top": yy - 140});
+                    console.log(pos);
+                    drawDetail("输入层", window.calcData.inputImage[pos.row * 28 + pos.col]);
+                } else {
+                    detail.hide();
+                }
+
+                // console.log(positionX + '   ' + positionY);
+                // console.log(mainMainToIdx(positionX,positionY));
             });
 
             /*

@@ -37,7 +37,7 @@
     height: 112px;
     background-color: #66ccff;
     z-index: 999;
-    display: none;
+    /*display: none;*/
 }
 
 #headDiv {

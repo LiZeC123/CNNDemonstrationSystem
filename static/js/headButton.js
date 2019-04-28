@@ -7,6 +7,7 @@ function drawExport(URL) {
     const canvas = document.getElementById('drawCanvas');
     const img_png_src = canvas.toDataURL('image/png');
     dataTool.upload({"image": img_png_src}, function (data) {
+        window.calcData = data;
         const name = URL.split('/').pop();
          window.dialog.hide();
         if (name === 'main.html') {
