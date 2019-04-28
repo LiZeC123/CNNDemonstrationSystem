@@ -9,12 +9,13 @@ window.mainMainUpdate = function () {
     drawMatrixNerve2(point, margin, radius, window.inputImage);
 };
 
-window.mainMainToIdx = function (X, Y) {
-    var rX = X - point.x;
-    var rY = Y - point.y;
-
-    return {
-        "row": Math.ceil(rY / (2 * margin)) - 1,
-        "col": Math.ceil(rX / (2 * margin)) - 1
-    }
-};
+var mainMainToIdx = genConvert(point, 1, 28, 0, margin);
+var obj = $("#mainCanvas");
+obj.mousemove(genMouseMove(obj, mainMainToIdx,
+    function () {
+        return "输入层"
+    },
+    function (pos) {
+        return window.calcData.inputImage[pos.row * 28 + pos.col]
+    })
+);

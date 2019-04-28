@@ -34,7 +34,9 @@
     <script type="text/javascript">
         var shrink = true;
         $(function () {
+            const detail = $("#detailCanvas");
             $("#pool1Canvas").click(function () {
+                detail.hide();
                 if (shrink) {
                     $("#conv1Canvas").hide("slow");
                     $("#reLU1Canvas").hide("slow");
@@ -55,6 +57,7 @@
                 shrink = !shrink;
             });
             $("#pool2Canvas").click(function () {
+                detail.hide();
                 if (shrink) {
                     $("#conv2WbCanvas").hide("slow");
                     $("#conv2Canvas").hide("slow");
@@ -74,6 +77,7 @@
                 shrink = !shrink;
             });
             $("#fullCanvas").click(function () {
+                detail.hide();
                 if (shrink) {
                     $("#mainCanvas").show("slow");
                     $("#pool1Canvas").show("slow");
@@ -83,62 +87,6 @@
                 }
                 shrink = !shrink;
             });
-
-            $("#mainCanvas").mousemove(function (e) {
-                const xx = e.originalEvent.x || e.originalEvent.layerX || 0;
-                const yy = e.originalEvent.y || e.originalEvent.layerY || 0;
-                const positionX = e.pageX - $(this).offset().left; //获取当前鼠标相对img的X坐标
-                const positionY = e.pageY - $(this).offset().top; //获取当前鼠标相对img的Y坐标
-                const detail = $("#detailCanvas");
-                const pos = mainMainToIdx(positionX, positionY);
-                if (pos.row >= 0 && pos.col >= 0 && pos.row < 28 && pos.col < 28) {
-                    detail.show();
-                    detail.css({"left": xx + 20, "top": yy - 140});
-                    console.log(pos);
-                    drawDetail("输入层", window.calcData.inputImage[pos.row * 28 + pos.col]);
-                } else {
-                    detail.hide();
-                }
-
-                // console.log(positionX + '   ' + positionY);
-                // console.log(mainMainToIdx(positionX,positionY));
-            });
-
-            /*
-            $("#fullCanvas").mousemove(function (e) {
-                var positionX = e.pageX - $(this).offset().left; //获取当前鼠标相对img的X坐标
-                var positionY = e.pageY - $(this).offset().top; //获取当前鼠标相对img的Y坐标
-                console.log(positionX + '   ' + positionY);
-            });
-
-            $("#reLU2Canvas").mousemove(function (e) {
-                var positionX = e.pageX - $(this).offset().left; //获取当前鼠标相对img的X坐标
-                var positionY = e.pageY - $(this).offset().top; //获取当前鼠标相对img的Y坐标
-                console.log(positionX + '   ' + positionY);
-            });
-            */
-
-            /*
-            $("body").mousemove(function (e) {
-                // 获得针对浏览器窗口的坐标
-                const xx = e.originalEvent.x || e.originalEvent.layerX || 0;
-                const yy = e.originalEvent.y || e.originalEvent.layerY || 0;
-                const detail = $("#detailCanvas");
-                //console.log(xx + '   ' + yy);
-
-                // 获得相对页面的坐标
-                if (e.pageY > 150) {
-                    detail.show();
-                    if (xx < 620) {
-                        detail.css({"left": xx + 20, "top": yy - 140});
-                    } else {
-                        detail.css({"left": xx - 600 - 20, "top": yy - 140});
-                    }
-                } else {
-                    detail.hide();
-                }
-            });
-             */
 
             $("#btnOpen").click(function () {
                 window.dialog = $.ligerDialog.open({target: $("#mainHeadDiv"), width: 249, title: "请输入手写数字"});

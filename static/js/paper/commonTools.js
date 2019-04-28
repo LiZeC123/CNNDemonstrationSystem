@@ -104,12 +104,79 @@ window.drawMatrixNerve2 = function (point, margin, radius, data) {
     border.closed = true;
 };
 
-window.drawTitle = function (content,point) {
-    if(point === undefined){
-        point = new Point(5,20);
+window.drawTitle = function (content, point) {
+    if (point === undefined) {
+        point = new Point(5, 20);
     }
     var text = new PointText(point);
     text.content = content;
     text.fontSize = 20;
     text.fillColor = 'white';
+};
+
+/**
+ * 产生一个将像素坐标转化元素序号的函数
+ * @param point 第一个特征面的起始点
+ * @param num 特征面的数量
+ * @param eleNum 一个特征面中元素的数量
+ * @param interval 特征面各起始点之间的间隔
+ * @param margin 元素之间的间距
+ * @returns {Function} 一个将坐标转化为{特征面，行数，列数}的函数
+ */
+window.genConvert = function (point, num, eleNum, interval, margin) {
+    return function (X, Y) {
+        for (var i = 0; i < num; i++) {
+            var rX = X - point.x;
+            var rY = Y - (point.y + i * interval);
+            var row = Math.ceil(rY / (2 * margin)) - 1;
+            var col = Math.ceil(rX / (2 * margin)) - 1;
+
+            if (row >= 0 && col >= 0 && row < eleNum && col < eleNum) {
+                return {
+                    "feature": i,
+                    "row": row,
+                    "col": col
+                }
+            }
+        }
+    }
+};
+
+
+/**
+ * 根据给定的参数，创建鼠标移动时的监听函数
+ * @param eleThis 监听鼠标移动的JQuery对象
+ * @param funConv 将坐标转化为元素索引的函数
+ * @param funGetName 根据索引值获得名称的函数
+ * @param funGetValue 根据索引值获得神经元值的函数
+ * @returns {Function} 返回鼠标的监听函数
+ */
+window.genMouseMove = function (eleThis, funConv, funGetName, funGetValue) {
+    return function (e) {
+        ////相对浏览器窗口的坐标
+        var xx = e.originalEvent.x || e.originalEvent.layerX || 0;
+        var yy = e.originalEvent.y || e.originalEvent.layerY || 0;
+        // 相对当前元素的坐标
+        var positionX = e.pageX - eleThis.offset().left;
+        var positionY = e.pageY - eleThis.offset().top;
+
+        var detail = $("#detailCanvas");
+        var pos = funConv(positionX, positionY);
+        console.log(xx, yy);
+        if (pos !== undefined) {
+            detail.show();
+            if (xx < 710 && yy < 200) {
+                detail.css({"left": xx + 20, "top": yy + 20});
+            } else if (xx < 710 && yy >= 200) {
+                detail.css({"left": xx + 20, "top": yy - 140});
+            } else if (xx >= 710 && yy < 200) {
+                detail.css({"left": xx - 600 - 20, "top": yy + 20});
+            } else {
+                detail.css({"left": xx - 600 - 20, "top": yy - 140});
+            }
+            drawDetail(funGetName(pos), funGetValue(pos));
+        } else {
+            detail.hide();
+        }
+    }
 };
