@@ -21,5 +21,26 @@ obj.mousemove(genMouseMove(obj, conv1PoolToIdx,
     },
     function (pos) {
         return window.calcData.conv1.p[pos.feature][pos.row][pos.col];
+    },
+    {
+        "name": "conv1Pool",
+        "title": "池化层输入",
+        "getInputData": function (pos) {
+            var leftTop = {
+                "row": 2 * pos.row - 1,
+                "col": 2 * pos.col - 1
+            };
+
+            var result = [];
+            for (var row = leftTop.row; row < leftTop.row + 2; row++) {
+                var oneRow = [];
+                for (var col = leftTop.col; col < leftTop.col + 2; col++) {
+                    oneRow.push(window.calcData.conv1.v[pos.feature][row][col]);
+                }
+                result.push(oneRow);
+            }
+            return result;
+        }
+
     })
 );

@@ -163,17 +163,17 @@ window.genMouseMove = function (eleThis, funConv, funGetName, funGetValue, more)
 
         var detail = $("#detailCanvas");
         var pos = funConv(positionX, positionY);
-        console.log(xx, yy);
+        //  console.log(xx, yy);
         if (pos !== undefined) {
             detail.show();
-            if (xx < 710 && yy < 240) {
+            if (xx < 710 && yy < 380) {
                 detail.css({"left": xx + 20, "top": yy + 20});
-            } else if (xx < 710 && yy >= 240) {
-                detail.css({"left": xx + 20, "top": yy - 200 - 20});
-            } else if (xx >= 710 && yy < 240) {
-                detail.css({"left": xx - 300 - 20, "top": yy + 20});
+            } else if (xx < 710 && yy >= 380) {
+                detail.css({"left": xx + 20, "top": yy - 360 - 20});
+            } else if (xx >= 710 && yy < 380) {
+                detail.css({"left": xx - 540 - 20, "top": yy + 20});
             } else {
-                detail.css({"left": xx - 300 - 20, "top": yy - 200 - 20});
+                detail.css({"left": xx - 540 - 20, "top": yy - 360 - 20});
             }
 
             if (more !== undefined) {
