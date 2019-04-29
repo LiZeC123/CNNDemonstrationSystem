@@ -32,7 +32,26 @@ function getColorByType(colorType, sign, alpha) {
     }
 }
 
-function baseDrawMatrixNerve(point, margin, radius, data, colorType) {
+/**
+ * 坐标转换函数，使得输入的数字在指定的位置居中显示
+ * @param x 中心点x坐标
+ * @param y 中心点y坐标
+ * @param value 需要显示的数字
+ * @returns 转化后的坐标
+ */
+window.getTextPoint = function (x, y, value) {
+    if (value >= 100) {
+        return new Point(x - 20, y + 5)
+    } else if (value >= 10) {
+        return new Point(x - 15, y + 5)
+    } else if (value >= 0) {
+        return new Point(x - 12, y + 5)
+    } else if (value >= -10) {
+        return new Point(x - 15, y + 5);
+    }
+};
+
+function baseDrawMatrixNerve(point, margin, radius, data, colorType, drawText) {
     var b = matrixBorder(data);
     var min = b[0];
     var max = b[1];
@@ -41,7 +60,8 @@ function baseDrawMatrixNerve(point, margin, radius, data, colorType) {
     var height = data.length;
     for (var x = 0; x < width; x++) {
         for (var y = 0; y < height; y++) {
-            var c = Shape.Circle(point.x + 2 * x * margin + margin, point.y + 2 * y * margin + margin, radius);
+            var center = new Point(point.x + 2 * x * margin + margin, point.y + 2 * y * margin + margin);
+            var c = Shape.Circle(center, radius);
             //由于正负数分开进行归一化，因此ReLU函数前后的正数神经元看起来亮度不变，更能反映ReLU函数的特点
             if (data[y][x] >= 0) {
                 c.strokeColor = getColorByType(colorType, +1);
@@ -49,6 +69,16 @@ function baseDrawMatrixNerve(point, margin, radius, data, colorType) {
             } else {
                 c.strokeColor = getColorByType(colorType, -1);
                 c.fillColor = getColorByType(colorType, -1, data[y][x] / min);
+            }
+
+            // 在神经元上加上数值
+            if (drawText) {
+                var value = data[y][x];
+                var text = new PointText(getTextPoint(center.x, center.y, value));
+                text.content = value.toFixed(2);
+                if (value < 0) {
+                    text.fillColor = "white";
+                }
             }
         }
     }
@@ -63,12 +93,17 @@ function baseDrawMatrixNerve(point, margin, radius, data, colorType) {
     border.closed = true;
 }
 
+
 window.drawMatrixNerve = function (point, margin, radius, data) {
     baseDrawMatrixNerve(point, margin, radius, data, "data");
 };
 
 window.drawGradientMatrixNerve = function (point, margin, radius, data) {
     baseDrawMatrixNerve(point, margin, radius, data, "gradient");
+};
+
+window.drawMatrixNerveWithNumber = function (point, margin, radius, data) {
+    baseDrawMatrixNerve(point, margin, radius, data, "data", true);
 };
 
 window.drawMatrixNerve2 = function (point, margin, radius, data) {

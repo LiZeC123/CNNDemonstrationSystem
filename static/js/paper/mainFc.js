@@ -210,15 +210,6 @@ function retain(value) {
     return value < 0.2 ? 0.2 : value;
 }
 
-function getTextPoint(x, y, value) {
-    if (value >= 100) {
-        return new Point(x - 20, y + 5)
-    } else if (value >= 10) {
-        return new Point(x - 15, y + 5)
-    } else {
-        return new Point(x - 12, y + 5)
-    }
-}
 
 function max(array) {
     var m = array[0];

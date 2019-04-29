@@ -17,7 +17,7 @@ var conv1ReLUToIdx = genConvert(point, 4, 28, interval, margin);
 var obj = $("#reLU1Canvas");
 obj.mousemove(genMouseMove(obj, conv1ReLUToIdx,
     function (pos) {
-        return "第一ReLU层 特征面" + pos.feature;
+        return "第一ReLU层 特征面" + pos.feature + " 第" + pos.row + "行 第" + pos.col + "列";
     },
     function (pos) {
         return window.calcData.conv1.v[pos.feature][pos.row][pos.col];

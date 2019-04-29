@@ -17,7 +17,7 @@ var conv1ConvToIdx = genConvert(point, 4, 28, interval, margin);
 var obj = $("#conv1Canvas");
 obj.mousemove(genMouseMove(obj, conv1ConvToIdx,
     function (pos) {
-        return "第一卷积层 特征面" + pos.feature;
+        return "第一卷积层 特征面" + pos.feature + " 第" + pos.row + "行 第" + pos.col + "列";
     },
     function (pos) {
         return window.calcData.conv1.f[pos.feature][pos.row][pos.col];

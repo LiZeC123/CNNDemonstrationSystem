@@ -12,8 +12,8 @@ window.mainMainUpdate = function () {
 var mainMainToIdx = genConvert(point, 1, 28, 0, margin);
 var obj = $("#mainCanvas");
 obj.mousemove(genMouseMove(obj, mainMainToIdx,
-    function () {
-        return "输入层"
+    function (pos) {
+        return "输入层" + " 第" + pos.row + "行 第" + pos.col + "列";
     },
     function (pos) {
         return window.calcData.inputImage[pos.row * 28 + pos.col]
