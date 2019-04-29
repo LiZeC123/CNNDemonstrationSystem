@@ -47,6 +47,22 @@ window.drawDetail = function (layoutName, value, more) {
             drawMatrixNerveWithNumber(new Point(7, 100), 25, 20, more.getInputData(more.pos));
         }
     }
-
-
 };
+
+var detailToIdx = function () {
+    // 返回-1，使得鼠标移动在消息界面时隐藏此界面
+    return {
+        "feature": -1,
+        "row": -1,
+        "col": -1
+    }
+};
+var obj = $("#detailCanvas");
+obj.mousemove(genMouseMove(obj, detailToIdx,
+    function () {
+        
+    },
+    function () {
+
+    })
+);
