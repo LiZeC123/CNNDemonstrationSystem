@@ -19,6 +19,8 @@ obj.mousemove(genMouseMove(obj, conv2ConvToIdx,
     function (pos) {
         // 卷积核的数据跟随鼠标位置同步变化
         window.mainConv2WbUpdate(window.calcData.conv2, pos.feature);
+        // 输入的卷积层在输入神经元绘制一个边框
+        window.conv1PoolUpdate({"pos": pos});
         return "第二卷积层 特征面" + pos.feature + " 第" + pos.row + "行 第" + pos.col + "列";
     },
     function (pos) {

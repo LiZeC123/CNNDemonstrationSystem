@@ -93,6 +93,54 @@ function baseDrawMatrixNerve(point, margin, radius, data, colorType, drawText) {
     border.closed = true;
 }
 
+/**
+ *
+ * @param point
+ * @param pos
+ * @param margin
+ * @param eleNum
+ */
+window.drawSelectedBorder = function (point, pos, margin, eleNum) {
+
+    var center = new Point(point.x + pos.col * 2 * margin + margin, point.y + pos.row * 2 * margin + margin);
+    /* 边框与点的对应关系如下图所示
+        A       B
+         -------
+        |   x   |
+         -------
+        D       C
+     */
+    var base = 5 * margin;
+    var A = new Point(center.x - base, center.y - base);
+    var B = new Point(center.x + base, center.y - base);
+    var C = new Point(center.x + base, center.y + base);
+    var D = new Point(center.x - base, center.y + base);
+
+    var maxLen = eleNum * 2 * margin;
+    [A, B, C, D].forEach(function (e) {
+        if (e.x < point.x) {
+            e.x = point.x;
+        }
+        if (e.y < point.y) {
+            e.y = point.y;
+        }
+        if (e.x > point.x + maxLen) {
+            e.x = point.x + maxLen;
+        }
+        if (e.y > point.y + maxLen) {
+            e.y = point.y + maxLen;
+        }
+    });
+
+    var border = new Path();
+    border.strokeColor = 'white';
+    border.strokeWidth = 4;
+    border.add(A);
+    border.add(B);
+    border.add(C);
+    border.add(D);
+    border.closed = true;
+};
 
 window.drawMatrixNerve = function (point, margin, radius, data) {
     baseDrawMatrixNerve(point, margin, radius, data, "data");

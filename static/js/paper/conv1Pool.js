@@ -3,13 +3,16 @@ var interval = 400;
 var margin = 9;
 var radius = 6;
 
-window.conv1PoolUpdate = function () {
+window.conv1PoolUpdate = function (border) {
     paper.activate();
     paper.project.clear();
     drawTitle("第一池化层");
     window.conv1.p.forEach(function (e, i) {
         var p = new Point(point.x, point.y + i * interval);
-        drawMatrixNerve(p, margin, radius, e)
+        drawMatrixNerve(p, margin, radius, e);
+        if (border !== undefined) {
+            drawSelectedBorder(p, border.pos, margin, 14);
+        }
     });
 };
 
