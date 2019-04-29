@@ -201,15 +201,7 @@ window.genMouseMove = function (eleThis, funConv, funGetName, funGetValue, more)
         //  console.log(xx, yy);
         if (pos !== undefined) {
             detail.show();
-            if (xx < 710 && yy < 380) {
-                detail.css({"left": xx + 20, "top": yy + 20});
-            } else if (xx < 710 && yy >= 380) {
-                detail.css({"left": xx + 20, "top": yy - 360 - 20});
-            } else if (xx >= 710 && yy < 380) {
-                detail.css({"left": xx - 540 - 20, "top": yy + 20});
-            } else {
-                detail.css({"left": xx - 540 - 20, "top": yy - 360 - 20});
-            }
+            setDetailCSS(detail, eleThis, xx, yy);
 
             if (more !== undefined) {
                 // 如果更多参数不为空，则将pos加入到其中,以便于内部的模块调用其他函数
@@ -221,3 +213,39 @@ window.genMouseMove = function (eleThis, funConv, funGetName, funGetValue, more)
         }
     }
 };
+
+/**
+ * 根据鼠标的位置和详细界面的窗口类型设置详细界面的窗口的位置
+ * @param detail 详细界面的窗口的JQuery对象
+ * @param eleThis 当前需要展示的窗口的JQuery对象
+ * @param xx 当前鼠标的X坐标
+ * @param yy 当前鼠标的Y坐标
+ */
+function setDetailCSS(detail, eleThis, xx, yy) {
+    var width = 500;
+    var height = 60;
+    if (eleThis.selector === "#conv1Canvas") {
+        width = 540;
+        height = 360;
+    } else if (eleThis.selector === "#pool1Canvas") {
+        height = 212;
+    }
+
+    var m = 20;                 // 鼠标与窗口边缘的距离
+    var topLimit = height + m;  // 上方的极限距离，小于此距离时窗口必须位于下方
+    var leftLimit = 1340 - width - m;
+    if (xx < leftLimit && yy < topLimit) {
+        detail.css({"left": xx + m, "top": yy + m, "width": width, "height": height});
+        detail.attr({"width": width, "height": height});
+    } else if (xx < leftLimit && yy >= topLimit) {
+        detail.css({"left": xx + m, "top": yy - height - m, "width": width, "height": height});
+        detail.attr({"width": width, "height": height});
+    } else if (xx >= leftLimit && yy < topLimit) {
+        detail.css({"left": xx - width - m, "top": yy + m, "width": width, "height": height});
+        detail.attr({"width": width, "height": height});
+    } else {
+        detail.css({"left": xx - width - m, "top": yy - height - m, "width": width, "height": height});
+        detail.attr({"width": width, "height": height});
+    }
+
+}
