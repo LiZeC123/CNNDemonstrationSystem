@@ -66,10 +66,12 @@ json    | 解析后的JSON数据
 - [jQuery动态设置样式（style、css）](https://blog.csdn.net/xiaoyuncc/article/details/70854925)
 - [jQuery 异步和同步请求](https://www.cnblogs.com/wtcl/p/8138061.html)
 - [jQuery监听键盘事件及相关操作使用教程](https://www.cnblogs.com/xiangsj/p/5996454.html)
+- [jquery修改属性值](https://blog.csdn.net/au55555/article/details/80373437)
 
 ### 其他参考资料
 - [HTML5 -- canvas画板转为图片](https://blog.csdn.net/sinat_19327991/article/details/77050717 )
 - [HTML5 Canvas画图、保存图片、提交文件问题](https://www.jianshu.com/p/df7461ff64b1)
+- [H5 canvas绘制出现模糊的问题](http://www.cnblogs.com/qianduanjingying/p/5817516.html)
 
 ### 机器学习理论 
 - [softmax函数详解](https://www.cnblogs.com/alexanderkun/p/8098781.html)
