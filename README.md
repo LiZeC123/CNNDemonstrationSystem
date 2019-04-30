@@ -67,6 +67,8 @@ json    | 解析后的JSON数据
 - [jQuery 异步和同步请求](https://www.cnblogs.com/wtcl/p/8138061.html)
 - [jQuery监听键盘事件及相关操作使用教程](https://www.cnblogs.com/xiangsj/p/5996454.html)
 - [jquery修改属性值](https://blog.csdn.net/au55555/article/details/80373437)
+- [js如何修改button上的文字](https://zhidao.baidu.com/question/1924148062453751987.html)
+- [jquery禁用、启用button以及button的样式操作](https://blog.csdn.net/qq_38455201/article/details/80591530)
 
 ### 其他参考资料
 - [HTML5 -- canvas画板转为图片](https://blog.csdn.net/sinat_19327991/article/details/77050717 )
