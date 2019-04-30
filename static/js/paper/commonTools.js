@@ -147,7 +147,52 @@ window.drawMatrixNerve = function (point, margin, radius, data) {
 };
 
 window.drawGradientMatrixNerve = function (point, margin, radius, data) {
-    baseDrawMatrixNerve(point, margin, radius, data, "gradient");
+    //baseDrawMatrixNerve(point, margin, radius, data, "gradient");
+    var b = matrixBorder(data);
+    var min = b[0];
+    var max = b[1];
+
+    var width = data[0].length;
+    var height = data.length;
+    for (var x = 0; x < width; x++) {
+        for (var y = 0; y < height; y++) {
+            var center = new Point(point.x + 2 * x * margin + margin, point.y + 2 * y * margin + margin);
+
+            /*  箭头与点对应关系如下所示
+            *       C            A
+            *       |           /|\
+            *       |          B x D
+            *     B x D          |
+            *      \|/           |
+            *       A            C
+            */
+            var A, B, C, D, arrow;
+            B = new Point(center.x - 5, center.y);
+            D = new Point(center.x + 5, center.y);
+            if (data[y][x] >= 0) {
+                // 梯度为正，数值减少
+                A = new Point(center.x, center.y + 3);
+                C = new Point(center.x, center.y - 5);
+                arrow = new Path({"strokeColor": getColorByType("gradient", +1, data[y][x] / max)});
+
+                // c.strokeColor = getColorByType(colorType, +1);
+                // c.fillColor = getColorByType(colorType, +1, data[y][x] / max);
+            } else {
+                A = new Point(center.x, center.y - 3);
+                C = new Point(center.x, center.y + 5);
+                arrow = new Path({"strokeColor": getColorByType("gradient", -1, data[y][x] / min)});
+
+                // c.strokeColor = getColorByType(colorType, -1);
+                // c.fillColor = getColorByType(colorType, -1, data[y][x] / min);
+            }
+
+            arrow.add(A, B);
+            arrow.add(A, C);
+            arrow.add(A, D);
+        }
+    }
+
+
 };
 
 window.drawMatrixNerveWithNumber = function (point, margin, radius, data) {

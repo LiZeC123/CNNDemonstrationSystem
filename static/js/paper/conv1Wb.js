@@ -1,14 +1,22 @@
+var point = {x: 10, y: 140};
+var interval = 400;
+var margin = 12;
+var radius = 10;
+
 window.conv1WbUpdate = function (WbData, type) {
     paper.activate();
-    paper.project.clear();
+
 
     if (type === "data") {
+        paper.project.clear();
         WbData.W.forEach(function (e, i) {
-            drawMatrixNerve({x: 10, y: 10 + i * 346}, 9, 6, e)
+            drawMatrixNerve({x: 10, y: 140 + i * 400}, margin, radius, e)
         });
-    } else if (type === "gradient") {
+    }
+
+    if (type === "gradient") {
         WbData.W.forEach(function (e, i) {
-            drawGradientMatrixNerve({x: 10, y: 10 + i * 346}, 9, 6, e)
+            drawGradientMatrixNerve({x: 10, y: 140 + i * 400}, margin, radius, e)
         });
     }
 

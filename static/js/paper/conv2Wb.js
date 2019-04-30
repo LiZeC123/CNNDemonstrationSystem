@@ -1,15 +1,44 @@
+var point = {x: 10, y: 40};
+var interval = 200;
+var margin = 12;
+var radius = 10;
+
 window.conv2WbUpdate = function (WbData, type) {
     paper.activate();
-    paper.project.clear();
 
+    var i, line;
     if (type === "data") {
-        WbData.W.forEach(function (e, i) {
-            drawMatrixNerve({x: 10, y: 12 + i * 200}, 9, 6, e)
-        });
-    } else if (type === "gradient") {
-        WbData.W.forEach(function (e, i) {
-            drawGradientMatrixNerve({x: 10, y: 12 + i * 200}, 9, 6, e)
-        });
+        paper.project.clear();
+        for (i = 0; i < 4; i++) {
+            line = new Point(point.x + i * 140, point.y);
+            WbData.W[i].forEach(function (e, i) {
+                var p = new Point(line.x, line.y + i * interval);
+                drawMatrixNerve(p, margin, radius, e)
+            });
+        }
+        for (i = 0; i < 4; i++) {
+            line = new Point(point.x + i * 140, point.y + 800);
+            WbData.W[i + 4].forEach(function (e, i) {
+                var p = new Point(line.x, line.y + i * interval);
+                drawMatrixNerve(p, margin, radius, e)
+            });
+        }
     }
 
+    if (type === "gradient") {
+        for (i = 0; i < 4; i++) {
+            line = new Point(point.x + i * 140, point.y);
+            WbData.W[i].forEach(function (e, i) {
+                var p = new Point(line.x, line.y + i * interval);
+                drawGradientMatrixNerve(p, margin, radius, e)
+            });
+        }
+        for (i = 0; i < 4; i++) {
+            line = new Point(point.x + i * 140, point.y + 800);
+            WbData.W[i + 4].forEach(function (e, i) {
+                var p = new Point(line.x, line.y + i * interval);
+                drawGradientMatrixNerve(p, margin, radius, e)
+            });
+        }
+    }
 };
