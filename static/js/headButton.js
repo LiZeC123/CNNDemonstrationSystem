@@ -28,6 +28,14 @@ function drawExport(URL) {
     })
 }
 
+function drawNew() {
+    $.post(config.baseURL + "/getMnistImage", function (jsonStr) {
+        var data = JSON.parse(jsonStr);
+        window.inputImage = data.image;
+        window.mainMainUpdate();
+        $("#numberResult").html(data.label + "(MNIST)")
+    })
+}
 
 function trainExport() {
     const canvas = document.getElementById('drawCanvas');
@@ -40,22 +48,28 @@ function trainExport() {
     dataTool.trainUpload(data, function (trainData) {
         console.log(trainData);
         window.trainData = trainData;
+        window.dialog.hide();
         window.conv1WbUpdate(trainData.first.conv1, "data");
         window.conv2WbUpdate(trainData.first.conv2, "data");
         window.mainFcUpdate(trainData, "data");
     })
 }
 
-function drawNew() {
-    $.post(config.baseURL + "/getMnistImage", function (jsonStr) {
-        var data = JSON.parse(jsonStr);
-        window.inputImage = data.image;
-        window.mainMainUpdate();
-        $("#numberResult").html(data.label + "(MNIST)")
-    })
+let isGradient = false;
+
+function trainSwitch() {
+    isGradient = !isGradient;
+    if (isGradient) {
+        window.conv1WbUpdate(trainData.gradient.conv1, "gradient");
+        window.conv2WbUpdate(trainData.gradient.conv2, "gradient");
+        window.mainFcUpdate(trainData, "gradient");
+    } else {
+        window.conv1WbUpdate(trainData.first.conv1, "data");
+        window.conv2WbUpdate(trainData.first.conv2, "data");
+        window.mainFcUpdate(trainData, "data");
+    }
 }
 
-let trainFlag = false;
 $(document).keydown(function (event) {
     if (trainData !== undefined) {
         if (event.key === 'a') {
@@ -68,7 +82,7 @@ $(document).keydown(function (event) {
             window.mainFcChange(-1, 2);
         }
 
-        if (trainFlag) {
+        if (isGradient) {
             window.mainFcUpdate(trainData, "gradient");
         } else {
             window.mainFcUpdate(trainData, "data");
