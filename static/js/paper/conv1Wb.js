@@ -9,6 +9,7 @@ window.conv1WbUpdate = function (WbData, type) {
 
     if (type === "data") {
         paper.project.clear();
+        drawTitle("第一卷积层权值");
         WbData.W.forEach(function (e, i) {
             drawMatrixNerve({x: 10, y: 140 + i * 400}, margin, radius, e)
         });

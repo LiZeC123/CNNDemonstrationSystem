@@ -9,6 +9,7 @@ window.conv2WbUpdate = function (WbData, type) {
     var i, line;
     if (type === "data") {
         paper.project.clear();
+        drawTitle("第二卷积层权值");
         for (i = 0; i < 4; i++) {
             line = new Point(point.x + i * 140, point.y);
             WbData.W[i].forEach(function (e, i) {
