@@ -38,3 +38,8 @@ if __name__ == '__main__':
     calculateImageLocation(1600, 16, 20, 1)
     print("第二卷积层权值")
     calculateImageLocation(1600, 4, 9, 5)
+    print("------------------")
+    print("训练界面第一卷积层权值")
+    calculateImageLocation(1600, 4, 12, 5)
+    print("训练界面第二卷积层权值")
+    calculateImageLocation(1600, 8, 12, 5)
