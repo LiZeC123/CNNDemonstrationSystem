@@ -31,7 +31,16 @@
     <script src="js/paper/mainFc.js" type="text/paperscript" canvas="fullCanvas"></script>
 
     <script type="text/javascript">
-        //TODO: 添加动画和详细页面的鼠标跟随代码
+        $(function () {
+            dataTool.trainData({}, function (result) {
+                window.trainData = {};
+                console.log(result);
+                window.trainDataList = result;
+                //trainFlag = true;
+                console.log("数据加载完毕");
+                $("#btnPause").attr('disabled', false);
+            });
+        });
     </script>
 </head>
 
@@ -44,10 +53,13 @@
     <br/>
     <button id="btnClear" style="width:80px;background-color:yellow; " onclick="drawClean();">清除</button>
     <br/>
+    <!--
     <button id="btnNew" style="width:80px;background-color:blue;" onclick="trainGradient();">切换</button>
-
-    <button id="btnClear" style="width:80px;background-color:yellow; " onclick="drawBegin();">开始</button>
-    <button id="btnClear" style="width:80px;background-color:yellow; " onclick="drawClean();">暂停</button>
+    -->
+    <button id="btnBack" onclick="trainBack();">后退</button>
+    <button id="btnPause" onclick="trainPause();" disabled="disabled">开始</button>
+    <button id="btnForward" onclick="trainForward();">前进</button>
+    <button id="btnGoto">跳转</button>
 
     <label>
         <select id="selectNumber">
