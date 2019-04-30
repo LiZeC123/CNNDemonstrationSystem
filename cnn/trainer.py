@@ -151,8 +151,9 @@ class TrainDateGen:
             y = graph.get_tensor_by_name("y:0")
             keep_prob = graph.get_tensor_by_name("keep_prob:0")
 
-            for n in range(30):
-                print(f"Total progress:{n / 30 * 100:.2f}%")
+            times = 120
+            for n in range(times):
+                print(f"Total progress:{n / times * 100:.2f}%")
                 # 先执行计算操作，获得参数信息
                 batch_xs, batch_ys = mnist.train.next_batch(1)
                 feed_dict = {x: batch_xs, y: batch_ys, keep_prob: 1.0}
