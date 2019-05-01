@@ -25,5 +25,10 @@ obj.mousemove(genMouseMove(obj, conv2ConvToIdx,
     },
     function (pos) {
         return window.calcData.conv2.f[pos.feature][pos.row][pos.col];
+    },
+    {
+        "onExit": function () {
+            window.conv1PoolUpdate();
+        }
     })
 );

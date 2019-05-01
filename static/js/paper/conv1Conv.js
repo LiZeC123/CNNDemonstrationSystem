@@ -49,6 +49,10 @@ obj.mousemove(genMouseMove(obj, conv1ConvToIdx,
                 result.push(oneRow);
             }
             return result;
+        },
+        "onExit": function () {
+            // 退出时，重新绘制输入层，消除原来绘制的边框
+            window.mainMainUpdate();
         }
     })
 );

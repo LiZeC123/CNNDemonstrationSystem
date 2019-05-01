@@ -303,6 +303,11 @@ window.genMouseMove = function (eleThis, funConv, funGetName, funGetValue, more)
             drawDetail(funGetName(pos), funGetValue(pos), more);
         } else {
             detail.hide();
+
+            if (more !== undefined && more.onExit !== undefined) {
+                more.onExit();
+            }
+
         }
     }
 };
@@ -316,7 +321,7 @@ window.genMouseMove = function (eleThis, funConv, funGetName, funGetValue, more)
  */
 function setDetailCSS(detail, eleThis, xx, yy) {
     var width = 500;
-    var height = 60;
+    var height = 55;
     if (eleThis.selector === "#conv1Canvas") {
         width = 540;
         height = 360;
