@@ -330,7 +330,7 @@ function setDetailCSS(detail, eleThis, xx, yy) {
     }
 
     var m = 20;                 // 鼠标与窗口边缘的距离
-    var topLimit = height + m;  // 上方的极限距离，小于此距离时窗口必须位于下方
+    var topLimit = height + m - 30;  // 上方的极限距离，小于此距离时窗口必须位于下方(-30使得上下移动更平滑）
     var leftLimit = 1340 - width - m;
     if (xx < leftLimit && yy < topLimit) {
         detail.css({"left": xx + m, "top": yy + m, "width": width, "height": height});

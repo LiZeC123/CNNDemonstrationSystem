@@ -13,9 +13,7 @@
 }
 
 .mainDiv {
-    /*width: 1340px;*/
     width: 3000px;
-    overflow-x: scroll;
     z-index: 0;
     position: relative;
 }
