@@ -19,8 +19,10 @@ function drawExport(URL) {
             window.conv2ConvUpdate();
             window.conv2ReLUUpdate();
             window.conv2PoolUpdate();
+
             // 调整结构，使其兼容训练过程的数据格式
-            window.mainFcUpdate({"first": data}, "data");
+            window.trainData = {"first": data};
+            window.mainFcUpdate(trainData, "data");
             console.log(data);
         }
 
@@ -71,7 +73,7 @@ function trainSwitch() {
 }
 
 $(document).keydown(function (event) {
-    if (trainData !== undefined) {
+    if (window.trainData !== undefined) {
         if (event.key === 'a') {
             window.mainFcChange(1, 1);
         } else if (event.key === 's') {
