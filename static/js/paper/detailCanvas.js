@@ -40,11 +40,20 @@ window.drawDetail = function (layoutName, value, more) {
 
             drawText(new Point(281, 80), more.inputTitle);
             drawMatrixNerveWithNumber(new Point(283, 100), 25, 20, more.getInputData(more.pos));
-
-        }
-        if (more.name === "conv1Pool") {
+        } else if (more.name === "conv1Pool") {
             drawText(new Point(5, 80), more.title);
             drawMatrixNerveWithNumber(new Point(7, 100), 25, 20, more.getInputData(more.pos));
+        } else if (more.name === "fc") {
+            var W = more.getWeight(more.pos);
+            drawText(new Point(5, 80), more.getBias(more.pos));
+            drawText(new Point(5, 110), more.getWeightTitle());
+            var i, half = W.length / 2;
+            for (i = 0; i < half; i++) {
+                drawText(new Point(5, 130 + i * 20), W[i]);
+            }
+            for (i = half; i < W.length; i++) {
+                drawText(new Point(270, 130 + (i - half) * 20), W[i]);
+            }
         }
     }
 };
@@ -60,7 +69,7 @@ var detailToIdx = function () {
 var obj = $("#detailCanvas");
 obj.mousemove(genMouseMove(obj, detailToIdx,
     function () {
-        
+
     },
     function () {
 

@@ -15,9 +15,11 @@ window.mainFcChange = function (delta, layout) {
     }
 };
 
+var fcData;
 window.mainFcUpdate = function (trainData, type) {
     paper.activate();
     paper.project.clear();
+    console.log(trainData);
     var location = {
         "pointIn": new Point(37, 150),
         "pointMid": new Point(277, 250),
@@ -26,11 +28,25 @@ window.mainFcUpdate = function (trainData, type) {
 
     drawTitle("全连接层", new Point(100, 30));
     drawArrow(location);
+
+    fcData = {
+        "type": type,
+        "flatP": flatArray(trainData.first.conv2.p),
+    };
+
     if (type === "gradient") {
-        drawFullConnectGradientNerve(location, trainData)
+        fcData.fc1 = trainData.gradient.fc1;
+        fcData.fc2 = trainData.gradient.fc2;
     } else {
-        drawFullConnectNerve(location, trainData);
+        fcData.fc1 = trainData.first.fc1;
+        fcData.fc2 = trainData.first.fc2;
     }
+
+    fcData.fc1.h = trainData.first.fc1.h;
+    fcData.fc2.h = trainData.first.fc2.h;
+
+    drawFullConnectNerve(location, fcData);
+
 };
 
 function drawArrow(location) {
@@ -64,75 +80,44 @@ function drawDownArrow(point) {
     pathUp.add(B);
 }
 
-function drawFullConnectGradientNerve(location, trainData) {
-    var flatP = flatArray(trainData.first.conv2.p);
 
-    drawNerve(location.pointIn, begIdx1, num1, flatP);
+function drawFullConnectNerve(location, fcData) {
+
+    drawNerve(location.pointIn, begIdx1, num1, fcData.flatP);
     drawNerve2(location.pointMid, begIdx2, num2,
-        {"type": "gradient", "v": trainData.first.fc1.h[0], "b": trainData.gradient.fc1.b});
+        {"v": fcData.fc1.h[0], "b": fcData.fc1.b});
     drawNerve2(location.pointOut, 0, 10,
-        {"type": "gradient", "v": trainData.first.fc2.h[0], "b": trainData.gradient.fc2.b});
-
+        {"v": fcData.fc2.h[0], "b": fcData.fc2.b});
 
     drawConnectLine({"begPnt": location.pointIn, "begIdx": begIdx1, "num": num1},
         {"begPnt": location.pointMid, "begIdx": begIdx2, "num": num2},
         {
-            "type": "gradient", "W": trainData.gradient.fc1.W,
-            "Wmin": min(flatArray(trainData.gradient.fc1.W)),
-            "Wmax": max(flatArray(trainData.gradient.fc1.W))
+            "W": fcData.fc1.W,
+            "Wmin": min(flatArray(fcData.fc1.W)),
+            "Wmax": max(flatArray(fcData.fc1.W))
         }
     );
 
     drawConnectLine({"begPnt": location.pointMid, "begIdx": begIdx2, "num": num2},
         {"begPnt": location.pointOut, "begIdx": 0, "num": 10},
         {
-            "type": "gradient", "W": trainData.gradient.fc2.W,
-            "Wmin": min(flatArray(trainData.gradient.fc2.W)),
-            "Wmax": max(flatArray(trainData.gradient.fc2.W))
+            "W": fcData.fc2.W,
+            "Wmin": min(flatArray(fcData.fc2.W)),
+            "Wmax": max(flatArray(fcData.fc2.W))
         }
     );
 
     drawNumberLabel(location.pointOut);
 }
 
-function drawFullConnectNerve(location, trainData) {
-    var flatP = flatArray(trainData.first.conv2.p);
-
-    drawNerve(location.pointIn, begIdx1, num1, flatP);
-    drawNerve2(location.pointMid, begIdx2, num2,
-        {"type": "data", "v": trainData.first.fc1.h[0], "b": trainData.first.fc1.b});
-    drawNerve2(location.pointOut, 0, 10,
-        {"type": "data", "v": trainData.first.fc2.h[0], "b": trainData.first.fc2.b});
-
-    drawConnectLine({"begPnt": location.pointIn, "begIdx": begIdx1, "num": num1},
-        {"begPnt": location.pointMid, "begIdx": begIdx2, "num": num2},
-        {
-            "type": "data", "W": trainData.first.fc1.W,
-            "Wmin": min(flatArray(trainData.first.fc1.W)),
-            "Wmax": max(flatArray(trainData.first.fc1.W))
-        }
-    );
-
-    drawConnectLine({"begPnt": location.pointMid, "begIdx": begIdx2, "num": num2},
-        {"begPnt": location.pointOut, "begIdx": 0, "num": 10},
-        {
-            "type": "data", "W": trainData.first.fc2.W,
-            "Wmin": min(flatArray(trainData.first.fc2.W)),
-            "Wmax": max(flatArray(trainData.first.fc2.W))
-        }
-    );
-
-    drawNumberLabel(location.pointOut);
-}
-
-// data -> {type,W,Wmin,Wmax}
+// data -> {W,Wmin,Wmax}
 // A B -> {begPnt,begIdx,num}
 function drawConnectLine(A, B, data) {
     for (var i = 0; i < A.num; i++) {
         for (var j = 0; j < B.num; j++) {
             var value = data.W[A.begIdx + i][B.begIdx + j];
             var path = new Path();
-            path.strokeColor = getColorByType(data.type, value, data.Wmax, data.Wmin);
+            path.strokeColor = getColorByType(fcData.type, value, data.Wmax, data.Wmin);
             path.add(new Point(A.begPnt.x + radius, A.begPnt.y + i * margin),
                 new Point(B.begPnt.x - radius, B.begPnt.y + j * margin));
         }
@@ -169,8 +154,10 @@ function drawNerve2(begPnt, begIdx, num, drawData) {
         var c = new Shape.Circle(begPnt.x, begPnt.y + i * margin, radius);
         var v = drawData.v[begIdx + i];
         var b = drawData.b[begIdx + i];
-        c.strokeColor = getColorByType(drawData.type, b, Bmax, Bmin);
+        // 边框颜色根据绘制的类型有所不同
+        c.strokeColor = getColorByType(fcData.type, b, Bmax, Bmin);
         c.strokeWidth = 2;
+        // 神经元填充颜色始终为黑白色
         c.fillColor = getColorByType("data", v, Vmax, Vmin);
         var text = new PointText(getTextPoint(begPnt.x, begPnt.y + i * margin, v));
         text.content = v.toFixed(2)
@@ -211,9 +198,9 @@ function retain(value) {
 }
 
 
-function max(array) {
-    var m = array[0];
-    array.forEach(function (ele) {
+function max(arr) {
+    var m = arr[0];
+    arr.forEach(function (ele) {
         if (ele > m) {
             m = ele;
         }
@@ -221,9 +208,9 @@ function max(array) {
     return m;
 }
 
-function min(array) {
-    var m = array[0];
-    array.forEach(function (ele) {
+function min(arr) {
+    var m = arr[0];
+    arr.forEach(function (ele) {
         if (ele < m) {
             m = ele;
         }
@@ -236,4 +223,99 @@ function flatArray(arr) {
     var fp = [].concat.apply([], arr);
     fp = [].concat.apply([], fp);
     return fp;
+}
+
+
+var mainFcToIdx = function (X, Y) {
+    var rY = Y % 100;
+    var absIdx, rIdx;
+    var line = -1;
+    if (rY > 50 - radius && rY < 50 + radius) {
+        rIdx = Math.floor(Y / 100) - 1;
+
+        if (X > 37 - radius && X < 37 + radius) {
+            line = 0;
+            absIdx = begIdx1 + rIdx;
+        } else if (X > 277 - radius && X < 277 + radius) {
+            line = 1;
+            rIdx -= 1; // 不同层的神经元起点位置不同，需要作出调整
+            absIdx = begIdx2 + rIdx;
+        } else if (X > 517 - radius && X < 517 + radius) {
+            line = 2;
+            rIdx -= 2;
+            absIdx = rIdx;
+        }
+
+    }
+
+
+    if (line !== -1 && rIdx !== undefined) {
+        return {
+            "line": line,
+            "rIdx": rIdx,
+            "absIdx": absIdx
+        }
+    }
+};
+
+var obj = $("#fullCanvas");
+obj.mousemove(genMouseMove(obj, mainFcToIdx,
+    function (pos) {
+        switch (pos.line) {
+            case 0:
+                return "输入层 序号" + pos.absIdx + " 当前位置" + pos.rIdx;
+            case 1:
+                return "隐含层 序号" + pos.absIdx + " 当前位置" + pos.rIdx;
+            case 2:
+                return "输出层 序号" + pos.absIdx;
+        }
+    },
+    function (pos) {
+        switch (pos.line) {
+            case 0:
+                return fcData.flatP[pos.absIdx];
+            case 1:
+                return fcData.fc1.h[0][pos.absIdx];
+            case 2:
+                return fcData.fc2.h[0][pos.absIdx];
+        }
+    },
+    {
+        "name": "fc",
+        "getWeight": getWeight,
+        "getBias": getBias,
+        "getWeightTitle": function () {
+            return window.isGradient ? "当前神经元连接权值的梯度" : "当前神经元连接权值";
+        }
+    })
+);
+
+function getWeight(pos) {
+    var result = [], i = 0;
+    if (pos.line === 0) {
+        result.push("此神经元没有连接的权值");
+        result.push("");
+    }
+    if (pos.line === 1) {
+        for (i = begIdx1; i < begIdx1 + num1; i++) {
+            result.push("[" + (i - begIdx1) + "] " + fcData.fc1.W[i][pos.absIdx].toFixed(5));
+        }
+    } else if (pos.line === 2) {
+        for (i = begIdx2; i < begIdx2 + num2; i++) {
+            result.push("[" + (i - begIdx2) + "] " + fcData.fc2.W[i][pos.absIdx].toFixed(5));
+        }
+    }
+    return result;
+}
+
+function getBias(pos) {
+    var title = window.isGradient ? "当前神经元偏置的梯度: " : "当前神经元偏置值: ";
+    switch (pos.line) {
+        case 0:
+            return title + "无";
+        case 1:
+            return title + fcData.fc1.b[pos.absIdx].toFixed(5);
+        case 2:
+            return title + fcData.fc2.b[pos.absIdx].toFixed(5);
+    }
 }

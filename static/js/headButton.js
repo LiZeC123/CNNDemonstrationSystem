@@ -57,10 +57,10 @@ function trainExport() {
     })
 }
 
-let isGradient = false;
+window.isGradient = false;
 
 function trainSwitch() {
-    isGradient = !isGradient;
+    window.isGradient = !isGradient;
     if (isGradient) {
         window.conv1WbUpdate(trainData.gradient.conv1, "gradient");
         window.conv2WbUpdate(trainData.gradient.conv2, "gradient");
@@ -104,11 +104,13 @@ function drawHandler() {
     }
 
     if (dataIdx % 2 === 0) {
+        window.isGradient = false;
         trainData.first = trainDataList[dataIdx];
         window.conv1WbUpdate(trainData.first.conv1, "data");
         window.conv2WbUpdate(trainData.first.conv2, "data");
         window.mainFcUpdate(trainData, "data");
     } else {
+        window.isGradient = true;
         trainData.gradient = trainDataList[dataIdx];
         window.conv1WbUpdate(trainData.gradient.conv1, "gradient");
         window.conv2WbUpdate(trainData.gradient.conv2, "gradient");

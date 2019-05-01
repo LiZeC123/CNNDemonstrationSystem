@@ -327,6 +327,8 @@ function setDetailCSS(detail, eleThis, xx, yy) {
         height = 360;
     } else if (eleThis.selector === "#pool1Canvas") {
         height = 212;
+    } else if (eleThis.selector === "#fullCanvas") {
+        height = 260;
     }
 
     var m = 20;                 // 鼠标与窗口边缘的距离
