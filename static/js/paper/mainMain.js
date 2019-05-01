@@ -6,10 +6,13 @@ window.mainMainUpdate = function (border) {
     paper.activate();
     paper.project.clear();
     drawTitle("输入图像");
-    drawMatrixNerve2(point, margin, radius, window.inputImage);
 
     if (border !== undefined) {
-        drawSelectedBorder(point, border.pos, margin, 28);
+        var adjustPoint = {x: 10, y: 32 + border.pos.feature * 400};
+        drawMatrixNerve2(adjustPoint, margin, radius, window.inputImage);
+        drawSelectedBorder(adjustPoint, border.pos, margin, 28);
+    } else {
+        drawMatrixNerve2(point, margin, radius, window.inputImage);
     }
 };
 
