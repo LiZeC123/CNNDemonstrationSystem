@@ -98,11 +98,12 @@ let dataIdx = 0;
 let isPause = true;
 
 function drawHandler() {
-    // 如果达到数组的最后一个元素 或者 当前处于暂停状态
+    // 如果达到数组的最后一个元素
     if (dataIdx >= trainDataList.length) {
         return;
     }
 
+    $("#spanFrame").text("当前第" + (Math.floor(dataIdx / 2) + 1) + "次训练");
     if (dataIdx % 2 === 0) {
         window.isGradient = false;
         trainData.first = trainDataList[dataIdx];
@@ -122,8 +123,10 @@ function drawHandler() {
 function trainBack() {
     clearInterval(intervalID);
     // dataIdx指向下一个需要绘制的位置，因此回退需要-2
-    dataIdx = dataIdx - 2;
-    drawHandler();
+    if (dataIdx >= 2) {
+        dataIdx = dataIdx - 2;
+        drawHandler();
+    }
     console.log(dataIdx);
 }
 

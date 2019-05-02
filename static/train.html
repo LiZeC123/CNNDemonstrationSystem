@@ -45,6 +45,7 @@
                 //isGradient = true;
                 console.log("数据加载完毕");
                 $("#btnPause").attr('disabled', false);
+                $("#spanFrame").text("数据加载完毕");
             });
 
             $("#btnOpen").click(function () {
@@ -63,6 +64,7 @@
 <button id="btnBack" onclick="trainBack();">后退</button>
 <button id="btnPause" onclick="trainPause();" disabled="disabled">开始</button>
 <button id="btnForward" onclick="trainForward();">前进</button>
+<span id="spanFrame">正在加载数据...</span>
 <button id="btnGoto">跳转</button>
 <button id="btnOpen">手动训练</button>
 <button id="btnSwitch" onclick="trainSwitch();">梯度切换</button>
