@@ -54,7 +54,8 @@ json    | 解析后的JSON数据
 - [JS数据格式化保留两位小数的多种实现方法总结](https://balzac.iteye.com/blog/1450143)
 - [js 向上取整、向下取整、四舍五入](https://www.cnblogs.com/Marydon20170307/p/8831055.html)
 - [HTML select标签](http://www.w3school.com.cn/tags/tag_select.asp)
-- [如何用jQuery获得select的值](https://www.cnblogs.com/eager/p/7133270.html)
+- [使用原生JS+CSS或HTML5实现简单的进度条和滑动条效果](https://www.cnblogs.com/zhangjunfeng/p/6705924.html)
+
 
 ### Paper.js
 - [Paper.js Document](http://paperjs.org/reference/global/)
@@ -69,6 +70,8 @@ json    | 解析后的JSON数据
 - [jquery修改属性值](https://blog.csdn.net/au55555/article/details/80373437)
 - [js如何修改button上的文字](https://zhidao.baidu.com/question/1924148062453751987.html)
 - [jquery禁用、启用button以及button的样式操作](https://blog.csdn.net/qq_38455201/article/details/80591530)
+- [如何用jQuery获得select的值](https://www.cnblogs.com/eager/p/7133270.html)
+
 
 ### 其他参考资料
 - [HTML5 -- canvas画板转为图片](https://blog.csdn.net/sinat_19327991/article/details/77050717 )
