@@ -27,7 +27,7 @@ window.mainFcUpdate = function (trainData, type) {
     };
 
     drawTitle("全连接层", new Point(100, 30));
-    drawArrow(location);
+    drawArrows(location);
 
     fcData = {
         "type": type,
@@ -49,37 +49,39 @@ window.mainFcUpdate = function (trainData, type) {
 
 };
 
-function drawArrow(location) {
-    drawUpArrow(new Point(location.pointIn.x, location.pointIn.y - 80));
-    drawUpArrow(new Point(location.pointMid.x, location.pointIn.y - 80));
-    drawDownArrow(new Point(location.pointIn.x, location.pointIn.y + 1380));
-    drawDownArrow(new Point(location.pointMid.x, location.pointIn.y + 1380));
+function drawArrows(location) {
+    drawArrow(new Point(location.pointIn.x, location.pointIn.y - 100), "up");
+    drawArrow(new Point(location.pointMid.x, location.pointIn.y - 100), "up");
+    drawArrow(new Point(location.pointIn.x, location.pointIn.y + 1400), "down");
+    drawArrow(new Point(location.pointMid.x, location.pointIn.y + 1400), "down");
 }
 
-function drawUpArrow(point) {
-    var A = new Point(point.x - 10, point.y + 10);
-    var B = new Point(point.x + 10, point.y + 10);
-    var C = new Point(point.x, point.y - 20);
-    var pathUp = new Path();
-    pathUp.strokeColor = 'white';
-    pathUp.strokeWidth = 5;
-    pathUp.add(A);
-    pathUp.add(C);
-    pathUp.add(B);
-}
+function drawArrow(center, direction) {
+    /*  箭头与点对应关系如下所示
+    *       C            A
+    *       |           /|\
+    *       |          B x D
+    *     B x D          |
+    *      \|/           |
+    *       A            C
+    */
+    var A, B, C, D, arrow;
 
-function drawDownArrow(point) {
-    var A = new Point(point.x - 10, point.y - 10);
-    var B = new Point(point.x + 10, point.y - 10);
-    var C = new Point(point.x, point.y + 20);
-    var pathUp = new Path();
-    pathUp.strokeColor = 'white';
-    pathUp.strokeWidth = 5;
-    pathUp.add(A);
-    pathUp.add(C);
-    pathUp.add(B);
-}
+    B = new Point(center.x - 12, center.y);
+    D = new Point(center.x + 12, center.y);
+    arrow = new Path({"strokeColor": "white"});
+    if (direction === "up") {
+        A = new Point(center.x, center.y - 12);
+        C = new Point(center.x, center.y + 18);
+    } else {
+        A = new Point(center.x, center.y + 12);
+        C = new Point(center.x, center.y - 18);
+    }
 
+    arrow.add(A, B);
+    arrow.add(A, C);
+    arrow.add(A, D);
+}
 
 function drawFullConnectNerve(location, fcData) {
 
@@ -255,6 +257,7 @@ var mainFcToIdx = function (X, Y) {
             "rIdx": rIdx,
             "absIdx": absIdx
         }
+
     }
 };
 
