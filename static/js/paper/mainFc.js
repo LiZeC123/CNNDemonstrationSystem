@@ -251,11 +251,15 @@ var mainFcToIdx = function (X, Y) {
     }
 
 
-    if (line !== -1 && rIdx !== undefined) {
-        return {
-            "line": line,
-            "rIdx": rIdx,
-            "absIdx": absIdx
+    if (line !== -1 && rIdx !== undefined && rIdx >= 0) {
+        if ((line === 0 && rIdx < num1) ||
+            (line === 1 && rIdx < num2) ||
+            (line === 2 && rIdx < 10)) {
+            return {
+                "line": line,
+                "rIdx": rIdx,
+                "absIdx": absIdx
+            }
         }
 
     }
