@@ -95,15 +95,19 @@ $(document).keydown(function (event) {
 
 let intervalID;
 let dataIdx = 0;
-let isPause = true;
+let isPause = false;
+let isReset = false;
 
 function drawHandler() {
     // 如果达到数组的最后一个元素
     if (dataIdx >= trainDataList.length) {
+        trainReset();
         return;
     }
 
-    $("#spanFrame").text("当前第" + (Math.floor(dataIdx / 2) + 1) + "次训练");
+    $("#progress").val(Math.floor(dataIdx / 2) + 1);
+    $("#perShow").text("当前第" + (Math.floor(dataIdx / 2) + 1) + "次训练");
+
     if (dataIdx % 2 === 0) {
         window.isGradient = false;
         trainData.first = trainDataList[dataIdx];
@@ -119,6 +123,34 @@ function drawHandler() {
     }
     dataIdx++;
 }
+
+
+// 进度条拖动函数'
+let isClick = false;
+$(function () {
+    const progress = $("#progress");
+    progress.mousedown(function () {
+        isClick = true;
+        dataIdx = 2 * progress.val();
+        $("#perShow").text("当前第" + (Math.floor(dataIdx / 2) + 1) + "次训练");
+        //dataIdx = progress.val();
+        //drawHandler()
+    });
+    progress.mousemove(function () {
+        if (isClick) {
+            dataIdx = 2 * progress.val();
+            $("#perShow").text("当前第" + (Math.floor(dataIdx / 2) + 1) + "次训练");
+            drawHandler();
+        }
+    });
+    progress.mouseup(function () {
+        dataIdx = 2 * progress.val();
+        $("#perShow").text("当前第" + (Math.floor(dataIdx / 2) + 1) + "次训练");
+        drawHandler();
+        isClick = false;
+    });
+});
+
 
 function trainBack() {
     clearInterval(intervalID);
@@ -137,13 +169,25 @@ function trainForward() {
 }
 
 function trainPause() {
+    if (isReset) {
+        dataIdx = 0;
+        isReset = false;
+    }
     if (isPause) {
+        clearInterval(intervalID);
+        $("#btnPause").text("恢复");
+    } else {
+        //console.log(dataIdx);
         intervalID = setInterval(drawHandler, 200);
         $("#btnPause").text("暂停")
-    } else {
-        console.log(dataIdx);
-        clearInterval(intervalID);
-        $("#btnPause").text("恢复")
     }
+
     isPause = !isPause;
+}
+
+function trainReset() {
+    clearInterval(intervalID);
+    $("#btnPause").text("重置");
+    isReset = true;
+    isPause = false;
 }
