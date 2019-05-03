@@ -326,3 +326,29 @@ function getBias(pos) {
             return title + fcData.fc2.b[pos.absIdx].toFixed(5);
     }
 }
+
+obj.click(function (e) {
+    // 相对当前元素的坐标
+    var X = e.pageX - obj.offset().left;
+    var Y = e.pageY - obj.offset().top;
+
+    if (X > 37 - radius && X < 37 + radius) {
+        if (Y > 50 - radius && Y < 50 + radius) {
+            mainFcChange(-1, 1);
+        } else if (Y > 1550 - radius && Y < 1550 + radius) {
+            mainFcChange(1, 1);
+        }
+    } else if (X > 277 - radius && X < 277 + radius) {
+        if (Y > 50 - radius && Y < 50 + radius) {
+            mainFcChange(-1, 2);
+        } else if (Y > 1550 - radius && Y < 1550 + radius) {
+            mainFcChange(1, 2);
+        }
+    }
+
+    if (window.isGradient) {
+        window.mainFcUpdate(window.trainData, "gradient");
+    } else {
+        window.mainFcUpdate(window.trainData, "data");
+    }
+});
