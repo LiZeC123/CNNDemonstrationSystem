@@ -123,7 +123,7 @@ function drawHandler() {
         window.conv2WbUpdate(trainData, "gradient", frameId);
         window.mainFcUpdate(trainData, "gradient");
 
-        if (frameId !== 2) {
+        if (frameId < 3) {
             frameId++;
         } else {
             frameId = 0;
@@ -165,6 +165,7 @@ function trainBack() {
     // dataIdx指向下一个需要绘制的位置，因此回退需要-2
     if (dataIdx >= 2) {
         dataIdx = dataIdx - 2;
+        frameId = 3;
         drawHandler();
     }
     console.log(dataIdx);
@@ -172,6 +173,7 @@ function trainBack() {
 
 function trainForward() {
     clearInterval(intervalID);
+    frameId = 3;
     drawHandler();
     console.log(dataIdx);
 }
@@ -182,10 +184,15 @@ function trainPause() {
         isReset = false;
     }
     if (isPause) {
+        console.log("frame=" + frameId);
         clearInterval(intervalID);
+        if (frameId !== 0) {
+            frameId = 1;
+            dataIdx++;
+            drawHandler();
+        }
         $("#btnPause").text("继续");
     } else {
-        //console.log(dataIdx);
         intervalID = setInterval(drawHandler, 200);
         $("#btnPause").text("暂停")
     }
