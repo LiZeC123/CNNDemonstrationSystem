@@ -146,8 +146,15 @@ window.drawMatrixNerve = function (point, margin, radius, data) {
     baseDrawMatrixNerve(point, margin, radius, data, "data");
 };
 
-window.drawGradientMatrixNerve = function (point, margin, radius, data) {
-    //baseDrawMatrixNerve(point, margin, radius, data, "gradient");
+/**
+ * 在指定的位置绘制表示梯度的箭头
+ * @param point 绘制梯度的矩形的起始位置
+ * @param margin 矩形中元素的边距
+ * @param radius
+ * @param data 梯度数据
+ * @param frame 箭头位置，分别使用数字0,1,2表示，依次绘制即可产生连续的动画
+ */
+window.drawGradientMatrixNerve = function (point, margin, radius, data, frame) {
     var b = matrixBorder(data);
     var min = b[0];
     var max = b[1];
@@ -157,43 +164,46 @@ window.drawGradientMatrixNerve = function (point, margin, radius, data) {
     for (var x = 0; x < width; x++) {
         for (var y = 0; y < height; y++) {
             var center = new Point(point.x + 2 * x * margin + margin, point.y + 2 * y * margin + margin);
-
-            /*  箭头与点对应关系如下所示
-            *       C            A
-            *       |           /|\
-            *       |          B x D
-            *     B x D          |
-            *      \|/           |
-            *       A            C
-            */
-            var A, B, C, D, arrow;
-            B = new Point(center.x - 5, center.y);
-            D = new Point(center.x + 5, center.y);
-            if (data[y][x] >= 0) {
-                // 梯度为正，数值减少
-                A = new Point(center.x, center.y + 3);
-                C = new Point(center.x, center.y - 5);
-                arrow = new Path({"strokeColor": getColorByType("gradient", +1, data[y][x] / max)});
-
-                // c.strokeColor = getColorByType(colorType, +1);
-                // c.fillColor = getColorByType(colorType, +1, data[y][x] / max);
-            } else {
-                A = new Point(center.x, center.y - 3);
-                C = new Point(center.x, center.y + 5);
-                arrow = new Path({"strokeColor": getColorByType("gradient", -1, data[y][x] / min)});
-
-                // c.strokeColor = getColorByType(colorType, -1);
-                // c.fillColor = getColorByType(colorType, -1, data[y][x] / min);
+            var value = data[y][x];
+            if (frame === 0) {
+                center = value > 0 ? new Point(center.x, center.y - 3) : new Point(center.x, center.y + 3);
+            } else if (frame === 1) {
+                // center不变
+            } else if (frame === 2) {
+                center = value > 0 ? new Point(center.x, center.y + 5) : new Point(center.x, center.y - 5);
             }
-
-            arrow.add(A, B);
-            arrow.add(A, C);
-            arrow.add(A, D);
+            drawArrow(center, data[y][x], min, max);
         }
     }
-
-
 };
+
+function drawArrow(center, value, min, max) {
+    /*  箭头与点对应关系如下所示
+    *       C            A
+    *       |           /|\
+    *       |          B x D
+    *     B x D          |
+    *      \|/           |
+    *       A            C
+    */
+    var A, B, C, D, arrow;
+    B = new Point(center.x - 5, center.y);
+    D = new Point(center.x + 5, center.y);
+    if (value >= 0) {
+        // 梯度为正，数值减少
+        A = new Point(center.x, center.y + 3);
+        C = new Point(center.x, center.y - 5);
+        arrow = new Path({"strokeColor": getColorByType("gradient", +1, value / max)});
+    } else {
+        A = new Point(center.x, center.y - 3);
+        C = new Point(center.x, center.y + 5);
+        arrow = new Path({"strokeColor": getColorByType("gradient", -1, value / min)});
+    }
+
+    arrow.add(A, B);
+    arrow.add(A, C);
+    arrow.add(A, D);
+}
 
 window.drawMatrixNerveWithNumber = function (point, margin, radius, data) {
     baseDrawMatrixNerve(point, margin, radius, data, "data", true);

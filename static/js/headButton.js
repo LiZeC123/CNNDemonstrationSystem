@@ -51,8 +51,8 @@ function trainExport() {
         console.log(trainData);
         window.trainData = trainData;
         window.dialog.hide();
-        window.conv1WbUpdate(trainData.first.conv1, "data");
-        window.conv2WbUpdate(trainData.first.conv2, "data");
+        window.conv1WbUpdate(trainData, "data");
+        window.conv2WbUpdate(trainData, "data");
         window.mainFcUpdate(trainData, "data");
     })
 }
@@ -62,12 +62,12 @@ window.isGradient = false;
 function trainSwitch() {
     window.isGradient = !isGradient;
     if (isGradient) {
-        window.conv1WbUpdate(trainData.gradient.conv1, "gradient");
-        window.conv2WbUpdate(trainData.gradient.conv2, "gradient");
+        window.conv1WbUpdate(trainData, "gradient");
+        window.conv2WbUpdate(trainData, "gradient");
         window.mainFcUpdate(trainData, "gradient");
     } else {
-        window.conv1WbUpdate(trainData.first.conv1, "data");
-        window.conv2WbUpdate(trainData.first.conv2, "data");
+        window.conv1WbUpdate(trainData, "data");
+        window.conv2WbUpdate(trainData, "data");
         window.mainFcUpdate(trainData, "data");
     }
 }
@@ -95,6 +95,7 @@ $(document).keydown(function (event) {
 
 let intervalID;
 let dataIdx = 0;
+let frameId = 0;
 let isPause = false;
 let isReset = false;
 
@@ -111,17 +112,24 @@ function drawHandler() {
     if (dataIdx % 2 === 0) {
         window.isGradient = false;
         trainData.first = trainDataList[dataIdx];
-        window.conv1WbUpdate(trainData.first.conv1, "data");
-        window.conv2WbUpdate(trainData.first.conv2, "data");
+        window.conv1WbUpdate(trainData, "data");
+        window.conv2WbUpdate(trainData, "data");
         window.mainFcUpdate(trainData, "data");
+        dataIdx++;
     } else {
         window.isGradient = true;
         trainData.gradient = trainDataList[dataIdx];
-        window.conv1WbUpdate(trainData.gradient.conv1, "gradient");
-        window.conv2WbUpdate(trainData.gradient.conv2, "gradient");
+        window.conv1WbUpdate(trainData, "gradient", frameId);
+        window.conv2WbUpdate(trainData, "gradient", frameId);
         window.mainFcUpdate(trainData, "gradient");
+
+        if (frameId !== 2) {
+            frameId++;
+        } else {
+            frameId = 0;
+            dataIdx++;
+        }
     }
-    dataIdx++;
 }
 
 
@@ -175,7 +183,7 @@ function trainPause() {
     }
     if (isPause) {
         clearInterval(intervalID);
-        $("#btnPause").text("恢复");
+        $("#btnPause").text("继续");
     } else {
         //console.log(dataIdx);
         intervalID = setInterval(drawHandler, 200);

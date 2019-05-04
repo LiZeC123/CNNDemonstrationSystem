@@ -19,7 +19,7 @@ var fcData;
 window.mainFcUpdate = function (trainData, type) {
     paper.activate();
     paper.project.clear();
-    console.log(trainData);
+    //console.log(trainData);
     var location = {
         "pointIn": new Point(37, 150),
         "pointMid": new Point(277, 250),
