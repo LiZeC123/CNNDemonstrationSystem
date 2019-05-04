@@ -46,7 +46,7 @@ window.drawDetail = function (layoutName, value, more) {
         } else if (more.name === "fc") {
             var W = more.getWeight(more.pos);
             drawText(new Point(5, 80), more.getBias(more.pos));
-            drawText(new Point(5, 110), more.getWeightTitle());
+            drawText(new Point(5, 110), more.getWeightTitle(more.pos));
             var i, half = W.length / 2;
             for (i = 0; i < half; i++) {
                 drawText(new Point(5, 130 + i * 20), W[i]);

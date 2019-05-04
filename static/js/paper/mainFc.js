@@ -291,8 +291,13 @@ obj.mousemove(genMouseMove(obj, mainFcToIdx,
         "name": "fc",
         "getWeight": getWeight,
         "getBias": getBias,
-        "getWeightTitle": function () {
-            return window.isGradient ? "当前神经元连接权值的梯度" : "当前神经元连接权值";
+        "getWeightTitle": function (pos) {
+            if (pos.line !== 0) {
+                return window.isGradient ? "当前神经元连接权值的梯度" : "当前神经元连接权值";
+            } else {
+                return window.isGradient ? "当前神经元连接权值的梯度: 无" : "当前神经元连接权值: 无";
+            }
+
         }
     })
 );
@@ -300,7 +305,8 @@ obj.mousemove(genMouseMove(obj, mainFcToIdx,
 function getWeight(pos) {
     var result = [], i = 0;
     if (pos.line === 0) {
-        result.push("此神经元没有连接的权值");
+        //输入层不包含权值，返回两个空字符串，填充原来列表的位置
+        result.push("");
         result.push("");
     }
     if (pos.line === 1) {
