@@ -28,18 +28,6 @@
 - [Flask第五篇——设置debug模式](https://www.cnblogs.com/captainmeng/p/8508106.html)
 - [flask创建的项目用外网访问？](https://segmentfault.com/q/1010000007309151?_ea=1303968)
 - [pycharm 运行 flask项目,指定访问ip与端口的坑](https://blog.csdn.net/LJXZDN/article/details/82429303)
-#### Request 对象
-
-通过Request的以下成员变量获得请求参数
-
-参数    | 含义
---------|-------------------------
-args    | 查询字符串
-data    | 字符串形式的请求数据
-files   | 上传的文件
-form    | 表单数据
-values  | args和form的数据
-json    | 解析后的JSON数据
 
 ### HTML
 - [css绝对定位、相对定位和文档流的那些事](https://www.cnblogs.com/tim-li/archive/2012/07/09/2582618.html)
@@ -57,6 +45,11 @@ json    | 解析后的JSON数据
 - [使用原生JS+CSS或HTML5实现简单的进度条和滑动条效果](https://www.cnblogs.com/zhangjunfeng/p/6705924.html)
 
 
+### Canvas
+- [HTML5 -- canvas画板转为图片](https://blog.csdn.net/sinat_19327991/article/details/77050717 )
+- [HTML5 Canvas画图、保存图片、提交文件问题](https://www.jianshu.com/p/df7461ff64b1)
+- [H5 canvas绘制出现模糊的问题](http://www.cnblogs.com/qianduanjingying/p/5817516.html)
+
 ### Paper.js
 - [Paper.js Document](http://paperjs.org/reference/global/)
 - [Paperscope and paperjs](https://stackoverflow.com/questions/28035898/paperscope-and-paperjs)
@@ -73,11 +66,14 @@ json    | 解析后的JSON数据
 - [如何用jQuery获得select的值](https://www.cnblogs.com/eager/p/7133270.html)
 
 
-### 其他参考资料
-- [HTML5 -- canvas画板转为图片](https://blog.csdn.net/sinat_19327991/article/details/77050717 )
-- [HTML5 Canvas画图、保存图片、提交文件问题](https://www.jianshu.com/p/df7461ff64b1)
-- [H5 canvas绘制出现模糊的问题](http://www.cnblogs.com/qianduanjingying/p/5817516.html)
-
 ### 机器学习理论 
 - [softmax函数详解](https://www.cnblogs.com/alexanderkun/p/8098781.html)
+- [小白都能看懂的softmax详解](https://blog.csdn.net/bitcarmanlee/article/details/82320853)
 - [一文搞懂交叉熵在机器学习中的使用，透彻理解交叉熵背后的直觉](https://blog.csdn.net/tsyccnh/article/details/79163834 )
+- [交叉熵、相对熵(KL散度)的数学原理及在机器学习中应用](https://blog.csdn.net/tyhj_sf/article/details/84933972)
+- [常用激活函数（激励函数）理解与总结](https://blog.csdn.net/tyhj_sf/article/details/79932893)
+
+### 发展经历
+- [【重磅】卷积神经网络为什么能称霸计算机视觉领域？](https://zhuanlan.zhihu.com/p/36160648)
+- [【卷积神经网络发展历程】从LeNet、AlexNet到ResNet、SENet](https://blog.csdn.net/u012679707/article/details/80870625)
+- [CNN的近期进展与实用技巧（上）](https://mp.weixin.qq.com/s?__biz=MzI1NTE4NTUwOQ==&mid=2650324619&idx=1&sn=ca1aed9e42d8f020d0971e62148e13be&scene=1&srcid=0503De6zpYN01gagUvn0Ht8D#wechat_redirect)
