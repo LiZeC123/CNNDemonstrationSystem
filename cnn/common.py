@@ -34,30 +34,32 @@ def max_pool_2x2(x, name):
 
 def buildNetwork(x, y, keep_prob):
     """创建一个卷积神经网络"""
+    num_conv1 = 3
+    num_conv2 = 8
 
     # 改变x的格式转为4D的向量[batch,in_height,in_width,in_channels]
     x_image = tf.reshape(x, [-1, 28, 28, 1])
 
     # 初始化第一个卷积层的权值和偏置
     # 把x_image和权值向量进行卷积，再加上偏置值，然后应用与relu激活函数
-    W_conv1 = weight_variable([5, 5, 1, 4], 'W_conv1')
-    b_conv1 = bias_variable([4], 'b_conv1')
+    W_conv1 = weight_variable([5, 5, 1, num_conv1], 'W_conv1')
+    b_conv1 = bias_variable([num_conv1], 'b_conv1')
     f_conv1 = tf.add(conv2d(x_image, W_conv1, name='c_conv1'), b_conv1, name='f_conv1')
     h_vonv1 = tf.nn.relu(f_conv1, name='h_vonv1')
     h_pool1 = max_pool_2x2(h_vonv1, 'h_pool1')
 
     # 初始化第二个卷积层的权值和偏置
-    W_conv2 = weight_variable([5, 5, 4, 8], 'W_conv2')
-    b_conv2 = bias_variable([8], 'b_conv2')
+    W_conv2 = weight_variable([5, 5, num_conv1, num_conv2], 'W_conv2')
+    b_conv2 = bias_variable([num_conv2], 'b_conv2')
     f_conv2 = tf.add(conv2d(h_pool1, W_conv2, name='c_conv2'), b_conv2, name='f_conv2')
     h_vonv2 = tf.nn.relu(f_conv2, 'h_vonv2')
     h_pool2 = max_pool_2x2(h_vonv2, 'h_pool2')  # 进行max-pooling
 
     # 把池化层2的输出扁平化为1维
-    h_pool2_flat = tf.reshape(h_pool2, [-1, 7 * 7 * 8], name='h_pool2_flat')
+    h_pool2_flat = tf.reshape(h_pool2, [-1, 7 * 7 * num_conv2], name='h_pool2_flat')
 
     # 初始化第一个全连接层的权值
-    W_fc1 = weight_variable([7 * 7 * 8, 84], 'W_fc1')
+    W_fc1 = weight_variable([7 * 7 * num_conv2, 84], 'W_fc1')
     b_fc1 = bias_variable([84], 'b_fc1')
     f_fc1 = tf.add(tf.matmul(h_pool2_flat, W_fc1), b_fc1, name='f_fc1')
     h_fc1 = tf.nn.relu(f_fc1, name='h_fc1')

@@ -9,7 +9,7 @@ def train(savePath='./SavedData/cnn_model', times=20):
 
     batch_size = 100
     n_batch = mnist.train.num_examples // batch_size
-    n_test_batch = mnist.test.num_examples // batch_size
+    # n_test_batch = mnist.test.num_examples // batch_size
     x = tf.placeholder(tf.float32, [None, 784], name='x')  # 28*28
     y = tf.placeholder(tf.float32, [None, 10], name='y')
     keep_prob = tf.placeholder(tf.float32, name='keep_prob')
@@ -29,13 +29,14 @@ def train(savePath='./SavedData/cnn_model', times=20):
         saver.save(sess, savePath)
 
         print("===== Begin Test ====")
-        acc_sum = 0
-        for batch in range(1, n_test_batch + 1):
-            batch_test_xs, batch_test_ys = mnist.test.next_batch(batch_size)
-            acc = sess.run(accuracy, feed_dict={x: batch_test_xs, y: batch_test_ys, keep_prob: 1})
-            print(f'batch: {batch:6}, Current correct rate: {acc:.2f}')
-            acc_sum = acc_sum + acc
-        print(f"Average correct rate: {acc_sum / n_test_batch:.4f}")
+        for i in range(3):
+            acc_sum = 0
+            for batch in range(i * 33 + 1, (i + 1) * 33 + 1):
+                batch_test_xs, batch_test_ys = mnist.test.next_batch(batch_size)
+                acc = sess.run(accuracy, feed_dict={x: batch_test_xs, y: batch_test_ys, keep_prob: 1})
+                print(f'batch: {batch:6}, Current correct rate: {acc:.2f}')
+                acc_sum = acc_sum + acc
+            print(f"Average correct rate: {acc_sum / 33:.4f}")
 
 
 if __name__ == '__main__':
