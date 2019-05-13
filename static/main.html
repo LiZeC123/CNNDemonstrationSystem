@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>卷积神经网络演示系统</title>
-    <link rel="stylesheet" href="css/main.css" type="text/css"/>
     <link href="ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css"/>
+    <link href="css/headstyle.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="css/main.css" type="text/css"/>
 
     <script src="js/jquery-1.7.2.min.js"></script>
     <script src="js/paper-full.min.js"></script>
@@ -89,26 +90,35 @@
                 shrink = !shrink;
             });
              */
-
-            $("#btnOpen").click(function () {
-                window.dialog = $.ligerDialog.open({target: $("#mainHeadDiv"), width: 249, title: "请输入手写数字"});
-            });
         });
+
+        function openInput() {
+            window.dialog = $.ligerDialog.open({target: $("#mainHeadDiv"), width: 249, title: "请输入手写数字"});
+        }
     </script>
 </head>
 
 <body>
 <canvas id="detailCanvas"></canvas>
-<span style="display: inline-block;font-size: 20px;color: black;padding-top: 6px">卷积神经网络演示系统</span>
 
-<button id="btnOpen" style="width:80px;height: 26px;background-color:pink;">Open</button>
+<div id="header-menu" class="header-menu-pos">
+    <div class="header-menu-container">
+        <a href="/" class="left">
+            <span class="site-title">卷积神经网络演示系统(计算过程)</span>
+        </a>
+        <nav id="header-menu-nav" class="right">
 
-<div>
-    识别结果是
-    <div id="numberResult"></div>
+            <a href="javascript:void(0);" onclick="openInput()">
+                <img src="svg/input.svg" width="18px" height="18px"
+                     style="vertical-align: middle;margin: -5px 0 0 15px;">
+                <span>输入数字</span>
+            </a>
+        </nav>
+    </div>
 </div>
 
-<div class="mainDiv">
+
+<div class="mainDiv" style="position: absolute;top: 52px">
     <canvas id="mainCanvas"></canvas>
     <canvas id="conv1Canvas" class="showCanvas" style="width: 356px;"></canvas>
     <canvas id="reLU1Canvas" class="showCanvas" style="width: 356px;"></canvas>

@@ -191,10 +191,10 @@ function trainPause() {
             dataIdx++;
             drawHandler();
         }
-        $("#btnPause").text("继续");
+        $("#btnPause").attr("src", "svg/play-circle.svg")
     } else {
         intervalID = setInterval(drawHandler, 200);
-        $("#btnPause").text("暂停")
+        $("#btnPause").attr("src", "svg/stop.svg")
     }
 
     isPause = !isPause;
@@ -202,7 +202,7 @@ function trainPause() {
 
 function trainReset() {
     clearInterval(intervalID);
-    $("#btnPause").text("重置");
+    $("#btnPause").attr("src", "svg/replay.svg");
     isReset = true;
     isPause = false;
 }

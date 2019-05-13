@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>卷积神经网络演示系统</title>
-    <link rel="stylesheet" href="css/main.css" type="text/css"/>
     <link href="ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css"/>
+    <link href="css/headstyle.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="css/main.css" type="text/css"/>
 
     <script src="js/jquery-1.7.2.min.js"></script>
     <script src="js/paper-full.min.js"></script>
@@ -19,21 +20,9 @@
 
     <script src="js/paper/detailCanvas.js" type="text/paperscript" canvas="detailCanvas"></script>
 
-    <!--<script src="js/paper/mainMain.js" type="text/paperscript" canvas="mainCanvas"></script>-->
-
     <script src="js/paper/conv1Wb.js" type="text/paperscript" canvas="Wb1Canvas"></script>
     <script src="js/paper/conv2Wb.js" type="text/paperscript" canvas="Wb2Canvas"></script>
 
-
-    <!--
-    <script src="js/paper/conv1Conv.js" type="text/paperscript" canvas="conv1Canvas"></script>
-    <script src="js/paper/conv1ReLU.js" type="text/paperscript" canvas="reLU1Canvas"></script>
-    <script src="js/paper/conv1Pool.js" type="text/paperscript" canvas="pool1Canvas"></script>
-
-    <script src="js/paper/conv2Conv.js" type="text/paperscript" canvas="conv2Canvas"></script>
-    <script src="js/paper/conv2ReLU.js" type="text/paperscript" canvas="reLU2Canvas"></script>
-    <script src="js/paper/conv2Pool.js" type="text/paperscript" canvas="pool2Canvas"></script>
-    -->
     <script src="js/paper/mainFc.js" type="text/paperscript" canvas="fullCanvas"></script>
 
     <script type="text/javascript">
@@ -46,20 +35,71 @@
                 //isGradient = true;
                 console.log("数据加载完毕");
                 $("#btnPause").attr('disabled', false);
-                $("#spanFrame").text("数据加载完毕");
-            });
-
-            $("#btnOpen").click(function () {
-                window.dialog = $.ligerDialog.open({target: $("#mainHeadDiv"), width: 249, title: "请输入手写数字"});
+                $("#spanFrame").text("");
             });
         });
+
+        function openInput() {
+            window.dialog = $.ligerDialog.open({target: $("#mainHeadDiv"), width: 249, title: "请输入手写数字"});
+        }
 
 
     </script>
 </head>
 
-<body>
+<body style="background-color: #7c7c7c">
 <canvas id="detailCanvas"></canvas>
+
+
+<div id="header-menu" class="header-menu-pos">
+    <div class="header-menu-container">
+        <a href="/" class="left">
+            <span class="site-title">卷积神经网络演示系统(训练过程)</span>
+        </a>
+
+        <a href="/" class="left">
+            <span id="spanFrame">数据加载中...</span>
+        </a>
+
+        <a href="javascript:void(0);" onclick="trainBack();" class="left" style="margin-left: 40px">
+            <img src="svg/left.svg" style="vertical-align: middle;margin: -5px 0 0 15px;"
+                 alt="上一步" title="上一步">
+        </a>
+
+        <a href="javascript:void(0);" onclick="trainPause();" class="left">
+            <img id="btnPause" src="svg/play-circle.svg"
+                 style="vertical-align: middle;margin: -5px 0 0 15px;">
+        </a>
+
+        <a href="javascript:void(0);" onclick="trainForward();" class="left">
+            <img src="svg/right.svg" style="vertical-align: middle;margin: -5px 0 0 14px;"
+                 alt="下一步" title="下一步">
+        </a>
+
+
+        <label for="progress"
+               style="position: relative;color: white;vertical-align: middle;margin-left: 20px;top: -2px">训练进度</label>
+        <input id="progress" type="range" min="0" max="119" value="0"
+               style="width:400px;vertical-align: middle;margin-top: -6px"/>
+        <span id="perShow" style="position: relative;color: white;vertical-align: middle;top: -2px">第0次训练</span>
+
+
+        <nav id="header-menu-nav" class="right">
+
+            <a href="javascript:void(0);" onclick="openInput()">
+                <img src="svg/input.svg" style="vertical-align: middle;margin: -5px 0 0 15px;">
+                <span>手动训练</span>
+            </a>
+            <a href="javascript:void(0);" onclick="trainSwitch();" style="margin-right: 5px;margin-left: -10px">
+                <img src="svg/swap.svg" style="vertical-align: middle;margin: -5px 0 0 15px;">
+                <span>切换</span>
+            </a>
+        </nav>
+    </div>
+</div>
+
+
+<!--
 <span style="display: inline-block;font-size: 20px;color: black;padding-top: 6px">卷积神经网络演示系统</span>
 <span id="spanFrame">正在加载数据...</span>
 <button id="btnBack" onclick="trainBack();">后退</button>
@@ -67,17 +107,13 @@
 <button id="btnForward" onclick="trainForward();">前进</button>
 
 
-<label for="progress">训练进度</label>
-<input id="progress" type="range" min="0" max="119" value="0" style="width:400px"/>
-<span id="perShow">第0次训练</span>
-
 
 <button id="btnGoto">跳转</button>
 <button id="btnOpen">手动训练</button>
 <button id="btnSwitch" onclick="trainSwitch();">梯度切换</button>
+-->
 
-
-<div class="mainDiv">
+<div class="mainDiv" style="position: absolute;top: 45px">
     <!--<canvas id="mainCanvas"></canvas>-->
     <canvas id="Wb1Canvas" class="gradientCanvas" style="width: 165px"></canvas>
     <canvas id="Wb2Canvas" class="gradientCanvas" style="width: 600px"></canvas>

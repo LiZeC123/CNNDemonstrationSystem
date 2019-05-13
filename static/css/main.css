@@ -41,3 +41,7 @@
     width: 1340px;
     height: 122px;
 }
+
+html, body {
+    background-color: #7c7c7c;
+}
