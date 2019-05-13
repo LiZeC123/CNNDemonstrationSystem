@@ -1,7 +1,7 @@
-const serverType = "localServer";
+const serverType = "remoteServer";
 // 使用远程服务器时使用的配置
 const remoteServerConfig = {
-    baseURL: '<请替换为相应的服务器域名或IP地址>',
+    baseURL: 'http://192.168.1.100:5000',
 };
 // 使用本地服务器时使用的配置
 const localServerConfig = {
