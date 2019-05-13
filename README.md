@@ -43,7 +43,9 @@
 - [js 向上取整、向下取整、四舍五入](https://www.cnblogs.com/Marydon20170307/p/8831055.html)
 - [HTML select标签](http://www.w3school.com.cn/tags/tag_select.asp)
 - [使用原生JS+CSS或HTML5实现简单的进度条和滑动条效果](https://www.cnblogs.com/zhangjunfeng/p/6705924.html)
-
+- [SVG——在网页中使用SVG](https://segmentfault.com/a/1190000004447771)
+- [标签中的href如何调用js代码](https://blog.csdn.net/zhangshuang92/article/details/54407229/)
+- [html中img小图标与文字不对齐的解决方式](https://blog.csdn.net/u010618627/article/details/84783744)
 
 ### Canvas
 - [HTML5 -- canvas画板转为图片](https://blog.csdn.net/sinat_19327991/article/details/77050717 )
