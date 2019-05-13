@@ -4,7 +4,7 @@ from tensorflow.examples.tutorials.mnist import input_data
 from cnn.common import buildNetwork
 
 
-def train(savePath='./SavedData/cnn_model', times=20):
+def train(savePath='./SavedData/cnn_model', times=30):
     mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
 
     batch_size = 100
@@ -40,7 +40,7 @@ def train(savePath='./SavedData/cnn_model', times=20):
 
 
 if __name__ == '__main__':
-    op = 'Semi'
+    op = 'train'
     if op == 'train':
         train()
     elif op == 'Semi':

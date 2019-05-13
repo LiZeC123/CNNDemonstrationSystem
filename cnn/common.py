@@ -34,7 +34,7 @@ def max_pool_2x2(x, name):
 
 def buildNetwork(x, y, keep_prob):
     """创建一个卷积神经网络"""
-    num_conv1 = 3
+    num_conv1 = 4
     num_conv2 = 8
 
     # 改变x的格式转为4D的向量[batch,in_height,in_width,in_channels]
