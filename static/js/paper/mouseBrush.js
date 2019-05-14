@@ -56,7 +56,7 @@ function restrain(vec) {
         // 对数模型
         // 7-3*log(x)
         // 假定x最小值为1
-        return i * (10 - 3 * Math.log(len));
+        return i * (10 - 2 * Math.log(len));
     }
 
 }
