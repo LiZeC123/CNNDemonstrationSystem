@@ -1,23 +1,3 @@
-const serverType = "remoteServer";
-// 使用远程服务器时使用的配置
-const remoteServerConfig = {
-    baseURL: 'http://192.168.1.100:5000',
-};
-// 使用本地服务器时使用的配置
-const localServerConfig = {
-    baseURL: 'http://localhost:5000',
-};
-// 使用纯本地静态文件时使用的配置
-const localStaticConfig = {};
-let config = {};
-if (serverType === "remoteServer") {
-    config = remoteServerConfig;
-} else if (serverType === "localServer") {
-    config = localServerConfig;
-} else if (serverType === "localStatic") {
-    config = localStaticConfig;
-}
-
 const dataTool = {};
 dataTool.serverOnline = function () {
     // 向服务器发送请求，如果服务器在指定的时间内答复

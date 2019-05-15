@@ -5,11 +5,11 @@ from flask import Flask, render_template, request
 from cnn.calculator import Calculator
 from cnn.mnistHelper import MnistHelper
 from cnn.trainer import StepTrainer
+from config import Config
 from util.image2List import toList
 
 app = Flask(__name__)
-calculator = Calculator('cnn/SavedData')
-stepTrainer = StepTrainer('cnn/SemiData')
+app.config.from_object(Config)
 mnistHelper = MnistHelper()
 
 
@@ -25,6 +25,7 @@ def isOnline():
 
 @app.route('/upload', methods=['POST'])
 def uploadImage():
+    calculator = Calculator('cnn/SavedData')
     calculator.setInputImage(toList(request.form['image']))
     data = {
         'conv1': calculator.calcConv1(),
@@ -46,6 +47,7 @@ def getImage():
 
 @app.route('/uploadTrain', methods=['POST'])
 def uploadTrainImage():
+    stepTrainer = StepTrainer('cnn/SemiData')
     stepTrainer.setInputImage(toList(request.form['image']), int(request.form['number']))
     data = {
         "first": stepTrainer.first,
@@ -58,4 +60,4 @@ def uploadTrainImage():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(app.config["HOST"], app.config["PORT"], app.config["DEBUG"])
