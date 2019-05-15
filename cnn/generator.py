@@ -4,8 +4,8 @@ from tensorflow.examples.tutorials.mnist import input_data
 from cnn.common import buildNetwork
 
 
-def train(savePath='./SavedData/cnn_model', times=30):
-    mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
+def train(savePath, times):
+    mnist = input_data.read_data_sets('cnn/MNIST_data', one_hot=True)
 
     batch_size = 100
     n_batch = mnist.train.num_examples // batch_size
@@ -37,15 +37,3 @@ def train(savePath='./SavedData/cnn_model', times=30):
                 print(f'batch: {batch:6}, Current correct rate: {acc:.2f}')
                 acc_sum = acc_sum + acc
             print(f"Average correct rate: {acc_sum / 33:.4f}")
-
-
-if __name__ == '__main__':
-    op = 'train'
-    if op == 'train':
-        train()
-    elif op == 'Semi':
-        # 创建一个显欠拟合的网络，用于进一步的训练
-        # 训练次数为0，则直接跳过训练过程，只用初始值
-        train('./SemiData/cnn_model', 0)
-    else:
-        print("Op is not a correct option")
