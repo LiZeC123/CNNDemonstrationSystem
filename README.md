@@ -28,6 +28,8 @@
 - [Flask第五篇——设置debug模式](https://www.cnblogs.com/captainmeng/p/8508106.html)
 - [flask创建的项目用外网访问？](https://segmentfault.com/q/1010000007309151?_ea=1303968)
 - [pycharm 运行 flask项目,指定访问ip与端口的坑](https://blog.csdn.net/LJXZDN/article/details/82429303)
+- [python Flask框架的中配置文件加载的五中方法使用](https://blog.51cto.com/aolens/1904407)
+- [配置处理 Flask 0.10.1 文档](http://docs.jinkan.org/docs/flask/config.html)
 
 ### HTML
 - [css绝对定位、相对定位和文档流的那些事](https://www.cnblogs.com/tim-li/archive/2012/07/09/2582618.html)
