@@ -93,6 +93,7 @@ $(document).keydown(function (event) {
 
 });
 
+const frameTime = 120;
 let intervalID;
 let dataIdx = 0;
 let frameId = 0;
@@ -123,7 +124,7 @@ function drawHandler() {
         window.conv2WbUpdate(trainData, "gradient", frameId);
         window.mainFcUpdate(trainData, "gradient");
 
-        if (frameId < 4) {
+        if (frameId < 5) {
             // 在范围内才++，否则就越界了
             frameId++;
         } else {
@@ -194,7 +195,7 @@ function trainPause() {
         }
         $("#btnPause").attr("src", "svg/play-circle.svg")
     } else {
-        intervalID = setInterval(drawHandler, 200);
+        intervalID = setInterval(drawHandler, frameTime);
         $("#btnPause").attr("src", "svg/stop.svg")
     }
 

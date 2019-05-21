@@ -176,8 +176,10 @@ window.drawGradientMatrixNerve = function (point, margin, radius, data, frame) {
             } else if (frame === 3) {
                 center = value > 0 ? new Point(center.x, center.y + 5) : new Point(center.x, center.y - 5);
             } else if (frame === 4) {
-                center = value > 0 ? new Point(center.x, center.y + 11) : new Point(center.x, center.y - 11);
+                center = value > 0 ? new Point(center.x, center.y + 10) : new Point(center.x, center.y - 10);
                 scan.type = "tail";
+            } else if (frame === 5) {
+                scan.type = "empty";
             }
             drawArrow(center,
                 {"v": data[y][x], "max": max, "min": min},
@@ -233,6 +235,8 @@ function drawArrow(center, value, scan) {
         arrow.add(A, D);
     } else if (scan.type === "tail") {
         arrow.add(A, C);
+    } else if (scan.type === "empty") {
+        // 不绘制图像
     }
 }
 
