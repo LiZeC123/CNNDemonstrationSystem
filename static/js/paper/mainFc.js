@@ -196,7 +196,11 @@ function getColorByType(type, value, Vmax, Vmin) {
 }
 
 function retain(value) {
-    return value < 0.1 ? 0.1 : value;
+    if (value > 0.01 && value < 0.1) {
+        return 0.1;
+    } else {
+        return value;
+    }
 }
 
 
