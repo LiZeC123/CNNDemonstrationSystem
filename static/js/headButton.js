@@ -123,7 +123,7 @@ function drawHandler() {
         window.conv2WbUpdate(trainData, "gradient", frameId);
         window.mainFcUpdate(trainData, "gradient");
 
-        if (frameId < 2) {
+        if (frameId < 4) {
             // 在范围内才++，否则就越界了
             frameId++;
         } else {

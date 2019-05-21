@@ -158,6 +158,7 @@ window.drawGradientMatrixNerve = function (point, margin, radius, data, frame) {
     var b = matrixBorder(data);
     var min = b[0];
     var max = b[1];
+    var scan = {"type": "middle"};
 
     var width = data[0].length;
     var height = data.length;
@@ -166,18 +167,27 @@ window.drawGradientMatrixNerve = function (point, margin, radius, data, frame) {
             var center = new Point(point.x + 2 * x * margin + margin, point.y + 2 * y * margin + margin);
             var value = data[y][x];
             if (frame === 0) {
-                center = value > 0 ? new Point(center.x, center.y - 3) : new Point(center.x, center.y + 3);
+                center = value > 0 ? new Point(center.x, center.y - 9) : new Point(center.x, center.y + 9);
+                scan.type = "head";
             } else if (frame === 1) {
-                // center不变
+                center = value > 0 ? new Point(center.x, center.y - 3) : new Point(center.x, center.y + 3);
             } else if (frame === 2) {
+                // center不变
+            } else if (frame === 3) {
                 center = value > 0 ? new Point(center.x, center.y + 5) : new Point(center.x, center.y - 5);
+            } else if (frame === 4) {
+                center = value > 0 ? new Point(center.x, center.y + 11) : new Point(center.x, center.y - 11);
+                scan.type = "tail";
             }
-            drawArrow(center, data[y][x], min, max);
+            drawArrow(center,
+                {"v": data[y][x], "max": max, "min": min},
+                scan);
         }
     }
 };
 
-function drawArrow(center, value, min, max) {
+
+function drawArrow(center, value, scan) {
     /*  箭头与点对应关系如下所示
     *       C            A
     *       |           /|\
@@ -189,20 +199,41 @@ function drawArrow(center, value, min, max) {
     var A, B, C, D, arrow;
     B = new Point(center.x - 5, center.y);
     D = new Point(center.x + 5, center.y);
-    if (value >= 0) {
+    if (value.v >= 0) {
         // 梯度为正，数值减少
-        A = new Point(center.x, center.y + 3);
-        C = new Point(center.x, center.y - 5);
-        arrow = new Path({"strokeColor": getColorByType("gradient", +1, value / max)});
+        if (scan.type === "head") {
+            A = new Point(center.x, center.y + 3);
+        } else if (scan.type === "middle") {
+            A = new Point(center.x, center.y + 3);
+            C = new Point(center.x, center.y - 5);
+        } else if (scan.type === "tail") {
+            A = new Point(center.x, center.y - 2);
+            C = new Point(center.x, center.y - 5);
+        }
+        arrow = new Path({"strokeColor": getColorByType("gradient", +1, value.v / value.max)});
     } else {
-        A = new Point(center.x, center.y - 3);
-        C = new Point(center.x, center.y + 5);
-        arrow = new Path({"strokeColor": getColorByType("gradient", -1, value / min)});
+        if (scan.type === "head") {
+            A = new Point(center.x, center.y - 3);
+        } else if (scan.type === "middle") {
+            A = new Point(center.x, center.y - 3);
+            C = new Point(center.x, center.y + 5);
+        } else if (scan.type === "tail") {
+            A = new Point(center.x, center.y + 2);
+            C = new Point(center.x, center.y + 5);
+        }
+        arrow = new Path({"strokeColor": getColorByType("gradient", -1, value.v / value.min)});
     }
 
-    arrow.add(A, B);
-    arrow.add(A, C);
-    arrow.add(A, D);
+    if (scan.type === "head") {
+        arrow.add(A, B);
+        arrow.add(A, D);
+    } else if (scan.type === "middle") {
+        arrow.add(A, B);
+        arrow.add(A, C);
+        arrow.add(A, D);
+    } else if (scan.type === "tail") {
+        arrow.add(A, C);
+    }
 }
 
 window.drawMatrixNerveWithNumber = function (point, margin, radius, data) {
