@@ -33,66 +33,8 @@
 
     <script src="js/paper/mainFc.js" type="text/paperscript" canvas="fullCanvas"></script>
 
+    <script src="js/shrink.js"></script>
     <script type="text/javascript">
-        var shrink = true;
-        $(function () {
-            const detail = $("#detailCanvas");
-            $("#pool1Canvas").click(function () {
-                detail.hide();
-                if (shrink) {
-                    $("#conv1Canvas").hide("slow");
-                    $("#reLU1Canvas").hide("slow");
-                    $("#conv2WbCanvas").hide();
-                    $("#conv2Canvas").hide();
-                    $("#reLU2Canvas").hide();
-                    $("#mainCanvas").show();
-                    $("#pool2Canvas").show();
-                    $("#fullCanvas").show();
-                } else {
-                    $("#fullCanvas").hide();
-                    $("#pool2Canvas").hide("slow", function () {
-                        $("#mainCanvas").show();
-                        $("#conv1Canvas").show("slow");
-                        $("#reLU1Canvas").show("slow");
-                    });
-                }
-                shrink = !shrink;
-            });
-            $("#pool2Canvas").click(function () {
-                detail.hide();
-                if (shrink) {
-                    $("#conv2WbCanvas").hide("slow");
-                    $("#conv2Canvas").hide("slow");
-                    $("#reLU2Canvas").hide("slow", function () {
-                        $("#mainCanvas").show("slow");
-                        $("#pool1Canvas").show("slow");
-                        $("#fullCanvas").show("slow");
-                    });
-                } else {
-                    $("#fullCanvas").hide();
-                    $("#mainCanvas").hide("slow", function () {
-                        $("#conv2WbCanvas").show("slow");
-                        $("#conv2Canvas").show("slow");
-                        $("#reLU2Canvas").show("slow");
-                    });
-                }
-                shrink = !shrink;
-            });
-            /*
-            $("#fullCanvas").click(function () {
-                detail.hide();
-                if (shrink) {
-                    $("#mainCanvas").show("slow");
-                    $("#pool1Canvas").show("slow");
-                } else {
-                    $("#mainCanvas").hide("slow");
-                    $("#pool1Canvas").hide("slow");
-                }
-                shrink = !shrink;
-            });
-             */
-        });
-
         function openInput() {
             window.dialog = $.ligerDialog.open({target: $("#mainHeadDiv"), width: 249, title: "请输入手写数字"});
         }
