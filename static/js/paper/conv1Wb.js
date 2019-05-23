@@ -19,3 +19,27 @@ window.conv1WbUpdate = function (trainData, type, frameId) {
         });
     }
 };
+
+
+var conv1WbToIdx = genConvert(point, 4, 5, interval, margin);
+var obj = $("#Wb1Canvas");
+obj.mousemove(genMouseMove(obj, conv1WbToIdx,
+    function (pos) {
+        return "第一卷积层 卷积核" + pos.feature + " 第" + pos.row + "行 第" + pos.col + "列";
+    },
+    function (pos) {
+        return trainData.first.conv1.W[pos.feature][pos.row][pos.col];
+
+    },
+    {
+        "name": "convWb",
+        "getGradientInfo": function (pos) {
+            if (window.isGradient) {
+                var value = trainData.gradient.conv1.W[pos.feature][pos.row][pos.col];
+                return "当前神经元梯度值: " + value.toFixed(5);
+            } else {
+                return "当前神经元梯度值: 无";
+            }
+        }
+    }
+));

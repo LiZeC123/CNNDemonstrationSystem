@@ -374,6 +374,8 @@ function setDetailCSS(detail, eleThis, xx, yy) {
         height = 212;
     } else if (eleThis.selector === "#fullCanvas") {
         height = 260;
+    } else if (eleThis.selector === "#Wb1Canvas" || eleThis.selector === "#Wb2Canvas") {
+        height = 90
     }
 
     var m = 20;                 // 鼠标与窗口边缘的距离

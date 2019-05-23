@@ -54,6 +54,8 @@ window.drawDetail = function (layoutName, value, more) {
             for (i = half; i < W.length; i++) {
                 drawText(new Point(270, 130 + (i - half) * 20), W[i]);
             }
+        } else if (more.name === "convWb") {
+            drawText(new Point(5, 80), more.getGradientInfo(more.pos));
         }
     }
 };

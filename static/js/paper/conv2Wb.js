@@ -41,3 +41,45 @@ window.conv2WbUpdate = function (trainData, type, frameId) {
         }
     }
 };
+
+var conv2WbToIdx = function (X, Y) {
+    var rxIdx = Math.floor(X / 140);
+    var rX = point.x + rxIdx * 140;
+    var rY = point.y;
+    var pos;
+    if (Y < 800) {
+        pos = genConvert(new Point(rX, rY), 4, 5, interval, margin)(X, Y);
+    } else {
+        rY = point.y + 800;
+        pos = genConvert(new Point(rX, rY), 4, 5, interval, margin)(X, Y);
+    }
+
+    if (pos !== undefined) {
+        pos.out = Y < 800 ? rxIdx : rxIdx + 4;
+    }
+
+    return pos;
+};
+
+
+var obj = $("#Wb2Canvas");
+obj.mousemove(genMouseMove(obj, conv2WbToIdx,
+    function (pos) {
+        return "第二卷积层 特征面" + pos.out + " 卷积核" + pos.feature + " 第" + pos.row + "行 第" + pos.col + "列";
+    },
+    function (pos) {
+        return trainData.first.conv2.W[pos.out][pos.feature][pos.row][pos.col];
+
+    },
+    {
+        "name": "convWb",
+        "getGradientInfo": function (pos) {
+            if (window.isGradient) {
+                var value = trainData.gradient.conv2.W[pos.out][pos.feature][pos.row][pos.col];
+                return "当前神经元梯度值: " + value.toFixed(5);
+            } else {
+                return "当前神经元梯度值: 无";
+            }
+        }
+    }
+));
