@@ -315,14 +315,31 @@ function getWeight(pos) {
     }
     if (pos.line === 1) {
         for (i = begIdx1; i < begIdx1 + num1; i++) {
-            result.push("[" + (i - begIdx1) + "] " + fcData.fc1.W[i][pos.absIdx].toFixed(5));
+            result.push("[" + numToStr(i - begIdx1) + "] " + fixNum(fcData.fc1.W[i][pos.absIdx], 5));
         }
     } else if (pos.line === 2) {
         for (i = begIdx2; i < begIdx2 + num2; i++) {
-            result.push("[" + (i - begIdx2) + "] " + fcData.fc2.W[i][pos.absIdx].toFixed(5));
+            result.push("[" + numToStr(i - begIdx2) + "] " + fixNum(fcData.fc2.W[i][pos.absIdx], 5));
         }
     }
     return result;
+}
+
+//将数字转化为两位的字符串，不足两位则补零
+function numToStr(num) {
+    if (num < 10) {
+        return "  " + num;
+    } else {
+        return num;
+    }
+}
+
+function fixNum(value, digits) {
+    if (value >= 0) {
+        return " " + value.toFixed(digits);
+    } else {
+        return value.toFixed(digits);
+    }
 }
 
 function getBias(pos) {
