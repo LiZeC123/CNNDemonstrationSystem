@@ -1,5 +1,6 @@
-// initialize.py自动生成的JS配置
+// initialize.py自动生成的JavaScript配置
 const config = {
-    baseURL: 'http://localhost:5000',
+    "baseURL": 'http://localhost:5000',
+    "noPre": false,
 };
     

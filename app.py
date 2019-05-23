@@ -60,4 +60,4 @@ def uploadTrainImage():
 
 
 if __name__ == '__main__':
-    app.run(app.config["HOST"], app.config["PORT"], app.config["DEBUG"])
+    app.run(app.config["HOST"], app.config["PORT"], app.config["DEBUG"], threaded=app.config["THREAD"])
