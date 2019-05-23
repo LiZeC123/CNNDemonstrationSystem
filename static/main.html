@@ -38,6 +38,10 @@
         function openInput() {
             window.dialog = $.ligerDialog.open({target: $("#mainHeadDiv"), width: 249, title: "请输入手写数字"});
         }
+
+        function gotoTrain() {
+            window.location.href = "train.html";
+        }
     </script>
 </head>
 
@@ -54,6 +58,10 @@
             <a href="javascript:void(0);" onclick="openInput()">
                 <img src="svg/input.svg" style="vertical-align: middle;margin: -5px 0 0 15px;" alt="输入数字">
                 <span>输入数字</span>
+            </a>
+            <a href="javascript:void(0);" onclick="gotoTrain()">
+                <img src="svg/nerve.svg" style="vertical-align: middle;margin: -5px 0 0 15px;" alt="训练过程">
+                <span>训练过程</span>
             </a>
         </nav>
     </div>
@@ -77,11 +85,13 @@
 <div id="mainHeadDiv" style="display: none">
     <canvas id="drawCanvas" width="224" height="224" style="background-color: #7c7c7c;"></canvas>
     <br/>
-    <button id="btnExport" style="width:110px;background-color:pink;"
+    <button id="btnExport" style="width:110px;"
             onclick="drawExport(window.location.href); ">导出
     </button>
-    <button id="btnClear" style="width:110px;background-color:yellow; " onclick="drawClean();">清除</button>
+    <button id="btnClear" style="width:110px;" onclick="drawClean();">清除</button>
+    <!--
     <button id="btnNew" style="width:80px;background-color:blue;" onclick="drawNew();">切换</button>
+    -->
 </div>
 
 </html>
