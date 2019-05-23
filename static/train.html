@@ -28,15 +28,18 @@
 
     <script type="text/javascript">
         $(function () {
-            dataTool.trainData({}, function (result) {
-                window.trainData = {};
-                console.log(result);
-                window.trainDataList = result;
-                //isGradient = true;
-                console.log("数据加载完毕");
-                $("#btnPause").attr('disabled', false);
+            if (config.noPre) {
                 $("#spanFrame").text("");
-            });
+            } else {
+                dataTool.trainData({}, function (result) {
+                    window.trainData = {};
+                    console.log(result);
+                    window.trainDataList = result;
+                    console.log("数据加载完毕");
+                    $("#btnPause").attr('disabled', false);
+                    $("#spanFrame").text("");
+                });
+            }
         });
 
         function openInput() {
