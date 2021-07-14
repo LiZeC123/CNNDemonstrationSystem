@@ -19,16 +19,16 @@
 
 项目依赖
 ---------------
-此项目依赖flask、Pillow、numpy和TensorFlow
+本项目使用Python3.6作为解释器， 依赖flask、Pillow、numpy和TensorFlow。由于Tensorflow版本问题， 本项目只能使用Python 3.6 + Tensorflow 1.12.0， 其余版本没有经过测试，不能保证可以正常运行。建议使用Conda管理Python环境。
 
 ```bash
-$ pip install flask Pillow numpy tensorflow
+$ pip install flask Pillow numpy tensorflow==1.12.0
 ```
 
 如果有可用的GPU，可以安装GPU版本的TensorFlow
 
 ```bash
-$ pip install  tensorflow-gpu
+$ pip install  tensorflow-gpu==1.12.0
 ```
 
 GPU版本需要进行配置才能使用, 配置过程可以参考TensorFlow官网指南
